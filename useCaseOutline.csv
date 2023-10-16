@@ -1,0 +1,26 @@
+Use Case	Title	Status
+	Sign Up Page	
+UC 1.1	Sign Up Page - Initial User	
+UC 1.2	Sign Up Page - Coach User	
+UC 1.3	Personal Information Servey	
+UC 1.4	Hashing Passwords	
+UC 1.5	Log In Page	
+UC 1.6	Log Out	
+		
+	General User Page	
+UC 2.1	Statistic Logger	
+UC 2.2	Workout Notebook	
+UC 2.3	Weekly Workout Plans	
+UC 2.4	Pictures	
+UC 2.5	Progress Graph	
+UC 2.6	Preloaded  Workouts	
+UC 2.7	Coaches Look Up	
+UC 2.8	Coaches Look Up - Associated Stats	
+UC 2.9	Coach Communication	
+UC 2.10	Account Settings	
+UC 2.11	Account Settings - Delete	
+		
+	Coach User Page	
+UC 3.1	General User Page	
+UC 3.2	View Client Details	
+UC 3.3	Assign Workouts to clients 	
