@@ -1,18 +1,34 @@
 import React, { useState } from 'react';
 import AuthSwitcher from '../components/authSwitch.js';
+import api from '../api';
 import './styling/auth.css';
 
 const Login = ({ onSwitch }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
-    // Simulating a backend call with a timeout
-    setTimeout(() => {
-      console.log('Login:', username, password);
-      // Add actual backend call here for authentication
-    }, 1000);
-  };
+  async function handleLogin(event){
+    event.preventDefault();
+
+    const data = {
+      username: 'REPLACE THIS WITH EMAIL',
+      password: 'REPLACE THIS WITH PASSWORD'
+    };
+    //error handling with try catch
+    try {
+      const response = await axios.post('/login', data)
+      
+      if (response.ok) {
+        const responseData = await response.json();
+        //handle the response
+        console.log('Login success', responseData)
+      } else  {
+        console.error('Login unsuccessful:', response.status);
+      }
+    } catch (error){
+      console.error('Error during login', error);
+    }
+  }
 
   return (
     <div className='login-container'>
