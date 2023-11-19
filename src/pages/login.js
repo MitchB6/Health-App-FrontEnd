@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import AuthSwitcher from '../components/authSwitch.js';
-import api from '../api';
+import api from '../api.js';
 import './styling/auth.css';
 
 const Login = ({ onSwitch }) => {
@@ -16,7 +16,7 @@ const Login = ({ onSwitch }) => {
     };
     //error handling with try catch
     try {
-      const response = await axios.post('/login', data)
+      const response = await api.post('/login', data)
       
       if (response.ok) {
         const responseData = await response.json();
