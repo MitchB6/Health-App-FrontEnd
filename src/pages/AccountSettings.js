@@ -6,7 +6,7 @@ const AccountSettings = () => {
     const [profilePicture, setProfilePicture] = useState('path_to_user_image.jpg');
     const [name, setName] = useState('User Name');
     const [email, setEmail] = useState('user@example.com');
-    const [goal, setGoal] = useState('Your current goal');
+    const [goals, setGoals] = useState(['Your current goal']); // Changed to an array for multiple goals
     const [location, setLocation] = useState('Your current location');
 
     // State for edit mode toggle
@@ -17,12 +17,6 @@ const AccountSettings = () => {
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
-
-    // State for notification preferences
-    const [notifications, setNotifications] = useState({
-        emailNotifications: true,
-        appNotifications: true,
-    });
 
     // Toggle edit mode
     const handleEditToggle = () => {
@@ -39,7 +33,7 @@ const AccountSettings = () => {
     // Submit user info
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log('Updated User Information:', { name, email, goal, location });
+        console.log('Updated User Information:', { name, email, goals, location });
         setIsEditMode(false);
     };
 
@@ -57,54 +51,50 @@ const AccountSettings = () => {
         setConfirmNewPassword('');
         setIsPasswordChangeMode(false);
     };
+
     const handleProfilePictureChange = async (event) => {
         const file = event.target.files[0];
         if (file) {
-            // Create a URL for the file for preview
             const fileUrl = URL.createObjectURL(file);
             setProfilePicture(fileUrl);
 
-            // Prepare the image for upload
             const formData = new FormData();
             formData.append('profilePicture', file);
 
             try {
-                // Send the image to the server
                 const response = await axios.post('/api/uploadProfilePicture', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },
                 });
 
-                // Handle the response
                 console.log('Image uploaded successfully:', response.data);
-                // You might want to update the user's profile or state here
             } catch (error) {
                 console.error('Error uploading the image:', error);
             }
         }
     };
 
-    // Toggle notification preferences
-    const toggleNotification = (type) => {
-        setNotifications(prev => ({
-            ...prev,
-            [type]: !prev[type],
-        }));
+    const handleGoalChange = (selectedGoal) => {
+        setGoals(prevGoals => {
+            if (prevGoals.includes(selectedGoal)) {
+                return prevGoals.filter(goal => goal !== selectedGoal);
+            } else {
+                return [...prevGoals, selectedGoal];
+            }
+        });
     };
+
     const handleDeleteAccount = () => {
         if (window.confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
             deleteAccount();
         }
     };
 
-    // Function to make API call for account deletion
     const deleteAccount = async () => {
         try {
-            const response = await axios.delete('/api/deleteAccount'); // Replace with your API endpoint
+            const response = await axios.delete('/api/deleteAccount');
             console.log('Account deleted:', response.data);
-            // Redirect user or perform other actions post-deletion
-            // Example: window.location.href = '/goodbye'; 
         } catch (error) {
             console.error('Error deleting the account:', error);
         }
@@ -112,16 +102,15 @@ const AccountSettings = () => {
 
     return (
         <div className="account-settings">
-        <h1>Settings Page</h1>
-        <form onSubmit={isPasswordChangeMode ? handlePasswordChange : handleSubmit}>
-            <div className="user-info">
-                <img src={profilePicture} alt="User" className="user-picture" />
-                {isEditMode && (
-                    <input type="file" onChange={handleProfilePictureChange} accept="image/*" />
-                )}
-            </div>
+            <h1>Settings Page</h1>
+            <form onSubmit={isPasswordChangeMode ? handlePasswordChange : handleSubmit}>
+                <div className="user-info">
+                    <img src={profilePicture} alt="User" className="user-picture" />
+                    {isEditMode && (
+                        <input type="file" onChange={handleProfilePictureChange} accept="image/*" />
+                    )}
+                </div>
 
-                {/* User settings fields */}
                 <div className="setting">
                     {isEditMode ? (
                         <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
@@ -136,13 +125,7 @@ const AccountSettings = () => {
                         <span>{email}</span>
                     )}
                 </div>
-                <div className="setting">
-                    {isEditMode ? (
-                        <input type="text" value={goal} onChange={(e) => setGoal(e.target.value)} />
-                    ) : (
-                        <span>{goal}</span>
-                    )}
-                </div>
+              
                 <div className="setting">
                     {isEditMode ? (
                         <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} />
@@ -150,35 +133,25 @@ const AccountSettings = () => {
                         <span>{location}</span>
                     )}
                 </div>
-
-                {/* Notification Preferences - Only shown in edit mode */}
-                {isEditMode && (
-                    <div className="notification-settings">
-                        <h2>Notification Preferences</h2>
-                        <div className="setting" style={{ fontWeight: 'normal' }}>
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    checked={notifications.emailNotifications}
-                                    onChange={() => toggleNotification('emailNotifications')}
-                                />
-                                Email Notifications
-                            </label>
-                        </div>
-                        <div className="setting" style={{ fontWeight: 'normal' }}>
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    checked={notifications.appNotifications}
-                                    onChange={() => toggleNotification('appNotifications')}
-                                />
-                                App Notifications
-                            </label>
-                        </div>
-                    </div>
-                )}
-
-                {/* Password change fields */}
+                <div className="setting">
+                    {isEditMode ? (
+                        <>
+                            <label>Select Goals:</label>
+                            {['Goal 1', 'Goal 2', 'Goal 3'].map(goalOption => (
+                                <div key={goalOption}>
+                                    <input
+                                        type="checkbox"
+                                        checked={goals.includes(goalOption)}
+                                        onChange={() => handleGoalChange(goalOption)}
+                                    />
+                                    {goalOption}
+                                </div>
+                            ))}
+                        </>
+                    ) : (
+                        <span>{goals.join(', ')}</span>
+                    )}
+                </div>
                 {isPasswordChangeMode && (
                     <>
                         <div className="setting">
@@ -194,7 +167,6 @@ const AccountSettings = () => {
                     </>
                 )}
 
-                {/* Edit and Change Password Buttons */}
                 {!isPasswordChangeMode && (
                     <button type="button" onClick={handleEditToggle}>
                         {isEditMode ? 'Save Changes' : 'Edit'}
@@ -205,7 +177,7 @@ const AccountSettings = () => {
                         {isPasswordChangeMode ? 'Cancel' : 'Change Password'}
                     </button>
                 )}
-                 <button type="button" className="delete-account-button" onClick={handleDeleteAccount}>
+                <button type="button" className="delete-account-button" onClick={handleDeleteAccount}>
                     Delete Account
                 </button>
             </form>
