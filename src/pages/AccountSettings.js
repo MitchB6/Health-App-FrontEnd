@@ -92,6 +92,23 @@ const AccountSettings = () => {
             [type]: !prev[type],
         }));
     };
+    const handleDeleteAccount = () => {
+        if (window.confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+            deleteAccount();
+        }
+    };
+
+    // Function to make API call for account deletion
+    const deleteAccount = async () => {
+        try {
+            const response = await axios.delete('/api/deleteAccount'); // Replace with your API endpoint
+            console.log('Account deleted:', response.data);
+            // Redirect user or perform other actions post-deletion
+            // Example: window.location.href = '/goodbye'; 
+        } catch (error) {
+            console.error('Error deleting the account:', error);
+        }
+    };
 
     return (
         <div className="account-settings">
@@ -188,6 +205,9 @@ const AccountSettings = () => {
                         {isPasswordChangeMode ? 'Cancel' : 'Change Password'}
                     </button>
                 )}
+                 <button type="button" className="delete-account-button" onClick={handleDeleteAccount}>
+                    Delete Account
+                </button>
             </form>
         </div>
     );
