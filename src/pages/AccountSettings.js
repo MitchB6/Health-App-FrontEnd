@@ -1,57 +1,72 @@
 import React, { useState } from 'react';
-import axios from 'axios'; 
+import axios from 'axios';
 
 const AccountSettings = () => {
     // States for user information
     const [profilePicture, setProfilePicture] = useState('path_to_user_image.jpg');
     const [name, setName] = useState('User Name');
     const [email, setEmail] = useState('user@example.com');
-    const [goals, setGoals] = useState(['Your current goal']); // Changed to an array for multiple goals
+    const [phoneNumber, setPhoneNumber] = useState('(123) 456-7890');
+    const [goals, setGoals] = useState(['Your current goal']);
     const [location, setLocation] = useState('Your current location');
 
-    // State for edit mode toggle
-    const [isEditMode, setIsEditMode] = useState(false);
-
     // States for password change
-    const [isPasswordChangeMode, setIsPasswordChangeMode] = useState(false);
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
+
+    // State for edit and password change mode toggle
+    const [isEditMode, setIsEditMode] = useState(false);
+    const [isPasswordChangeMode, setIsPasswordChangeMode] = useState(false);
+
+    // State for user feedback
+    const [message, setMessage] = useState('');
 
     // Toggle edit mode
     const handleEditToggle = () => {
         setIsEditMode(!isEditMode);
         if (isPasswordChangeMode) setIsPasswordChangeMode(false);
+        setMessage('');
     };
 
     // Toggle password change mode
     const handlePasswordChangeMode = () => {
         setIsPasswordChangeMode(!isPasswordChangeMode);
         if (isEditMode) setIsEditMode(false);
+        setMessage('');
     };
 
-    // Submit user info
-    const handleSubmit = (event) => {
+    // Enhanced submit user info with basic validation
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log('Updated User Information:', { name, email, goals, location });
+        if (!email.includes('@')) {
+            setMessage('Please enter a valid email address.');
+            return;
+        }
+        if (phoneNumber && phoneNumber.length < 10) {
+            setMessage('Please enter a valid phone number.');
+            return;
+        }
+
+        // API call to update user information
+        try {
+            const response = await axios.post('/api/updateUserInfo', { name, email, goals, location, phoneNumber });
+            setMessage('User information updated successfully!');
+            console.log('Updated User Information:', response.data);
+        } catch (error) {
+            setMessage('Error updating user information.');
+            console.error('Error:', error);
+        }
+
         setIsEditMode(false);
     };
 
-    // Submit password change
-    const handlePasswordChange = (e) => {
-        e.preventDefault();
-        if (newPassword !== confirmNewPassword) {
-            alert("New passwords do not match!");
-            return;
-        }
-        console.log('Password Changed:', { currentPassword, newPassword });
-        alert("Password successfully changed!");
-        setCurrentPassword('');
-        setNewPassword('');
-        setConfirmNewPassword('');
-        setIsPasswordChangeMode(false);
+    // Handle phone number change
+    const handlePhoneNumberChange = (event) => {
+        setPhoneNumber(event.target.value);
     };
 
+    // Handle profile picture change
     const handleProfilePictureChange = async (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -75,6 +90,7 @@ const AccountSettings = () => {
         }
     };
 
+    // Handle goal change
     const handleGoalChange = (selectedGoal) => {
         setGoals(prevGoals => {
             if (prevGoals.includes(selectedGoal)) {
@@ -85,32 +101,46 @@ const AccountSettings = () => {
         });
     };
 
-    const handleDeleteAccount = () => {
-        if (window.confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
-            deleteAccount();
+    // Handle password change
+    const handlePasswordChange = (e) => {
+        e.preventDefault();
+        if (newPassword !== confirmNewPassword) {
+            setMessage("New passwords do not match!");
+            return;
         }
+        // Add logic to change password here
+        setMessage("Password successfully changed!");
+        setCurrentPassword('');
+        setNewPassword('');
+        setConfirmNewPassword('');
+        setIsPasswordChangeMode(false);
     };
 
-    const deleteAccount = async () => {
-        try {
-            const response = await axios.delete('/api/deleteAccount');
-            console.log('Account deleted:', response.data);
-        } catch (error) {
-            console.error('Error deleting the account:', error);
+    // Handle account deletion
+    const handleDeleteAccount = async () => {
+        if (window.confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+            try {
+                const response = await axios.delete('/api/deleteAccount');
+                console.log('Account deleted:', response.data);
+                // Redirect or perform further actions upon successful deletion
+            } catch (error) {
+                console.error('Error deleting the account:', error);
+            }
         }
     };
 
     return (
         <div className="account-settings">
             <h1>Settings Page</h1>
+            {message && <div className="feedback-message">{message}</div>}
             <form onSubmit={isPasswordChangeMode ? handlePasswordChange : handleSubmit}>
+                {/* User Profile Section */}
                 <div className="user-info">
                     <img src={profilePicture} alt="User" className="user-picture" />
                     {isEditMode && (
                         <input type="file" onChange={handleProfilePictureChange} accept="image/*" />
                     )}
                 </div>
-
                 <div className="setting">
                     {isEditMode ? (
                         <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
@@ -125,7 +155,13 @@ const AccountSettings = () => {
                         <span>{email}</span>
                     )}
                 </div>
-              
+                <div className="setting">
+                    {isEditMode ? (
+                        <input type="tel" value={phoneNumber} onChange={handlePhoneNumberChange} />
+                    ) : (
+                        <span>{phoneNumber}</span>
+                    )}
+                </div>
                 <div className="setting">
                     {isEditMode ? (
                         <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} />
@@ -133,25 +169,25 @@ const AccountSettings = () => {
                         <span>{location}</span>
                     )}
                 </div>
-                <div className="setting">
-                    {isEditMode ? (
-                        <>
-                            <label>Select Goals:</label>
-                            {['Goal 1', 'Goal 2', 'Goal 3'].map(goalOption => (
-                                <div key={goalOption}>
-                                    <input
-                                        type="checkbox"
-                                        checked={goals.includes(goalOption)}
-                                        onChange={() => handleGoalChange(goalOption)}
-                                    />
-                                    {goalOption}
-                                </div>
-                            ))}
-                        </>
-                    ) : (
-                        <span>{goals.join(', ')}</span>
-                    )}
-                </div>
+
+                {/* Goals Section */}
+                {isEditMode && (
+                    <div className="setting">
+                        <label>Select Goals:</label>
+                        {['Goal 1', 'Goal 2', 'Goal 3'].map(goalOption => (
+                            <div key={goalOption}>
+                                <input
+                                    type="checkbox"
+                                    checked={goals.includes(goalOption)}
+                                    onChange={() => handleGoalChange(goalOption)}
+                                />
+                                {goalOption}
+                            </div>
+                        ))}
+                    </div>
+                )}
+
+                {/* Password Change Section */}
                 {isPasswordChangeMode && (
                     <>
                         <div className="setting">
@@ -167,9 +203,10 @@ const AccountSettings = () => {
                     </>
                 )}
 
+                {/* Edit and Password Change Toggles */}
                 {!isPasswordChangeMode && (
                     <button type="button" onClick={handleEditToggle}>
-                        {isEditMode ? 'Save Changes' : 'Edit'}
+                        {isEditMode ? 'Save Changes' : 'Edit Profile'}
                     </button>
                 )}
                 {!isEditMode && (
@@ -177,6 +214,8 @@ const AccountSettings = () => {
                         {isPasswordChangeMode ? 'Cancel' : 'Change Password'}
                     </button>
                 )}
+
+                {/* Account Deletion Section */}
                 <button type="button" className="delete-account-button" onClick={handleDeleteAccount}>
                     Delete Account
                 </button>
