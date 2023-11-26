@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import AuthSwitcher from '../components/authSwitch.js';
 import './styling/auth.css';
+import axios from 'axios';
 
 const Signup = ({ onSwitch }) => {
   const [role, setRole] = useState('');
@@ -9,11 +10,30 @@ const Signup = ({ onSwitch }) => {
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
 
-  const handleSignup = () => {
+
+  const handleSignup = async () => {
     // Simulating a backend call with a timeout
-    setTimeout(() => {
+    setTimeout(async () => {
       console.log('Signup:', role, username, email, password, phoneNumber);
-      // Add actual backend call here for authentication
+      // Add actual backend call here for authentication 
+      try {
+        const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000'; // Default to localhost if env variable is not set
+        const response = await axios.post(`${apiUrl}/auth/signup`, {
+          role,
+          username,
+          email,
+          password,
+          phoneNumber
+        });
+        console.log(response);
+        if (response.status === 200) {
+          console.log("Signup successful");
+        } else {
+          console.log('Signup failed');
+        }
+      } catch (err) {
+        console.log(err);
+      }
     }, 1000);
   };
 
