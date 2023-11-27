@@ -11,12 +11,12 @@ const Login = ({ onSwitch }) => {
     event.preventDefault();
 
     const data = {
-      username: 'REPLACE THIS WITH EMAIL',
-      password: 'REPLACE THIS WITH PASSWORD'
+      username: username,
+      password: password
     };
     //error handling with try catch
     try {
-      const response = await api.post('/login', data)
+      const response = await api.post('/auth/login', data)
       
       if (response.ok) {
         const responseData = await response.json();

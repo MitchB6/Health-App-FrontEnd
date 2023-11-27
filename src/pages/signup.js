@@ -10,14 +10,13 @@ const Signup = ({ onSwitch }) => {
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
 
-
   const handleSignup = async () => {
     // Simulating a backend call with a timeout
     setTimeout(async () => {
       console.log('Signup:', role, username, email, password, phoneNumber);
       // Add actual backend call here for authentication 
       try {
-        const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000'; // Default to localhost if env variable is not set
+        const apiUrl = process.env.REACT_APP_API_URL;
         const response = await axios.post(`${apiUrl}/auth/signup`, {
           role,
           username,
@@ -28,6 +27,7 @@ const Signup = ({ onSwitch }) => {
         console.log(response);
         if (response.status === 200) {
           console.log("Signup successful");
+          console.log(response.data);
         } else {
           console.log('Signup failed');
         }
