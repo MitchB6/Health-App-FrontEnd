@@ -4,6 +4,7 @@ import Signup from './pages/signup.js';
 import Login from './pages/login.js';
 import AccountSettings from './pages/AccountSettings.js';
 import CoachesLookup from './pages/CoachesLookup.js'; // Import Coaches Look Up page
+import InitialSurvey from './pages/initialSurvey.js';
 
 
 function App() {
