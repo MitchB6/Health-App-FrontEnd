@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import AuthSwitcher from '../components/authSwitch.js';
 import api from '../api.js';
 import './styling/auth.css';
+import axios from 'axios';
 
 const Login = ({ onSwitch }) => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
 
@@ -56,8 +57,8 @@ const Login = ({ onSwitch }) => {
     <div className='login-container'>
       <h2>Login</h2>
       <label>
-        Username:
-        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+        E-Mail:
+        <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
       </label>
       <br />
       <label>
