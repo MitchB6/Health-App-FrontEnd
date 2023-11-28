@@ -22,6 +22,7 @@ function App() {
           <Route path="/account-settings" element={<AccountSettings />} />
           <Route path="/coaches-lookup" element={<CoachesLookup />} />
           <Route path="*" element={<Navigate to="/account-settings" replace />} />
+          <Route path="/initial-survey" element={<InitialSurvey />} />
         </Routes>
       </div>
     </Router>
