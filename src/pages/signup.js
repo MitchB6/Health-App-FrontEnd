@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import AuthSwitcher from '../components/authSwitch.js';
-import './styling/auth.css';
+import './pages-styling/auth.css';
 import axios from 'axios';
 
 const Signup = ({ onSwitch }) => {

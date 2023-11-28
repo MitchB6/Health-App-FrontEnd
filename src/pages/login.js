@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import AuthSwitcher from '../components/authSwitch.js';
 // import api from '../api.js';
-import './styling/auth.css';
+import './pages-styling/auth.css';
 import axios from 'axios';
 
 const Login = ({ onSwitch }) => {
