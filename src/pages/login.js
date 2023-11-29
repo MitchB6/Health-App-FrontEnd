@@ -5,40 +5,19 @@ import './styling/auth.css';
 import axios from 'axios';
 
 const Login = ({ onSwitch }) => {
+  const [role, setRole] = useState('0');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-
-  // async function handleLogin(event){
-  //   event.preventDefault();
-
-  //   const data = {
-  //     email: email,
-  //     password: password
-  //   };
-  //   //error handling with try catch
-  //   try {
-  //     const response = await api.post('/auth/login', data)
-      
-  //     if (response.ok) {
-  //       const responseData = await response.json();
-  //       //handle the response
-  //       console.log('Login success', responseData)
-  //     } else  {
-  //       console.error('Login unsuccessful:', response.status);
-  //     }
-  //   } catch (error){
-  //     console.error('Error during login', error);
-  //   }
-  // }
   const handleLogin = async () => {
     setTimeout(async () => {
       // console.log('Login:', email, password);
       try {
         const apiUrl = process.env.REACT_APP_API_URL;
         const response = await axios.post(`${apiUrl}/auth/login`, {
-          email,
-          password
+          role_id: role,
+          email: email,
+          password: password
         });
         console.log(response);
         if (response.status === 200) {
@@ -56,6 +35,14 @@ const Login = ({ onSwitch }) => {
   return (
     <div className='login-container'>
       <h2>Login</h2>
+      <label>
+        Role:
+        <select value={role} onChange={(e) => setRole(e.target.value)}>
+          <option value="0">Member</option>
+          <option value="1">Coach</option>
+          <option value="2">Admin</option>
+        </select>
+      </label>
       <label>
         E-Mail:
         <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />

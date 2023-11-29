@@ -25,7 +25,7 @@ const Signup = ({ onSwitch }) => {
           phone: phone
         });
         console.log(response);
-        if (response.status === 200) {
+        if (response.status === 201) {
           console.log("Signup successful");
           console.log(response.data);
         } else {
