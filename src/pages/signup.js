@@ -4,7 +4,7 @@ import './styling/auth.css';
 import axios from 'axios';
 
 const Signup = ({ onSwitch }) => {
-  const [role, setRole] = useState('0');
+  const [role, setRole] = useState(0);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');

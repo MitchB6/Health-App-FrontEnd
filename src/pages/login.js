@@ -5,7 +5,7 @@ import './styling/auth.css';
 import axios from 'axios';
 
 const Login = ({ onSwitch }) => {
-  const [role, setRole] = useState('0');
+  const [role, setRole] = useState(0);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
