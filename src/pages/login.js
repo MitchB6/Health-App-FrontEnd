@@ -11,7 +11,7 @@ const Login = ({ onSwitch }) => {
 
   const handleLogin = async () => {
     setTimeout(async () => {
-      // console.log('Login:', email, password);
+      console.log('Login:', role, email, password);
       try {
         const apiUrl = process.env.REACT_APP_API_URL;
         const response = await axios.post(`${apiUrl}/auth/login`, {
