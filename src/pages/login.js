@@ -3,11 +3,15 @@ import AuthSwitcher from '../components/authSwitch.js';
 // import api from '../api.js';
 import './styling/auth.css';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 
 const Login = ({ onSwitch }) => {
   const [role, setRole] = useState(0);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     setTimeout(async () => {
@@ -21,6 +25,8 @@ const Login = ({ onSwitch }) => {
         });
         console.log(response);
         if (response.status === 200) {
+          localStorage.setItem('accessToken', loginResponse.data.accessToken);
+          localStorage.setItem('refreshToken', loginResponse.data.refreshToken);
           console.log("Login successful");
           console.log(response.data);
         } else {
