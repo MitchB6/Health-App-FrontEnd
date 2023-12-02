@@ -1,0 +1,142 @@
+
+/* AccountSettings.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+body {
+    font-family: 'Your Font', sans-serif; /* Replace with your actual font */
+    background-color: #fff6ea; /* Adjust to match your design */
+    color: #333; /* Text color */
+}
+.account-settings {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: #fff6ea; /* light yellow background */
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    max-width: 800px;
+    margin: 40px auto;
+    background: white; /* front page white */
+}
+
+.account-settings h1 {
+    font-family: "Poppins", sans-serif;
+    color: #000; /* black color */
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+.account-settings h2 {
+    font-family: "Poppins", sans-serif;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.setting, .account-info {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.setting label, .account-info label {
+    font-family: "Poppins", sans-serif;
+    display: inline-block;
+    min-width: 150px;
+    color: #555;
+}
+
+.setting input, .setting select, .account-info input {
+    font-family: "Poppins", sans-serif;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: calc(100% - 160px);
+    margin-left: 10px;
+}
+
+.setting input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+
+
+.delete-account-button, .cancel-button, .change-password-button, .edit-profile-button, .save-changes-button {
+    font-family: 'Poppins', sans-serif;
+    background-color: red; /* updated color */
+    color: white; /* updated text color */
+    padding: 10px;
+    margin-top: 10px; /* add margin-top */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out; /* updated transition */
+}
+
+.delete-account-button:hover, .cancel-button:hover, .change-password-button:hover, .edit-profile-button:hover, .save-changes-button:hover {
+    transform: translateY(-5px); /* Move the button up on hover */
+}
+
+
+.change-password-button, .edit-profile-button, .save-changes-button {
+    font-family: 'Poppins', sans-serif;
+    background-color: transparent;
+    color: #000000; 
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: underline;
+}
+
+.edit-profile-button:hover, .change-password-button:hover {
+    background-color: #90ee90; /* Darker green on hover */
+}
+
+.feedback-message {
+    font-family: "Poppins", sans-serif;
+    color: #90ee90; /* green color for success messages */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+
+
+/* Styles for when the buttons are in a disabled state */
+.edit-profile-button:disabled, .change-password-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+.user-picture {
+    display: block;
+    max-width: 150px;
+    max-height: 150px;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+}
+
+.setting > img, .setting > div {
+    flex: 1;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .setting, .account-info {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .setting label, .account-info label {
+        min-width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .setting input, .setting select, .account-info input {
+        width: 100%;
+    }
+
+    .buttons {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+

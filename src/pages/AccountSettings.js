@@ -1,14 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './styling/AccountSettings.css';
 
 const AccountSettings = () => {
     // States for user information
     const [profilePicture, setProfilePicture] = useState('path_to_user_image.jpg');
     const [name, setName] = useState('User Name');
+    const [birthDate, setBirthDate] = useState('YYYY-MM-DD'); 
+    const [gender, setGender] = useState('Gender');
     const [email, setEmail] = useState('user@example.com');
     const [phoneNumber, setPhoneNumber] = useState('(123) 456-7890');
-    const [goals, setGoals] = useState(['Your current goal']);
-    const [location, setLocation] = useState('Your current location');
+    const [goals, setGoals] = useState(['']);
+    
+    // Separate state for city, state, and zipCode
+    const [city, setCity] = useState('City');
+    const [state, setState] = useState('State');
+    const [zipCode, setZipCode] = useState('12345');
 
     // States for password change
     const [currentPassword, setCurrentPassword] = useState('');
@@ -50,11 +57,16 @@ const AccountSettings = () => {
 
         // API call to update user information
         try {
-            const response = await axios.post('/api/updateUserInfo', { name, email, goals, location, phoneNumber });
+            const response = await axios.post('/api/updateUserInfo', {
+                name,
+                email,
+                phoneNumber,
+                location: { city, state, zipCode }, // Sending location as an object
+            });
             setMessage('User information updated successfully!');
             console.log('Updated User Information:', response.data);
         } catch (error) {
-            setMessage('Error updating user information.');
+            setMessage('');
             console.error('Error:', error);
         }
 
@@ -90,6 +102,21 @@ const AccountSettings = () => {
         }
     };
 
+    // Fetch user's selected goals when the component mounts
+    useEffect(() => {
+        const fetchGoals = async () => {
+            try {
+                const response = await axios.get('/api/getUserGoals');
+                setGoals(response.data.goals); // Assuming the response has a 'goals' field
+            } catch (error) {
+                console.error('Error fetching goals:', error);
+                // Handle error scenario
+            }
+        };
+
+        fetchGoals();
+    }, []);
+
     // Handle goal change
     const handleGoalChange = (selectedGoal) => {
         setGoals(prevGoals => {
@@ -115,6 +142,13 @@ const AccountSettings = () => {
         setConfirmNewPassword('');
         setIsPasswordChangeMode(false);
     };
+    const handleCancelEdit = () => {
+        
+        setIsEditMode(false);
+        setMessage('');
+    };
+
+   
 
     // Handle account deletion
     const handleDeleteAccount = async () => {
@@ -134,14 +168,17 @@ const AccountSettings = () => {
             <h1>Settings Page</h1>
             {message && <div className="feedback-message">{message}</div>}
             <form onSubmit={isPasswordChangeMode ? handlePasswordChange : handleSubmit}>
+                <h2>Basic Info</h2> 
                 {/* User Profile Section */}
-                <div className="user-info">
+                <div className="setting">
+                <label>Profile Picture</label>
                     <img src={profilePicture} alt="User" className="user-picture" />
                     {isEditMode && (
                         <input type="file" onChange={handleProfilePictureChange} accept="image/*" />
                     )}
                 </div>
                 <div className="setting">
+                <label>Name</label>
                     {isEditMode ? (
                         <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
                     ) : (
@@ -149,6 +186,32 @@ const AccountSettings = () => {
                     )}
                 </div>
                 <div className="setting">
+    <label>Birth Date</label>
+    {isEditMode ? (
+        <input
+            type="date"
+            value={birthDate}
+            onChange={(e) => setBirthDate(e.target.value)}
+        />
+    ) : (
+        <span>{birthDate}</span>
+    )}
+</div>
+
+<div className="setting">
+    <label>Gender</label>
+    {isEditMode ? (
+        <select value={gender} onChange={(e) => setGender(e.target.value)}>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+        </select>
+    ) : (
+        <span>{gender}</span>
+    )}
+</div>
+                <div className="setting">
+                <label>Email</label>
                     {isEditMode ? (
                         <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                     ) : (
@@ -156,6 +219,7 @@ const AccountSettings = () => {
                     )}
                 </div>
                 <div className="setting">
+                <label>Phone number:</label>
                     {isEditMode ? (
                         <input type="tel" value={phoneNumber} onChange={handlePhoneNumberChange} />
                     ) : (
@@ -163,62 +227,97 @@ const AccountSettings = () => {
                     )}
                 </div>
                 <div className="setting">
+                <label>Location</label>
                     {isEditMode ? (
-                        <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} />
+                        <>
+                        <div className="setting">
+                            <input type="text" placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} />
+                        </div>
+                        <div className="setting">
+                            <input type="text" placeholder="State" value={state} onChange={(e) => setState(e.target.value)} />
+                        </div>
+                        <div className="setting">
+                            <input type="text" placeholder="Zip Code" value={zipCode} onChange={(e) => setZipCode(e.target.value)} />
+                        </div>
+                    </>
                     ) : (
-                        <span>{location}</span>
+                        <span>{`${city}, ${state} ${zipCode}`}</span>
                     )}
                 </div>
 
                 {/* Goals Section */}
-                {isEditMode && (
-                    <div className="setting">
-                        <label>Select Goals:</label>
-                        {['Goal 1', 'Goal 2', 'Goal 3'].map(goalOption => (
-                            <div key={goalOption}>
-                                <input
-                                    type="checkbox"
-                                    checked={goals.includes(goalOption)}
-                                    onChange={() => handleGoalChange(goalOption)}
-                                />
-                                {goalOption}
-                            </div>
+            <div className="setting">
+                <label>Your Goals</label>
+                
+                {isEditMode ? (
+                    // When in edit mode, show checkboxes to select goals
+                    ['Goal 1', 'Goal 2', 'Goal 3'].map(goalOption => (
+                        <div key={goalOption}>
+                            <input
+                                type="checkbox"
+                                checked={goals.includes(goalOption)}
+                                onChange={() => handleGoalChange(goalOption)}
+                            />
+                            {goalOption}
+                        </div>
+                    ))
+                ) : (
+                    // When not in edit mode, simply display the selected goals
+                    <ul>
+                        {goals.map(goal => (
+                            <li key={goal}>{goal}</li>
                         ))}
-                    </div>
+                    </ul>
                 )}
-
-                {/* Password Change Section */}
-                {isPasswordChangeMode && (
-                    <>
-                        <div className="setting">
+            </div>
+            
+                
+                <h2>Account Info</h2>
+            <div className="account-info">
+                {/* Password Section */}
+                <div className="setting">
+                    <label>Password</label>
+                    <div className="info">
+                        {isPasswordChangeMode ? (
+                        <>
                             <input type="password" placeholder="Current Password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} />
-                        </div>
-                        <div className="setting">
                             <input type="password" placeholder="New Password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
-                        </div>
-                        <div className="setting">
                             <input type="password" placeholder="Confirm New Password" value={confirmNewPassword} onChange={(e) => setConfirmNewPassword(e.target.value)} />
-                        </div>
-                        <button type="submit">Save New Password</button>
-                    </>
-                )}
-
-                {/* Edit and Password Change Toggles */}
-                {!isPasswordChangeMode && (
-                    <button type="button" onClick={handleEditToggle}>
-                        {isEditMode ? 'Save Changes' : 'Edit Profile'}
-                    </button>
-                )}
-                {!isEditMode && (
-                    <button type="button" onClick={handlePasswordChangeMode}>
-                        {isPasswordChangeMode ? 'Cancel' : 'Change Password'}
-                    </button>
-                )}
-
-                {/* Account Deletion Section */}
-                <button type="button" className="delete-account-button" onClick={handleDeleteAccount}>
-                    Delete Account
-                </button>
+                        </>
+                    ) : (
+                        
+                        <span>********</span>
+                    )}</div>
+                </div>
+                
+            </div>
+            
+            
+              {/* Button Section */}
+              <div className="button-container">
+                    {isEditMode ? (
+                        <>
+                            <button type="button" className="save-changes-button"onClick={handleSubmit}>
+                                Save Changes
+                            </button>
+                            <button type="button" className="cancel-button"onClick={handleCancelEdit}>
+                                Cancel
+                            </button>
+                        </>
+                    ) : (
+                        <>
+                            <button type="button" className="edit-profile-button" onClick={handleEditToggle}>
+                                Edit Profile
+                            </button>
+                            <button type="button" className="change-password-button"  onClick={handlePasswordChangeMode}>
+                                Change Password
+                            </button>
+                            <button type="button" className="delete-account-button" onClick={handleDeleteAccount}>
+                                Delete Account
+                            </button>
+                        </>
+                    )}
+                </div>
             </form>
         </div>
     );
