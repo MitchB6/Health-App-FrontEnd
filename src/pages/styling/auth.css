@@ -12,6 +12,13 @@
   justify-content: center;
   height: 100vh; 
 }
+.survey-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* height: 100vh */
+}
 label {
   display: flex;
   flex-direction: column;
@@ -37,3 +44,4 @@ input, select {
 .submit-button:hover {
   transform: translateY(-5px); /* Move the button up on hover */
 }
+    

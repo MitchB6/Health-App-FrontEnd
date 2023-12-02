@@ -1,7 +1,7 @@
 // initial servey for everyone, another file will be directed to the coach if necessary
 import React, { useState } from 'react';
 import axios from 'axios';
-import './styling/survey.css';
+import './styling/auth.css';
 
 const InitialSurvey = () => {
   const [firstName, setFirstName] = useState('');
