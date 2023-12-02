@@ -1,6 +1,6 @@
 // initial servey for everyone, another file will be directed to the coach if necessary
 import React, { useState } from 'react';
-const axios = require('axios');
+import axios from 'axios';
 
 const InitialSurvey = () => {
   const [firstName, setFirstName] = useState('');
@@ -22,19 +22,52 @@ const InitialSurvey = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const birthday = `${month}/${day}/${year}`;
-    const height = heightFeet * 12 + heightInches;
+    const accessToken = localStorage.getItem('accessToken');
+    const refreshToken = localStorage.getItem('refreshToken');
+    if (!accessToken || !refreshToken) {
+      console.log('No access token or refresh token');
+      return;
+    }
+    const surveyData = {
+      first_name: firstName,
+      last_name: lastName,
+      city: city,
+      state: state,
+      zip_code: zip,
+      birthday: `${year}-${month}-${day}`,
+      height: heightFeet * 12 + heightInches,
+      weight: weight,
+      age: age,
+      gender: gender
+    }
+    try{
+      const apiUrl = process.env.REACT_APP_API_URL;
+      const response = await axios.post(`${apiUrl}/survey`, surveyData, {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        }
+      });
+      console.log(response);
+      if (response.status === 200) {
+        console.log("Survey successful");
+        console.log(response.data);
+      } else {
+        console.log('Survey failed');
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   const generateDropdown = (min, max) => {
     const options = [];
     if (min < max) {
       for (let i = min; i <= max; i++) {
-        options.push(<option value={i}>{i}</option>);
+        options.push(<option key={i} value={i}>{i}</option>);
       }
     }else{
       for (let i = min; i >= max; i--) {
-        options.push(<option value={i}>{i}</option>);
+        options.push(<option key={i} value={i}>{i}</option>);
       }
     }
     return options;
@@ -101,14 +134,14 @@ const InitialSurvey = () => {
         <br />
         <label>
           Weight (lbs):
-          <input type="text" value={weight} placeholder="Weight" onChange = {(e) => setWeight(e.target.value)} />
+          <input type="number" value={weight} placeholder="Weight" onChange = {(e) => setWeight(e.target.value)} />
         </label>
         <br />
         <label>
           Location:
           <input type="text" value={city} placeholder="City" onChange = {(e) => setCity(e.target.value)} />
           <input type="text" value={state} placeholder="State" onChange = {(e) => setState(e.target.value)} />
-          <input type="text" value={zip} placeholder="Zip" onChange = {(e) => setZip(e.target.value)} />
+          <input type="number" value={zip} placeholder="Zip" onChange = {(e) => setZip(e.target.value)} />
         </label>
         <br />
         <input type="submit" value="Submit" />
