@@ -25,8 +25,8 @@ const Login = ({ onSwitch }) => {
         });
         console.log(response);
         if (response.status === 200) {
-          localStorage.setItem('accessToken', loginResponse.data.accessToken);
-          localStorage.setItem('refreshToken', loginResponse.data.refreshToken);
+          localStorage.setItem('accessToken', response.data.accessToken);
+          localStorage.setItem('refreshToken', response.data.refreshToken);
           console.log("Login successful");
           console.log(response.data);
         } else {

@@ -1,6 +1,7 @@
 // initial servey for everyone, another file will be directed to the coach if necessary
 import React, { useState } from 'react';
 import axios from 'axios';
+import './styling/survey.css';
 
 const InitialSurvey = () => {
   const [firstName, setFirstName] = useState('');
@@ -73,7 +74,8 @@ const InitialSurvey = () => {
     return options;
   };
   return(
-    <div>
+    <div className='survey-container'>
+      <h2>Initial Survey</h2>
       <form onSubmit={handleSubmit}>
         <label>
           First Name:
@@ -144,7 +146,7 @@ const InitialSurvey = () => {
           <input type="number" value={zip} placeholder="Zip" onChange = {(e) => setZip(e.target.value)} />
         </label>
         <br />
-        <input type="submit" value="Submit" />
+        <input type="submit" value="Submit" className='submit-button' />
       </form>
     </div>
   )
