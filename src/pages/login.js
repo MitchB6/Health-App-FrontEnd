@@ -58,7 +58,7 @@ const Login = ({ onSwitch }) => {
     }, 1000);
   };
   return (
-    <body>
+    <div className='box-container'>
     <div className='auth-container'>
     <div className='login-container'>
       <h2>Login</h2>
@@ -80,7 +80,7 @@ const Login = ({ onSwitch }) => {
       <AuthSwitcher isLogin={true} onSwitch={onSwitch} />
     </div>
     </div>
-    </body>
+    </div>
   );
 };
 
