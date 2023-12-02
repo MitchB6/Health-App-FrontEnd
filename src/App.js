@@ -6,6 +6,7 @@ import Home from './pages/home.js';
 import AccountSettings from './pages/AccountSettings.js';
 import CoachesLookup from './pages/CoachesLookup.js'; // Import Coaches Look Up page
 import InitialSurvey from './pages/initialSurvey.js';
+import WeeklyWorkoutPlan from './pages/WeeklyWorkoutPlan.js'
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/weekly-workout-plan" element={<WeeklyWorkoutPlan />} />
           <Route path="/signup" element={<Signup onSwitch={handleSwitch} />} />
           <Route path="/login" element={<Login onSwitch={handleSwitch} />} />
           <Route path="/account-settings" element={<AccountSettings />} />

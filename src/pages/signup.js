@@ -37,40 +37,55 @@ const Signup = ({ onSwitch }) => {
     }, 1000);
   };
 
+
   return (
+    <body>
+    <div className='auth-container'>
     <div className='signup-container'>
       <h2>Sign Up</h2>
       <label>
         Role:
+        <div className='input-wrapper'>
         <select value={role} onChange={(e) => setRole(e.target.value)}>
           <option value="member">Member</option>
           <option value="coach">Coach</option>
         </select>
+        </div>
       </label>
       <br />
       <label>
         Username:
+        <div className='input-wrapper'>
         <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+        </div>
       </label>
       <br />
       <label>
         Email:
+        <div className='input-wrapper'>
         <input type ="text" value={email} onChange={(e) => setEmail(e.target.value)} />
+        </div>
       </label>
       <br />
       <label>
         Password:
+        <div className='input-wrapper'>
         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        </div>
       </label>
       <br />
       <label>
         Phone Number:
+        <div className='input-wrapper'>
         <input type ="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+        </div>
       </label>
       <br />
       <button onClick={handleSignup} className='submit-button'>Sign Up</button>
       <AuthSwitcher isLogin={false} onSwitch={onSwitch} />
     </div>
+    </div>
+    </body>
   );
 };
 

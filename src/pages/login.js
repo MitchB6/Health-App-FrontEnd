@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import AuthSwitcher from '../components/authSwitch.js';
 // import api from '../api.js';
-import './pages-styling/auth.css';
+import './pages-styling/auth.css'
 import axios from 'axios';
 
 const Login = ({ onSwitch }) => {
@@ -44,6 +44,11 @@ const Login = ({ onSwitch }) => {
         if (response.status === 200) {
           console.log("Login successful");
           console.log(response.data);
+
+          // saving login details as a token into local storage
+          const authToken = response.data.token;
+          localStorage.setItem('authToken', authToken);
+
         } else {
           console.log('Login failed');
         }
@@ -52,23 +57,30 @@ const Login = ({ onSwitch }) => {
       }
     }, 1000);
   };
-
   return (
+    <body>
+    <div className='auth-container'>
     <div className='login-container'>
       <h2>Login</h2>
       <label>
-        E-Mail:
-        <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
+        Username:
+        <div className='input-wrapper'>
+        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+        </div>
       </label>
       <br />
       <label>
         Password:
+        <div className='input-wrapper'>
         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        </div>
       </label>
       <br />
       <button onClick={handleLogin} className='submit-button'>Login</button>
       <AuthSwitcher isLogin={true} onSwitch={onSwitch} />
     </div>
+    </div>
+    </body>
   );
 };
 
