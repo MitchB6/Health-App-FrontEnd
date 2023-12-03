@@ -4,6 +4,8 @@ import Signup from './pages/signup.js';
 import Login from './pages/login.js';
 import AccountSettings from './pages/AccountSettings.js';
 import CoachesLookup from './pages/CoachesLookup.js'; // Import Coaches Look Up page
+import InitialSurvey from './pages/initialSurvey.js';
+
 
 
 function App() {
@@ -22,6 +24,7 @@ function App() {
           <Route path="/account-settings" element={<AccountSettings />} />
           <Route path="/coaches-lookup" element={<CoachesLookup />} />
           <Route path="*" element={<Navigate to="/account-settings" replace />} />
+          <Route path="/initial-survey" element={<InitialSurvey />} />
         </Routes>
       </div>
     </Router>
