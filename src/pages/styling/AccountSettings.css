@@ -58,35 +58,44 @@ body {
 
 
 
-.delete-account-button, .cancel-button, .change-password-button, .edit-profile-button, .save-changes-button {
+.delete-account-button, .cancel-button {
     font-family: 'Poppins', sans-serif;
-    background-color: red; /* updated color */
-    color: white; /* updated text color */
-    padding: 10px;
-    margin-top: 10px; /* add margin-top */
+    background-color: transparent;  
     border: none;
-    border-radius: 4px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    color: rgb(249, 50, 96);
     cursor: pointer;
-    transition: transform 0.3s ease-in-out; /* updated transition */
-}
+    &:hover {
+        background-color: rgb(249, 50, 96);;
+        color: white;
+    }
 
-.delete-account-button:hover, .cancel-button:hover, .change-password-button:hover, .edit-profile-button:hover, .save-changes-button:hover {
-    transform: translateY(-5px); /* Move the button up on hover */
+
+}
+.delete-account-button:hover {
+    background-color: #ef888f72; 
+    border-radius: 8px;
 }
 
 
 .change-password-button, .edit-profile-button, .save-changes-button {
-    font-family: 'Poppins', sans-serif;
-    background-color: transparent;
-    color: #000000; 
-    border: none;
-    padding: 10px 15px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    text-decoration: underline;
+    display: flex-end;
+    align-items: center;
+    justify-content: center;
+    margin-top: 100px;
+    padding: 8px 18px;
+    color:lightgreen;
+    border: 2px solid lightgreen;
+    background-color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.3s, color 0.3s;
+    &:hover {
+        background-color: lightgreen;
+        color: white;
+    }
 }
-
 .edit-profile-button:hover, .change-password-button:hover {
     background-color: #90ee90; /* Darker green on hover */
 }
@@ -139,4 +148,3 @@ body {
         align-items: flex-start;
     }
 }
-

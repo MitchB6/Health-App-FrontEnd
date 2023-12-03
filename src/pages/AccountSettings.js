@@ -294,30 +294,39 @@ const AccountSettings = () => {
             
             
               {/* Button Section */}
-              <div className="button-container">
-                    {isEditMode ? (
-                        <>
-                            <button type="button" className="save-changes-button"onClick={handleSubmit}>
-                                Save Changes
-                            </button>
-                            <button type="button" className="cancel-button"onClick={handleCancelEdit}>
-                                Cancel
-                            </button>
-                        </>
-                    ) : (
-                        <>
-                            <button type="button" className="edit-profile-button" onClick={handleEditToggle}>
-                                Edit Profile
-                            </button>
-                            <button type="button" className="change-password-button"  onClick={handlePasswordChangeMode}>
-                                Change Password
-                            </button>
-                            <button type="button" className="delete-account-button" onClick={handleDeleteAccount}>
-                                Delete Account
-                            </button>
-                        </>
-                    )}
-                </div>
+<div className="button-container">
+    {isPasswordChangeMode ? (
+        <>
+            <button type="submit" className="save-changes-button">
+                Save New Password
+            </button>
+            <button type="button" className="cancel-button" onClick={() => setIsPasswordChangeMode(false)}>
+                Cancel
+            </button>
+        </>
+    ) : isEditMode ? (
+        <>
+            <button type="button" className="save-changes-button" onClick={handleSubmit}>
+                Save Changes
+            </button>
+            <button type="button" className="cancel-button" onClick={handleCancelEdit}>
+                Cancel
+            </button>
+        </>
+    ) : (
+        <>
+            <button type="button" className="edit-profile-button" onClick={handleEditToggle}>
+                Edit Profile
+            </button>
+            <button type="button" className="change-password-button" onClick={handlePasswordChangeMode}>
+                Change Password
+            </button>
+            <button type="button" className="delete-account-button" onClick={handleDeleteAccount}>
+                Delete Account
+            </button>
+        </>
+    )}
+</div>
             </form>
         </div>
     );
