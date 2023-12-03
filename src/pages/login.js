@@ -13,20 +13,6 @@ const Login = ({ onSwitch }) => {
 
   const navigate = useNavigate();
 
-    const data = {
-      username: username,
-      password: password
-    };
-    //error handling with try catch
-    try {
-      const response = await api.post('/auth/login', data)
-      
-      if (response.ok) {
-        const responseData = await response.json();
-        //handle the response
-        console.log('Login success', responseData)
-      } else  {
-        console.error('Login unsuccessful:', response.status);
   const handleLogin = async () => {
     setTimeout(async () => {
       console.log('Login:', role, email, password);
