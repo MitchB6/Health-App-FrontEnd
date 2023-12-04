@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import mockCoaches from './mockCoachesData'; 
-import './styling/CoachesLookup.css';
+import './styling/CoachLookup.css';
+import Navbar from "../components/navbar.js";
 
 const CoachesLookup = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -21,32 +22,41 @@ const CoachesLookup = () => {
 
     setCoaches(filteredCoaches);
   };
+  const handleHireRequest = (coachId) => {
+    console.log(`Request sent to hire coach with ID: ${coachId}`);
+  };
 
   return (
-    <div className="coaches-lookup">
-      <div className="search-container"> {/* New wrapper div */}
-        <input 
-          className="search-input"
-          type="text" 
-          value={searchQuery} 
-          onChange={handleSearchChange} 
-          placeholder="Search by name, availability, location, goal, cost" 
-        />
-        <button className="search-button" onClick={handleSearchClick}>Search</button>
-      </div>
-
-      <div className="coaches-list">
-        {coaches.map((coach) => (
-          <div key={coach.id}>
-            <h3>{coach.name}</h3>
-            <p>Availability: {coach.availability}</p>
-            <p>Location: {coach.location}</p>
-            <p>Goal: {coach.goal}</p>
-            <p>Cost: ${coach.cost}/hr</p>
+    <div>
+       <Navbar />
+       <div className="coaches-lookup">
+       <h1>Coaches</h1>
+       
+          <div className="search-container">
+            <input 
+              className="search-input"
+              type="text" 
+              value={searchQuery} 
+              onChange={handleSearchChange} 
+              placeholder="Search by name, availability, location, goal, cost" 
+            />
+            <button className="search-button" onClick={handleSearchClick}>Search</button>
           </div>
-        ))}
-      </div>
-    </div>
+
+          <div className="coaches-list">
+            {coaches.map((coach) => (
+              <div key={coach.id}>
+                <h3>{coach.name}</h3>
+                <p>Availability: {coach.availability}</p>
+                <p>Location: {coach.location}</p>
+                <p>Goal: {coach.goal}</p>
+                <p>Cost: ${coach.cost}/hr</p>
+                <button className="request-button" onClick={() => handleHireRequest(coach.id)}>Hire</button>
+              </div>
+            ))}
+          </div>
+       </div>
+    </div> 
   );
 };
 

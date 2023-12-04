@@ -1,25 +1,23 @@
 
 /* AccountSettings.css */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
 body {
-    font-family: 'Your Font', sans-serif; /* Replace with your actual font */
-    background-color: #fff6ea; /* Adjust to match your design */
-    color: #333; /* Text color */
+    font-family: 'Your Font', sans-serif; 
+    background-color: #fff6ea; 
+    color: #333; 
 }
 .account-settings {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background-color: #fff6ea; /* light yellow background */
+    font-family: "Poppins", sans-serif;
     padding: 20px;
     border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     max-width: 800px;
     margin: 40px auto;
-    background: white; /* front page white */
+    
 }
-
 .account-settings h1 {
     font-family: "Poppins", sans-serif;
-    color: #000; /* black color */
+    color: #000; 
     text-align: left;
     margin-bottom: 30px;
 }
@@ -43,7 +41,7 @@ body {
     color: #555;
 }
 
-.setting input, .setting select, .account-info input {
+.setting input, .setting select, .account-info input{
     font-family: "Poppins", sans-serif;
     padding: 10px;
     border: 1px solid #ccc;
@@ -51,6 +49,7 @@ body {
     width: calc(100% - 160px);
     margin-left: 10px;
 }
+
 
 .setting input[type="checkbox"] {
     margin-right: 10px;
@@ -97,19 +96,16 @@ body {
     }
 }
 .edit-profile-button:hover, .change-password-button:hover {
-    background-color: #90ee90; /* Darker green on hover */
+    background-color: #90ee90; 
 }
 
 .feedback-message {
     font-family: "Poppins", sans-serif;
-    color: #90ee90; /* green color for success messages */
+    color: #90ee90; 
     text-align: center;
     margin-bottom: 20px;
 }
 
-
-
-/* Styles for when the buttons are in a disabled state */
 .edit-profile-button:disabled, .change-password-button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
@@ -125,6 +121,8 @@ body {
 .setting > img, .setting > div {
     flex: 1;
 }
+
+
 
 
 /* Responsive adjustments */
@@ -148,3 +146,4 @@ body {
         align-items: flex-start;
     }
 }
+

@@ -3,7 +3,9 @@
 .coaches-lookup {
     font-family: "Poppins", sans-serif;
     padding: 20px;
-    width: 600px;
+    border-radius: 5px;
+    max-width: 800px;
+    margin: 40px auto;
 }
 .search-container {
   display: flex;
@@ -12,10 +14,9 @@
 }
 
 .search-input {
-    padding: 8px;
-    margin-right: 8px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
+    padding: 9px;
+    border: none;
+    
 }
 
 .search-button {
@@ -24,7 +25,6 @@
   border: 2px solid lightgreen;
   background-color: white;
   text-decoration: none;
-  border-radius: 8px;
   transition: background-color 0.3s, color 0.3s;
   cursor: pointer; 
 
@@ -32,6 +32,23 @@
       background-color: lightgreen;
       color: white;
   }
+}
+.request-button {
+    display: flex-end;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 18px;
+    color:lightgreen;
+    border: 2px solid lightgreen;
+    background-color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.3s, color 0.3s;
+
+    &:hover {
+        background-color: lightgreen;
+        color: white;
+    }
 }
 
 .coaches-list {
