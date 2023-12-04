@@ -20,58 +20,49 @@
 }
 
 .login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh
+  }
+.signup-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  height: 100vh; 
 }
-
-.signup-container{
-  
+.survey-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  /* height: 100vh */
 }
-
 label {
-  width: 50%;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  margin-bottom: 5px;
-  text-align: left;
+  align-items: center;
+  margin-bottom: 15px;
 }
 
-.input-wrapper {
+input, select {
+  padding: 8px;
+  margin-top: 5px; 
   width: 100%;
-  box-sizing: border-box;
-}
-
-input,
-select {
-  line-height: 1;
-  padding: 6px;
-  margin-top: 5px;
-  width: 100%;
-  box-sizing: border-box;
 }
 
 .submit-button {
+  background-color: red;
+  color: white;
   padding: 10px;
   margin-top: 10px;
   cursor: pointer;
-  color:lightgreen;
-  border: 2px solid lightgreen;
-  background-color: white;
-  text-decoration: none;
-  box-sizing: border-box;
-  border-radius: 8px;
-  transition: background-color 0.3s, color 0.3s;
-
-  &:hover {
-      background-color: lightgreen;
-      color: white;
-  }
-  
+  transition: transform 0.3s ease-in-out; 
 }
+
+.submit-button:hover {
+  transform: translateY(-5px); /* Move the button up on hover */
+}
+    

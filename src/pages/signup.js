@@ -36,8 +36,10 @@ const Signup = ({ onSwitch }) => {
         });
         console.log(loginResponse);
         if (loginResponse.status === 200) {
-          localStorage.setItem('accessToken', loginResponse.data.accessToken);
-          localStorage.setItem('refreshToken', loginResponse.data.refreshToken);
+          console.log("Login successful");
+          console.log(loginResponse.data);
+          localStorage.setItem('accessToken', loginResponse.data['access token']);
+          localStorage.setItem('refreshToken', loginResponse.data['refresh token']);
           navigate('/initial-survey');
         }
       } else {

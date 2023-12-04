@@ -6,20 +6,20 @@ import './styling/auth.css';
 const InitialSurvey = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [gender, setGender] = useState('');
-  const [month, setMonth] = useState('');
-  const [day, setDay] = useState('');
-  const [year, setYear] = useState('');
-  const [age, setAge] = useState('');
+  const [gender, setGender] = useState('o');
+  const [month, setMonth] = useState(1);
+  const [day, setDay] = useState(1);
+  const [year, setYear] = useState(2021);
+  const [age, setAge] = useState(0);
   // const [birthday, setBirthday] = useState('');
   // const [height, setHeight] = useState('');
-  const [heightFeet, setHeightFeet] = useState('');
-  const [heightInches, setHeightInches] = useState('');
-  const [weight, setWeight] = useState('');
+  const [heightFeet, setHeightFeet] = useState(4);
+  const [heightInches, setHeightInches] = useState(0);
+  const [weight, setWeight] = useState(0);
   // const [goal, setGoal] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
-  const [zip, setZip] = useState('');
+  const [zip, setZip] = useState(10000);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -29,26 +29,29 @@ const InitialSurvey = () => {
       console.log('No access token or refresh token');
       return;
     }
+    const birthday = `${year}-${month}-${day}`;
     const surveyData = {
       first_name: firstName,
       last_name: lastName,
       city: city,
       state: state,
       zip_code: zip,
-      birthday: `${year}-${month}-${day}`,
-      height: heightFeet * 12 + heightInches,
+      birthdate: birthday,
+      height: (heightFeet * 12 + heightInches),
       weight: weight,
       age: age,
       gender: gender
     }
     try{
       const apiUrl = process.env.REACT_APP_API_URL;
-      const response = await axios.post(`${apiUrl}/survey`, surveyData, {
+      const response = await axios.put(`${apiUrl}/member/settings`, surveyData, {
         headers: {
           'Authorization': `Bearer ${accessToken}`
         }
       });
       console.log(response);
+      console.log(surveyData.zip_code)
+      console.log(surveyData.birthday)
       if (response.status === 200) {
         console.log("Survey successful");
         console.log(response.data);
