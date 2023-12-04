@@ -8,6 +8,7 @@ import CoachesLookup from './pages/CoachesLookup.js';
 import CoachPage from './pages/CoachPage.js'; 
 import { CoachProvider } from './pages/CoachContext.js'; 
 import ClientProfile from './pages/ClientProfile.js';
+import StatisticLogger from './pages/StatisticLogger.js'
 
 function App() {
   const [isLogin, setIsLogin] = useState(true);
@@ -25,6 +26,7 @@ function App() {
           <Route path="/signup" element={<Signup onSwitch={handleSwitch} />} />
           <Route path="/login" element={<Login onSwitch={handleSwitch} />} />
           <Route path="/account-settings" element={<AccountSettings />} />
+          <Route path="/statistic-logger" element={<StatisticLogger />} />
           <Route path="/coach" element={<CoachesLookup />} />
           <Route path="/coach-page" element={<CoachPage />} />
           <Route path="/client-profile/:clientId" element={<ClientProfile />} />

@@ -41,7 +41,7 @@ const CoachPage = () => {
                     <div key={request.id}>
                         <span>{request.name}</span>
                         <button onClick={() => acceptClientRequest(request.id)}>Accept</button>
-                        <button onClick={() => denyClientRequest(request.id)}>Deny</button>
+                        <button onClick={() => denyClientRequest(request.id)}>Decline</button>
                     </div>
                 ))}
             </div>
