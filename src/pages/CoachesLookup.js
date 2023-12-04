@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext }  from 'react';
 import mockCoaches from './mockCoachesData'; 
+import { CoachContext } from './CoachContext';
 import './styling/CoachLookup.css';
 import Navbar from "../components/navbar.js";
 
@@ -22,8 +23,10 @@ const CoachesLookup = () => {
 
     setCoaches(filteredCoaches);
   };
+  const { addPendingRequest } = useContext(CoachContext);
   const handleHireRequest = (coachId) => {
     console.log(`Request sent to hire coach with ID: ${coachId}`);
+    addPendingRequest({ id: coachId, name: 'User Name' }); 
   };
 
   return (
