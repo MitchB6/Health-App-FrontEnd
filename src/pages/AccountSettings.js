@@ -5,7 +5,7 @@ import Navbar from "../components/navbar.js";
 
 const AccountSettings = () => {
     // States for user information
-    const [profilePicture, setProfilePicture] = useState('path_to_user_image.jpg');
+
     const [name, setName] = useState('User Name');
     const [birthDate, setBirthDate] = useState('YYYY-MM-DD'); 
     const [gender, setGender] = useState('Gender');
@@ -79,29 +79,6 @@ const AccountSettings = () => {
         setPhoneNumber(event.target.value);
     };
 
-    // Handle profile picture change
-    const handleProfilePictureChange = async (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            const fileUrl = URL.createObjectURL(file);
-            setProfilePicture(fileUrl);
-
-            const formData = new FormData();
-            formData.append('profilePicture', file);
-
-            try {
-                const response = await axios.post('/api/uploadProfilePicture', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                    },
-                });
-
-                console.log('Image uploaded successfully:', response.data);
-            } catch (error) {
-                console.error('Error uploading the image:', error);
-            }
-        }
-    };
 
     // Fetch user's selected goals when the component mounts
     useEffect(() => {
@@ -191,14 +168,7 @@ const AccountSettings = () => {
             {message && <div className="feedback-message">{message}</div>}
             <form onSubmit={isPasswordChangeMode ? handlePasswordChange : handleSubmit}>
                 <h2>Basic Info</h2> 
-                {/* User Profile Section */}
-                <div className="setting">
-                <label>Profile Picture</label>
-                    <img src={profilePicture} alt="User" className="user-picture" />
-                    {isEditMode && (
-                        <input type="file" onChange={handleProfilePictureChange} accept="image/*" />
-                    )}
-                </div>
+                {/* User Section */}
                 <div className="setting">
                 <label>Name</label>
                     {isEditMode ? (

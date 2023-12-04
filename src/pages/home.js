@@ -1,7 +1,7 @@
  
 import Navbar from "../components/navbar.js";
 import "./styling/home.css";
-//import Image from "../assets/banner-art-1.png";
+import Image from "../assets/banner-art-1.png";
 import { NavLink } from "react-router-dom";
 //import WeeklyWorkoutPlan from './pages/WeeklyWorkoutPlan.js'
 
