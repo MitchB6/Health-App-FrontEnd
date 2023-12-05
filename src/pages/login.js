@@ -25,10 +25,13 @@ const Login = ({ onSwitch }) => {
         });
         console.log(response);
         if (response.status === 200) {
-          localStorage.setItem('accessToken', response.data.accessToken);
-          localStorage.setItem('refreshToken', response.data.refreshToken);
+          localStorage.setItem('accessToken', response.data['access token']);
+          localStorage.setItem('refreshToken', response.data['refresh token']);
           console.log("Login successful");
-          console.log(response.data);
+          // console.log(response.data);
+          if(role === '2'){
+            navigate('/admin');
+          }
         } else {
           console.log('Login failed');
         }
