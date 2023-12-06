@@ -184,10 +184,10 @@ const Admin = () => {
           'Authorization': `Bearer ${accessToken}`
         }
       });
-      console.log(response);
+      // console.log(response);
       if (response.status === 200) {
         console.log("Exercise activated");
-        console.log(response.data);
+        // console.log(response.data);
         alert(`Exercise ${exercise_id} activated`);
       } else {
         console.log('Exercise activation failed');
@@ -210,10 +210,10 @@ const Admin = () => {
           'Authorization': `Bearer ${accessToken}`
         }
       });
-      console.log(response);
+      // console.log(response);
       if (response.status === 200) {
         console.log("Exercise deactivated");
-        console.log(response.data);
+        // console.log(response.data);
         alert(`Exercise ${exercise_id} deactivated`);
       } else {
         console.log('Exercise deactivation failed');
