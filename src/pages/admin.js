@@ -24,7 +24,7 @@ const Admin = () => {
             'Authorization': `Bearer ${accessToken}`
           }
         });
-        console.log(response);
+        // console.log(response);
         if (response.status === 200) {
           console.log("Coaches retrieved");
           // console.log(response.data);
@@ -44,10 +44,10 @@ const Admin = () => {
             'Authorization': `Bearer ${accessToken}`
           }
         });
-        console.log(response);
+        // console.log(response);
         if (response.status === 200) {
           console.log("Exercises retrieved");
-          console.log(response.data);
+          // console.log(response.data);
           setExercises(response.data);
         } else {
           console.log('Exercises retrieval failed');
@@ -134,6 +134,94 @@ const Admin = () => {
   const handlePageClick = (event) => {
     setCurrentPage(event.selected + 1);
   }
+  const handleAddExercise = async () => {
+    const name = prompt("Exercise name:");
+    const description = prompt("Exercise description:");
+    const equipment = prompt("Exercise equipment:");
+    const muscle_group = prompt("Exercise muscle group:");
+    const newExercise = {
+      name: name,
+      description: description,
+      equipment: equipment,
+      muscle_group: muscle_group
+    };
+    try {
+      const apiUrl = process.env.REACT_APP_API_URL;
+      const accessToken = localStorage.getItem('accessToken');
+      const refreshToken = localStorage.getItem('refreshToken');
+      if (!accessToken || !refreshToken) {
+        console.log('No access token or refresh token');
+        return;
+      }
+      const response = await axios.post(`${apiUrl}/exercise/`, newExercise, {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        }
+      });
+      // console.log(response);
+      if (response.status === 201) {
+        console.log("Exercise added");
+        // console.log(response.data);
+        setExercises([...exercises, newExercise]);
+      } else {
+        console.log('Exercise addition failed');
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  const handleActivate = async (exercise_id) => {
+    try{
+      const apiUrl = process.env.REACT_APP_API_URL;
+      const accessToken = localStorage.getItem('accessToken');
+      const refreshToken = localStorage.getItem('refreshToken');
+      if (!accessToken || !refreshToken) {
+        console.log('No access token or refresh token');
+        return;
+      }
+      const response = await axios.put(`${apiUrl}/exercise/activate/${exercise_id}`, {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        }
+      });
+      console.log(response);
+      if (response.status === 200) {
+        console.log("Exercise activated");
+        console.log(response.data);
+        alert(`Exercise ${exercise_id} activated`);
+      } else {
+        console.log('Exercise activation failed');
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  const handleDeactivate = async (exercise_id) => {
+    try{
+      const apiUrl = process.env.REACT_APP_API_URL;
+      const accessToken = localStorage.getItem('accessToken');
+      const refreshToken = localStorage.getItem('refreshToken');
+      if (!accessToken || !refreshToken) {
+        console.log('No access token or refresh token');
+        return;
+      }
+      const response = await axios.put(`${apiUrl}/exercise/deactivate/${exercise_id}`, {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        }
+      });
+      console.log(response);
+      if (response.status === 200) {
+        console.log("Exercise deactivated");
+        console.log(response.data);
+        alert(`Exercise ${exercise_id} deactivated`);
+      } else {
+        console.log('Exercise deactivation failed');
+      }
+    }catch (err) {
+      console.log(err);
+    }
+  }
 
   return(
     <div>
@@ -182,6 +270,7 @@ const Admin = () => {
       {showExercises &&
       <div>
         <h2>Exercises</h2>
+        <p><button onClick={handleAddExercise}>Add Exercise</button></p>
         <table>
           <thead>
             <tr>
@@ -189,6 +278,7 @@ const Admin = () => {
               <th>Exercise Description</th>
               <th>Exercise Equipment</th>
               <th>Exercise Muscle Group</th>
+              <th>Activate/Deactivate</th>
             </tr>
           </thead>
           <tbody>
@@ -198,6 +288,10 @@ const Admin = () => {
                 <td>{exercise.description}</td>
                 <td>{exercise.equipment}</td>
                 <td>{exercise.muscle_group}</td>
+                <td>
+                  <button onClick={() => handleActivate(exercise.exercise_id)}>Activate</button>
+                  <button onClick={() => handleDeactivate(exercise.exercise_id)}>Deactivate</button>
+                  </td>
               </tr>
             ))}
           </tbody>
