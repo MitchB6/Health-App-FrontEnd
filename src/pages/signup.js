@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import AuthSwitcher from '../components/authSwitch.js';
-import './styling/auth.css';
+import './pages-styling/auth.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -50,40 +50,55 @@ const Signup = ({ onSwitch }) => {
     }
   };
 
+
   return (
+    <div className='box-container'>
+    <div className='auth-container'>
     <div className='signup-container'>
       <h2>Sign Up</h2>
       <label>
         Role:
+        <div className='input-wrapper'>
         <select value={role} onChange={(e) => setRole(e.target.value)}>
           <option value="0">Member</option>
           <option value="1">Coach</option>
           <option value="2">Admin</option>
         </select>
+        </div>
       </label>
       <br />
       <label>
         Username:
+        <div className='input-wrapper'>
         <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+        </div>
       </label>
       <br />
       <label>
         Email:
+        <div className='input-wrapper'>
         <input type ="text" value={email} onChange={(e) => setEmail(e.target.value)} />
+        </div>
       </label>
       <br />
       <label>
         Password:
+        <div className='input-wrapper'>
         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        </div>
       </label>
       <br />
       <label>
         Phone Number:
+        <div className='input-wrapper'>
         <input type ="text" value={phone} onChange={(e) => setPhone(e.target.value)} />
+        </div>
       </label>
       <br />
       <button onClick={handleSignup} className='submit-button'>Sign Up</button>
       <AuthSwitcher isLogin={false} onSwitch={onSwitch} />
+    </div>
+    </div>
     </div>
   );
 };
