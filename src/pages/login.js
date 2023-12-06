@@ -58,7 +58,7 @@ const Login = ({ onSwitch }) => {
       <label>
         E-mail:
         <div className='input-wrapper'>
-        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+        <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
       </label>
       <br />
