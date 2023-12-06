@@ -14,15 +14,15 @@
   padding: 0.5rem 0.75rem;
   margin-left: -1px;
   border: 1px solid #dee2e6;
-  color: #007bff;
+  color: #FF0000;
   background-color: #fff;
   cursor: pointer;
 }
 
 .active .page-link {
   color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: #FF0000;
+  border-color: #FF0000;
 }
 
 .disabled .page-link {

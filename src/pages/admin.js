@@ -194,10 +194,10 @@ const Admin = () => {
           <tbody>
             {currentExercises.map((exercise) => (
               <tr key={exercise.exercise_id}>
-                <td>{exercise.exercise_name}</td>
-                <td>{exercise.exercise_description}</td>
-                <td>{exercise.exercise_equipment}</td>
-                <td>{exercise.exercise_muscle_group}</td>
+                <td>{exercise.name}</td>
+                <td>{exercise.description}</td>
+                <td>{exercise.equipment}</td>
+                <td>{exercise.muscle_group}</td>
               </tr>
             ))}
           </tbody>
