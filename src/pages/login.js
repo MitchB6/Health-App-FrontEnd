@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import AuthSwitcher from '../components/authSwitch.js';
 // import api from '../api.js';
-import './styling/auth.css';
+import './pages-styling/auth.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -40,30 +40,39 @@ const Login = ({ onSwitch }) => {
       }
     }, 1000);
   };
-
   return (
+    <div className='box-container'>
+    <div className='auth-container'>
     <div className='login-container'>
       <h2>Login</h2>
       <label>
         Role:
+        <div className='input-wrapper'>
         <select value={role} onChange={(e) => setRole(e.target.value)}>
           <option value="0">Member</option>
           <option value="1">Coach</option>
           <option value="2">Admin</option>
         </select>
+        </div>
       </label>
       <label>
-        E-Mail:
-        <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
+        E-mail:
+        <div className='input-wrapper'>
+        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+        </div>
       </label>
       <br />
       <label>
         Password:
+        <div className='input-wrapper'>
         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        </div>
       </label>
       <br />
       <button onClick={handleLogin} className='submit-button'>Login</button>
       <AuthSwitcher isLogin={true} onSwitch={onSwitch} />
+    </div>
+    </div>
     </div>
   );
 };
