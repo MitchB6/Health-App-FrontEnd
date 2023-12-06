@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Signup from './pages/signup.js';
 import Login from './pages/login.js';
-import Home from './pages/home.js';
+import Home from './pages/home.js'; 
 import AccountSettings from './pages/AccountSettings.js';
-import CoachesLookup from './pages/CoachesLookup.js'; // Import Coaches Look Up page
+import CoachesLookup from './pages/CoachesLookup.js'; 
+import CoachPage from './pages/CoachPage.js'; 
+import { CoachProvider } from './pages/CoachContext.js'; 
+import ClientProfile from './pages/ClientProfile.js';
+import StatisticLogger from './pages/StatisticLogger.js';
+import Admin from './pages/admin.js';
 import InitialSurvey from './pages/initialSurvey.js';
 import WeeklyWorkoutPlan from './pages/WeeklyWorkoutPlan.js';
 import WorkoutNotebook from './pages/WorkoutNotebook.js';
@@ -20,6 +25,7 @@ function App() {
 
   return (
     <Router>
+      <CoachProvider>
       <div className="App">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -29,11 +35,15 @@ function App() {
           <Route path="/signup" element={<Signup onSwitch={handleSwitch} />} />
           <Route path="/login" element={<Login onSwitch={handleSwitch} />} />
           <Route path="/account-settings" element={<AccountSettings />} />
-          <Route path="/coaches-lookup" element={<CoachesLookup />} />
-          <Route path="*" element={<Navigate to="/account-settings" replace />} />
+          <Route path="/statistic-logger" element={<StatisticLogger />} />
+          <Route path="/coach" element={<CoachesLookup />} />
+          <Route path="/coach-page" element={<CoachPage />} />
+          <Route path="/client-profile/:clientId" element={<ClientProfile />} />
           <Route path="/initial-survey" element={<InitialSurvey />} />
+          <Route path="/admin" element={<Admin />} />
         </Routes>
       </div>
+      </CoachProvider>
     </Router>
   );
 }

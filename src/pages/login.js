@@ -3,52 +3,35 @@ import AuthSwitcher from '../components/authSwitch.js';
 // import api from '../api.js';
 import './pages-styling/auth.css'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 
 const Login = ({ onSwitch }) => {
+  const [role, setRole] = useState(0);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const navigate = useNavigate();
 
-  // async function handleLogin(event){
-  //   event.preventDefault();
-
-  //   const data = {
-  //     email: email,
-  //     password: password
-  //   };
-  //   //error handling with try catch
-  //   try {
-  //     const response = await api.post('/auth/login', data)
-      
-  //     if (response.ok) {
-  //       const responseData = await response.json();
-  //       //handle the response
-  //       console.log('Login success', responseData)
-  //     } else  {
-  //       console.error('Login unsuccessful:', response.status);
-  //     }
-  //   } catch (error){
-  //     console.error('Error during login', error);
-  //   }
-  // }
   const handleLogin = async () => {
     setTimeout(async () => {
-      // console.log('Login:', email, password);
+      console.log('Login:', role, email, password);
       try {
         const apiUrl = process.env.REACT_APP_API_URL;
         const response = await axios.post(`${apiUrl}/auth/login`, {
-          email,
-          password
+          role_id: role,
+          email: email,
+          password: password
         });
         console.log(response);
         if (response.status === 200) {
+          localStorage.setItem('accessToken', response.data['access token']);
+          localStorage.setItem('refreshToken', response.data['refresh token']);
           console.log("Login successful");
-          console.log(response.data);
-
-          // saving login details as a token into local storage
-          const authToken = response.data.token;
-          localStorage.setItem('authToken', authToken);
-
+          // console.log(response.data);
+          if(role === '2'){
+            navigate('/admin');
+          }
         } else {
           console.log('Login failed');
         }
@@ -63,7 +46,17 @@ const Login = ({ onSwitch }) => {
     <div className='login-container'>
       <h2>Login</h2>
       <label>
-        Username:
+        Role:
+        <div className='input-wrapper'>
+        <select value={role} onChange={(e) => setRole(e.target.value)}>
+          <option value="0">Member</option>
+          <option value="1">Coach</option>
+          <option value="2">Admin</option>
+        </select>
+        </div>
+      </label>
+      <label>
+        E-mail:
         <div className='input-wrapper'>
         <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
         </div>
