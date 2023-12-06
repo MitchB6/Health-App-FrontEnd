@@ -179,7 +179,7 @@ const Admin = () => {
         console.log('No access token or refresh token');
         return;
       }
-      const response = await axios.put(`${apiUrl}/exercise/activate/${exercise_id}/`, {
+      const response = await axios.put(`${apiUrl}/exercise/activate/${exercise_id}`, {}, {
         headers: {
           'Authorization': `Bearer ${accessToken}`
         }
@@ -205,7 +205,7 @@ const Admin = () => {
         console.log('No access token or refresh token');
         return;
       }
-      const response = await axios.put(`${apiUrl}/exercise/deactivate/${exercise_id}`, {
+      const response = await axios.put(`${apiUrl}/exercise/deactivate/${exercise_id}`, {}, {
         headers: {
           'Authorization': `Bearer ${accessToken}`
         }
