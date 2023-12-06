@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import ReactPaginate from 'react-paginate';
+import './styling/admin.css';
 
 const Admin = () => {
   const [showCoaches, setShowCoaches] = useState(false);
@@ -45,7 +47,7 @@ const Admin = () => {
         console.log(response);
         if (response.status === 200) {
           console.log("Exercises retrieved");
-          // console.log(response.data);
+          console.log(response.data);
           setExercises(response.data);
         } else {
           console.log('Exercises retrieval failed');
@@ -121,6 +123,17 @@ const Admin = () => {
       console.log('Coach denial failed');
     }
   }
+  const [currentPage, setCurrentPage] = useState(1);
+  const exercisesPerPage = 20;
+
+  const indexOfLastExercise = currentPage * exercisesPerPage;
+  const indexOfFirstExercise = indexOfLastExercise - exercisesPerPage;
+  const currentExercises = exercises.slice(indexOfFirstExercise, indexOfLastExercise);
+  const pageCount = Math.ceil(exercises.length / exercisesPerPage);
+
+  const handlePageClick = (event) => {
+    setCurrentPage(event.selected + 1);
+  }
 
   return(
     <div>
@@ -135,6 +148,8 @@ const Admin = () => {
             <tr>
               <th>Coach ID</th>
               <th>Member ID</th>
+              <th>First Name</th>
+              <th>Last Name</th>
               <th>Specialization</th>
               <th>Price</th>
               <th>Location</th>
@@ -148,12 +163,13 @@ const Admin = () => {
               <tr key={coach.coach_id}>
                 <td>{coach.coach_id}</td>
                 <td>{coach.member_id}</td>
+                <td>{coach.first_name}</td>
+                <td>{coach.last_name}</td>
                 <td>{coach.specialization}</td>
                 <td>{coach.price}</td>
                 <td>{coach.location}</td>
                 <td>{coach.schedule_general}</td>
                 <td>{coach.qualifications}</td>
-                {/* <td>{coach.approved}</td> */}
                 <td>
                   <button onClick={() => handleApprove(coach.coach_id)}>Accept</button>
                   <button onClick={() => handleDeny(coach.coach_id)}>Deny</button>
@@ -166,6 +182,45 @@ const Admin = () => {
       {showExercises &&
       <div>
         <h2>Exercises</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Exercise Name</th>
+              <th>Exercise Description</th>
+              <th>Exercise Equipment</th>
+              <th>Exercise Muscle Group</th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentExercises.map((exercise) => (
+              <tr key={exercise.exercise_id}>
+                <td>{exercise.exercise_name}</td>
+                <td>{exercise.exercise_description}</td>
+                <td>{exercise.exercise_equipment}</td>
+                <td>{exercise.exercise_muscle_group}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <ReactPaginate
+            previousLabel={"<"}
+            nextLabel={">"}
+            breakLabel={"..."}
+            pageCount={pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={handlePageClick}
+            containerClassName={"pagination"}
+            activeClassName={"active"}
+            pageLinkClassName={"page-link"}
+            pageClassName={"page-item"}
+            previousClassName={"page-item"}
+            nextClassName={"page-item"}
+            previousLinkClassName={"page-link"}
+            nextLinkClassName={"page-link"}
+            breakClassName={"page-item"}
+            breakLinkClassName={"page-link"}
+          />
       </div>}
     </div>
   )
