@@ -10,6 +10,7 @@ import { CoachProvider } from './pages/CoachContext.js';
 import ClientProfile from './pages/ClientProfile.js';
 import StatisticLogger from './pages/StatisticLogger.js';
 import Admin from './pages/admin.js';
+import InitialSurvey from './pages/initialSurvey.js'
 
 
 function App() {
