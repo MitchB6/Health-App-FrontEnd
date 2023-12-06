@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
+import Card from "../components/Card.js";
 import Navbar from "../components/navbar";
 
 
-const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
 const WeeklyWorkoutPlan = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [cards, setCards] = useState([]);
     const [currentWeek, setCurrentWeek] = useState(new Date());
-    const [showForm, setShowForm] = useState({});
     const [workoutData, setWorkoutData] = useState({});
     const [isEditing, setIsEditing] = useState(false);
     const [editableDay, setEditableDay] = useState(null);
@@ -16,6 +16,16 @@ const WeeklyWorkoutPlan = () => {
         const authToken = localStorage.getItem('authToken');
         setIsLoggedIn(!!authToken);
     }, []);
+
+    const daysOfWeekCards = [
+        {title: 'Monday'},
+        {title: 'Tuesday'},
+        {title: 'Wednesday'},
+        {title: 'Thursday'},
+        {title: 'Friday'},
+        {title: 'Saturday'},
+        {title: 'Sunday'},
+    ];
 
     const handleNextWeek = () => {
         const nextWeek = new Date(currentWeek);
@@ -60,26 +70,21 @@ const WeeklyWorkoutPlan = () => {
     */
 
     return (
-        <div className="weekly-workout-plan">
+        <div className="weekly-workout-plan-container">
             <Navbar />
-            <div className="header">
-                <div className="previous-week" onClick={handlePrevWeek}>←</div>
-                <h2>{`Week of ${currentWeek.toDateString()}`}</h2>
-                <div className="next-week" onClick={handleNextWeek}>→</div>
+            <div className="weekly-workout-plan">
+                <h2 className="wwp-title">Weekly Workout Plans</h2>
+                <button className="previous-week-button" onClick={handlePrevWeek}>←</button>
+                <h3>{`Week of ${currentWeek.toDateString()}`}</h3>
+                <button className="next-week-button" onClick={handleNextWeek}>→</button>
             </div>
             <div className="day-cards">
-                {daysOfWeek.map(day, index => (
-                    <div key={day} className="day-card">
-                        <h3>{day}</h3>
-                        <form>
-                            <label>
-                                Exercise: 
-                                <input type="text" name="exercise" value={workoutData[day]?.exercise || ''} onChange={(e) => handleInputChange(day, e)} />
-                            </label>
-                        </form>
-                    </div>
+                {daysOfWeekCards.map((cardData, index) => (
+                    <Card key={index} cardData={cardData} onChange={(e) => handleInputChange(cardData, e)} />
                 ))}
-
+                {cards.map((cardData, index) => (
+                    <Card key={index} cardData={cardData} onChange={(e) => handleInputChange(cardData, e)} />
+                ))}
             </div>
         </div>
     );
