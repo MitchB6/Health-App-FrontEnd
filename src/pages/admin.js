@@ -37,7 +37,7 @@ const Admin = () => {
     const getExercises = async () => {
       try {
         const apiUrl = process.env.REACT_APP_API_URL;
-        const response = await axios.get(`${apiUrl}/exercise`, {
+        const response = await axios.get(`${apiUrl}/exercise/`, {
           headers: {
             'Authorization': `Bearer ${accessToken}`
           }
@@ -66,6 +66,11 @@ const Admin = () => {
     setShowExercises(true);
     if (showCoaches) setShowCoaches(false);
   }
+  const updateCoachStatus = (coach_id, status) => {
+    setCoaches(prevCoaches => prevCoaches.filter(coach => coach.coach_id !== coach_id));
+    const action = status ? "approved" : "denied";
+    alert(`Coach ${coach_id} ${action}`);
+  };
   const handleApprove = async (coach_id) => {
     const accessToken = localStorage.getItem('accessToken');
     const refreshToken = localStorage.getItem('refreshToken');
@@ -85,6 +90,7 @@ const Admin = () => {
     // console.log(response);
     if (response.status === 200) {
       console.log("Coach approved");
+      updateCoachStatus(coach_id, true);
       // console.log(response.data);
     } else {
       console.log('Coach approval failed');
@@ -109,6 +115,7 @@ const Admin = () => {
     console.log(response);
     if (response.status === 200) {
       console.log("Coach denied");
+      updateCoachStatus(coach_id, false);
       // console.log(response.data);
     } else {
       console.log('Coach denial failed');
