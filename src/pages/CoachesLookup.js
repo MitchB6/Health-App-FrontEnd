@@ -55,15 +55,18 @@ const CoachesLookup = () => {
   };
 
   const handleSearchClick = () => {
+    console.log(coaches)
     const tempFilteredCoaches = coaches.filter(coach =>
-      coach.name.toLowerCase().includes(searchQuery) ||
-      coach.availability.toLowerCase().includes(searchQuery) ||
-      coach.location.toLowerCase().includes(searchQuery) ||
-      coach.goal.toLowerCase().includes(searchQuery) ||
-      coach.cost.toString().toLowerCase().includes(searchQuery)
+      coach.first_name?.toLowerCase().includes(searchQuery) ||
+      coach.last_name?.toLowerCase().includes(searchQuery) ||
+      coach.schedule_general?.toLowerCase().includes(searchQuery) ||
+      coach.location?.toLowerCase().includes(searchQuery) ||
+      coach.qualifications?.toLowerCase().includes(searchQuery) ||
+      coach.price?.toString().toLowerCase().includes(searchQuery)
     );
 
     setFilteredCoaches(tempFilteredCoaches);
+    console.log("Coaches filtered")
   };
   const handleHireRequest = async (coach_id) => {
     const accessToken = localStorage.getItem('accessToken');
@@ -82,7 +85,7 @@ const CoachesLookup = () => {
           'Authorization': `Bearer ${accessToken}`
         }
       });
-      console.log(response);
+      // console.log(response);
       if (response.status === 201) {
         console.log("Hire request successful");
         // console.log(response.data);
