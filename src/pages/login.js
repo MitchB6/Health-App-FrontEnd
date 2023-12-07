@@ -31,6 +31,8 @@ const Login = ({ onSwitch }) => {
           // console.log(response.data);
           if(role === '2'){
             navigate('/admin');
+          }else{
+            navigate('/workout-notebook');
           }
         } else {
           console.log('Login failed');
