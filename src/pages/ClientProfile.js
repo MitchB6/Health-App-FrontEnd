@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { clients } from "./mockClientData.js"
 import Navbar from "../components/navbar.js";
+import './styling/ClientProfile.css';
 
 const ClientProfile = () => {
     const { clientId } = useParams();
     const [client, setClient] = useState(null);
 
     useEffect(() => {
-        // Mock function to simulate fetching data
         const fetchClientData = async (id) => {
-            // Replace this with actual data fetching logic
-            return {
-                id: id,
-                name: "John Doe",
-                email: "johndoe@example.com",
-                // other client details
-            };
+            const clientData = clients.find(client => client.id.toString() === id);
+            return clientData;
         };
 
         fetchClientData(clientId)
@@ -28,19 +24,22 @@ const ClientProfile = () => {
     }
 
     const handleAssignWorkout = () => {
-        // Logic to assign a workout
     };
+  
 
     return (
         <div>
         <Navbar />
-        <div>
+        <div className="client-profile">
             <h2>{client.name}'s Profile</h2>
-            {/* Display client information */}
             <p>Email: {client.email}</p>
-            {/* Other details */}
+            <p>Phone: {client.phone}</p>
+            <p>Age: {client.age}</p>
+            <p>Gender: {client.gender}</p>
+            <p>Location: {client.location}</p>
+            <p>Workout Log: {client.workoutLog}</p>
             
-            <button onClick={handleAssignWorkout}>Assign Workout</button>
+            <button className="client-profile-button" onClick={handleAssignWorkout}>Assign Workout</button>
         </div>
         </div>
     );

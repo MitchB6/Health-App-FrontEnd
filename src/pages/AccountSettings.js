@@ -12,6 +12,7 @@ const AccountSettings = () => {
     const [email, setEmail] = useState('user@example.com');
     const [phoneNumber, setPhoneNumber] = useState('(123) 456-7890');
     const [goals, setGoals] = useState(['']);
+
     
     // Separate state for city, state, and zipCode
     const [city, setCity] = useState('City');
@@ -85,10 +86,9 @@ const AccountSettings = () => {
         const fetchGoals = async () => {
             try {
                 const response = await axios.get('/api/getUserGoals');
-                setGoals(response.data.goals); // Assuming the response has a 'goals' field
+                setGoals(response.data.goals || []); // Ensuring goals is always an array
             } catch (error) {
                 console.error('Error fetching goals:', error);
-                // Handle error scenario
             }
         };
 
@@ -237,24 +237,24 @@ const AccountSettings = () => {
                 {/* Goals Section */}
                 <div className="setting">
                     <label>Your Goals</label>
-                     {isEditMode ? (
+                    {isEditMode ? (
                         ['Goal 1', 'Goal 2', 'Goal 3'].map(goalOption => (
-                        <div key={goalOption}>
-                            <input
-                            type="checkbox"
-                            checked={goals.includes(goalOption)}
-                            onChange={() => handleGoalChange(goalOption)}
-                            />
-                            {goalOption}
-                        </div>
-                        ))
-                        ) : (
+                             <div key={goalOption}>
+                                <input
+                                 type="checkbox"
+                                 checked={goals.includes(goalOption)}
+                                 onChange={() => handleGoalChange(goalOption)}
+                                 />
+                                 {goalOption}
+                            </div>
+                             ))
+                             ) : (
                              <ul>
                                 {goals.map(goal => (
                                     <li key={goal}>{goal}</li>
-                                    ))}
-                            </ul>
-                            )} 
+                                     ))}
+                                      </ul>
+                                      )}
                         </div>
                         <h2>Account Info</h2>
                          <div className="account-info">
