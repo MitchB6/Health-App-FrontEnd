@@ -15,7 +15,7 @@ const Login = ({ onSwitch }) => {
 
   const handleLogin = async () => {
     setTimeout(async () => {
-      console.log('Login:', role, email, password);
+      // console.log('Login:', role, email, password);
       try {
         const apiUrl = process.env.REACT_APP_API_URL;
         const response = await axios.post(`${apiUrl}/auth/login`, {
@@ -23,7 +23,7 @@ const Login = ({ onSwitch }) => {
           email: email,
           password: password
         });
-        console.log(response);
+        // console.log(response);
         if (response.status === 200) {
           localStorage.setItem('accessToken', response.data['access token']);
           localStorage.setItem('refreshToken', response.data['refresh token']);
@@ -31,6 +31,8 @@ const Login = ({ onSwitch }) => {
           // console.log(response.data);
           if(role === '2'){
             navigate('/admin');
+          }else{
+            navigate('/workout-notebook');
           }
         } else {
           console.log('Login failed');
@@ -58,7 +60,7 @@ const Login = ({ onSwitch }) => {
       <label>
         E-mail:
         <div className='input-wrapper'>
-        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+        <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
       </label>
       <br />

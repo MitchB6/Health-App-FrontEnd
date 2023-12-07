@@ -1,33 +1,100 @@
-import React, { useState, useContext }  from 'react';
-import mockCoaches from './mockCoachesData'; 
+import React, { useState, useContext, useEffect }  from 'react';
+// import mockCoaches from './mockCoachesData'; 
 import { CoachContext } from './CoachContext';
 import './styling/CoachLookup.css';
 import Navbar from "../components/navbar.js";
+import axios from 'axios';
+import { jwtDecode } from "jwt-decode";
 
 const CoachesLookup = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [coaches, setCoaches] = useState(mockCoaches); 
+  const [coaches, setCoaches] = useState([]); 
+  const [filteredCoaches, setFilteredCoaches] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [member_id, setMember_id] = useState(0);
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+    const refreshToken = localStorage.getItem('refreshToken');
+    if (!accessToken || !refreshToken) {
+      console.log('No access token or refresh token');
+      return;
+    }
+    setMember_id(jwtDecode(accessToken).sub);
+    const getCoaches = async () => {
+      setIsLoading(true);
+      try {
+        const apiUrl = process.env.REACT_APP_API_URL;
+        const response = await axios.get(`${apiUrl}/coaches/`, {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`
+          }
+        });
+        // console.log(response);
+        if (response.status === 200) {
+          console.log("Get coaches successful");
+          // console.log(response.data);
+          setCoaches(response.data);
+        } else {
+          console.log('Get coaches failed');
+        }
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    getCoaches();
+  }, []);
+  useEffect(() => {
+    setFilteredCoaches(coaches);
+  }, [coaches]);
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value.toLowerCase());
   };
 
   const handleSearchClick = () => {
-    const filteredCoaches = mockCoaches.filter(coach =>
-      coach.name.toLowerCase().includes(searchQuery) ||
-      coach.availability.toLowerCase().includes(searchQuery) ||
-      coach.location.toLowerCase().includes(searchQuery) ||
-      coach.goal.toLowerCase().includes(searchQuery) ||
-      coach.cost.toString().toLowerCase().includes(searchQuery)
+    const tempFilteredCoaches = coaches.filter(coach =>
+      coach.first_name?.toLowerCase().includes(searchQuery) ||
+      coach.last_name?.toLowerCase().includes(searchQuery) ||
+      coach.schedule_general?.toLowerCase().includes(searchQuery) ||
+      coach.location?.toLowerCase().includes(searchQuery) ||
+      coach.qualifications?.toLowerCase().includes(searchQuery) ||
+      coach.price?.toString().toLowerCase().includes(searchQuery)
     );
 
-    setCoaches(filteredCoaches);
+    setFilteredCoaches(tempFilteredCoaches);
+    console.log("Coaches filtered")
   };
-  const { addPendingRequest } = useContext(CoachContext);
-  const handleHireRequest = (coachId) => {
-    console.log(`Request sent to hire coach with ID: ${coachId}`);
-    addPendingRequest({ id: coachId, name: 'User Name' }); 
-  };
+  const handleHireRequest = async (coach_id) => {
+    const accessToken = localStorage.getItem('accessToken');
+    const refreshToken = localStorage.getItem('refreshToken');
+    if (!accessToken || !refreshToken) {
+      console.log('No access token or refresh token');
+      return;
+    }
+    try {
+      const apiUrl = process.env.REACT_APP_API_URL;
+      const response = await axios.post(`${apiUrl}/coaches/request_hire`, {
+        member_id: member_id,
+        coach_id: coach_id
+      }, {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        }
+      });
+      // console.log(response);
+      if (response.status === 201) {
+        console.log("Hire request successful");
+        // console.log(response.data);
+      } else {
+        console.log('Hire request failed');
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <div>
@@ -41,20 +108,19 @@ const CoachesLookup = () => {
               type="text" 
               value={searchQuery} 
               onChange={handleSearchChange} 
-              placeholder="Search by name, availability, location, goal, cost" 
+              placeholder="Search by name, availability, location, qualifications, cost" 
             />
             <button className="search-button" onClick={handleSearchClick}>Search</button>
           </div>
-
           <div className="coaches-list">
-            {coaches.map((coach) => (
-              <div key={coach.id}>
-                <h3>{coach.name}</h3>
-                <p>Availability: {coach.availability}</p>
+            {filteredCoaches.map((coach) => (
+              <div key={coach.coach_id}>
+                <h3>Coach {coach.first_name} {coach.last_name}</h3>
+                <p>Availability: {coach.schedule_general}</p>
                 <p>Location: {coach.location}</p>
-                <p>Goal: {coach.goal}</p>
-                <p>Cost: ${coach.cost}/hr</p>
-                <button className="request-button" onClick={() => handleHireRequest(coach.id)}>Hire</button>
+                <p>Qualifications: {coach.qualifications}</p>
+                <p>Cost: ${coach.price}/hr</p>
+                <button className="request-button" onClick={() => handleHireRequest(coach.coach_id)}>Hire</button>
               </div>
             ))}
           </div>

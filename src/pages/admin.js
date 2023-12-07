@@ -179,15 +179,15 @@ const Admin = () => {
         console.log('No access token or refresh token');
         return;
       }
-      const response = await axios.put(`${apiUrl}/exercise/activate/${exercise_id}`, {
+      const response = await axios.put(`${apiUrl}/exercise/activate/${exercise_id}`, {}, {
         headers: {
           'Authorization': `Bearer ${accessToken}`
         }
       });
-      console.log(response);
+      // console.log(response);
       if (response.status === 200) {
         console.log("Exercise activated");
-        console.log(response.data);
+        // console.log(response.data);
         alert(`Exercise ${exercise_id} activated`);
       } else {
         console.log('Exercise activation failed');
@@ -205,15 +205,15 @@ const Admin = () => {
         console.log('No access token or refresh token');
         return;
       }
-      const response = await axios.put(`${apiUrl}/exercise/deactivate/${exercise_id}`, {
+      const response = await axios.put(`${apiUrl}/exercise/deactivate/${exercise_id}`, {}, {
         headers: {
           'Authorization': `Bearer ${accessToken}`
         }
       });
-      console.log(response);
+      // console.log(response);
       if (response.status === 200) {
         console.log("Exercise deactivated");
-        console.log(response.data);
+        // console.log(response.data);
         alert(`Exercise ${exercise_id} deactivated`);
       } else {
         console.log('Exercise deactivation failed');
