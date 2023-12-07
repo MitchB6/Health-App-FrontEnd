@@ -4,6 +4,7 @@ import Sidebar from "../components/Sidebar.js";
 import Subcategories from "../components/Subcategories.js";
 import Exercises from "../components/Exercises.js";
 import Description from "../components/Description.js";
+import './pages-styling/exercisebank.css';
 
 const ExerciseBank = () => {
     const [categories] = useState(['muscle_group', 'equipment']);
