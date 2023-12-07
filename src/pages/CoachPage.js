@@ -1,9 +1,11 @@
 import React, { useState, useContext } from 'react';
 import ClientList from './ClientList';
 import ClientDetails from './ClientDetails';
-import { clients, pendingRequests } from './mockClientData';
+import { clients, pendingRequests } from './mock/mockClientData.js';
+import mockCoaches from './mock/mockCoachesData.js';
 import { CoachContext } from './CoachContext';
 import Navbar from "../components/navbar.js";
+import './styling/CoachPage.css';
 
 const CoachPage = () => {
     const [selectedClient, setSelectedClient] = useState(null);
@@ -40,8 +42,10 @@ const CoachPage = () => {
                 {pendingRequestsState.map(request => (
                     <div key={request.id}>
                         <span>{request.name}</span>
-                        <button onClick={() => acceptClientRequest(request.id)}>Accept</button>
-                        <button onClick={() => denyClientRequest(request.id)}>Decline</button>
+                        <div className="button-container-coach">
+                        <button className="client-accept-button" onClick={() => acceptClientRequest(request.id)}>Accept</button>
+                        <button className="client-decline-button" onClick={() => denyClientRequest(request.id)}>Decline</button>
+                        </div>
                     </div>
                 ))}
             </div>

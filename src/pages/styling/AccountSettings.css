@@ -1,5 +1,4 @@
 
-/* AccountSettings.css */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
 body {
@@ -8,6 +7,7 @@ body {
 }
 .account-settings {
     font-family: "Poppins", sans-serif;
+    color: #333;
     padding: 20px;
     border-radius: 5px;
     max-width: 800px;
@@ -16,7 +16,7 @@ body {
 }
 .account-settings h1 {
     font-family: "Poppins", sans-serif;
-    color: #000; 
+    color:  #333;
     text-align: left;
     margin-bottom: 30px;
 }
@@ -40,18 +40,20 @@ body {
     color: #555;
 }
 
-.setting input, .setting select, .account-info input{
+.setting input, .setting select, .account-info input {
     font-family: "Poppins", sans-serif;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    width: calc(100% - 160px);
+    min-width: 170px;
     margin-left: 10px;
 }
 
 
+
+
 .setting input[type="checkbox"] {
-    margin-right: 10px;
+    margin-right: 20px;
 }
 
 
@@ -113,7 +115,6 @@ body {
 
 
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
     .setting, .account-info {
         flex-direction: row;

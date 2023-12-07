@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 
-const Exercises = ({ exercises, onExerciseClick }) => {
+const Exercises = ({ exercises, handleExerciseClick }) => {
     return (
-        <div className="exercise-lise">
-            <h2>Exercises</h2>
-            <ul>
-                {exercises.map((exercise, index) => (
-                    <li key={index} onClick={() => onExerciseClick(exercise)}>
+        <div className='exercises'>
+            <h2 className='exercise-list'>Exercises List</h2>
+            <ul className='list-of-exercises'>
+                {exercises.map((exercise) => (
+                    <li key={exercise.name} onClick={() => handleExerciseClick(exercise)}>
                         {exercise.name}
                     </li>
                 ))}
