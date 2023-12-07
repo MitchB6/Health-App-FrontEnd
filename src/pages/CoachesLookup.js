@@ -1,19 +1,50 @@
-import React, { useState, useContext }  from 'react';
-import mockCoaches from './mockCoachesData'; 
+import React, { useState, useContext, useEffect }  from 'react';
+// import mockCoaches from './mockCoachesData'; 
 import { CoachContext } from './CoachContext';
 import './styling/CoachLookup.css';
 import Navbar from "../components/navbar.js";
+import axios from 'axios';
 
 const CoachesLookup = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [coaches, setCoaches] = useState(mockCoaches); 
+  const [coaches, setCoaches] = useState([]); 
+  const [filteredCoaches, setFilteredCoaches] = useState(coaches);
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+    const refreshToken = localStorage.getItem('refreshToken');
+    if (!accessToken || !refreshToken) {
+      console.log('No access token or refresh token');
+      return;
+    }
+    const getCoaches = async () => {
+      try {
+        const apiUrl = process.env.REACT_APP_API_URL;
+        const response = await axios.get(`${apiUrl}/coaches/`, {}, {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`
+          }
+        });
+        console.log(response);
+        if (response.status === 200) {
+          console.log("Get coaches successful");
+          console.log(response.data);
+          setCoaches(response.data);
+        } else {
+          console.log('Get coaches failed');
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }, [coaches]);
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value.toLowerCase());
   };
 
   const handleSearchClick = () => {
-    const filteredCoaches = mockCoaches.filter(coach =>
+    const tempFilteredCoaches = coaches.filter(coach =>
       coach.name.toLowerCase().includes(searchQuery) ||
       coach.availability.toLowerCase().includes(searchQuery) ||
       coach.location.toLowerCase().includes(searchQuery) ||
@@ -21,7 +52,7 @@ const CoachesLookup = () => {
       coach.cost.toString().toLowerCase().includes(searchQuery)
     );
 
-    setCoaches(filteredCoaches);
+    setFilteredCoaches(tempFilteredCoaches);
   };
   const { addPendingRequest } = useContext(CoachContext);
   const handleHireRequest = (coachId) => {
@@ -47,7 +78,7 @@ const CoachesLookup = () => {
           </div>
 
           <div className="coaches-list">
-            {coaches.map((coach) => (
+            {filteredCoaches.map((coach) => (
               <div key={coach.id}>
                 <h3>{coach.name}</h3>
                 <p>Availability: {coach.availability}</p>
