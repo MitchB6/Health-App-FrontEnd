@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './styling/auth.css';
+import { useNavigate } from 'react-router-dom';
 
 const InitialSurvey = () => {
   const [firstName, setFirstName] = useState('');
@@ -20,6 +21,8 @@ const InitialSurvey = () => {
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
   const [zip, setZip] = useState(10000);
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -49,12 +52,13 @@ const InitialSurvey = () => {
           'Authorization': `Bearer ${accessToken}`
         }
       });
-      console.log(response);
-      console.log(surveyData.zip_code)
-      console.log(surveyData.birthday)
+      // console.log(response);
+      // console.log(surveyData.zip_code)
+      // console.log(surveyData.birthday)
       if (response.status === 200) {
         console.log("Survey successful");
-        console.log(response.data);
+        // console.log(response.data);
+        navigate('/');
       } else {
         console.log('Survey failed');
       }
