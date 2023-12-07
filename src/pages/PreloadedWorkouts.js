@@ -1,61 +1,78 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import Navbar from "../components/navbar.js";
 import Sidebar from "../components/Sidebar.js";
+import Subcategories from "../components/Subcategories.js";
 import Exercises from "../components/Exercises.js";
+import Description from "../components/Description.js";
 
-
-const PreloadedWorkouts = () => {
-    const [exercises, setExercises] = useState([]);
-    const [filteredExercises, setFilteredExercises] = useState([]);
+const ExerciseBank = () => {
+    const [categories] = useState(['muscle_group', 'equipment']);
     const [selectedCategory, setSelectedCategory] = useState(null);
+    const [subcategories, setSubcategories] = useState([]);
+    const [selectedSubcategory, setSelectedSubcategory] = useState(null);
+    const [exercises, setExercises] = useState([]);
     const [selectedExercise, setSelectedExercise] = useState(null);
-
-    const apiURL = process.env.APi_URL;
-    console.log(apiURL);
+    const [originalExercises, setOriginalExercises] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/exercise/')
+        axios.get('http://127.0.0.1:5000/exercise/')
             .then(response => {
                 setExercises(response.data);
-                setFilteredExercises(response.data);
+                setOriginalExercises(response.data);
+
+                const muscleGroups = [...new Set(response.data.map(exercise => exercise.muscle_group))];
+                const equipment = [...new Set(response.data.map(exercise => exercise.equipment))];
+                setSubcategories({
+                    "muscle_group": muscleGroups,
+                    "equipment": equipment,
+                });
             })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            });
+            .catch(error => console.error('Error fetching data:', error));
     }, []);
 
-    const muscleGroups = [...new Set(exercises.map((exercise) => exercise.muscle_group))];
-    const equipments = [...new Set(exercises.map((exercise) => exercise.equipment))];
-
-    const filterExercises = (category, value) => {
-        setSelectedCategory({ category, value });
-
-        const filtered = exercises.filter(
-            (exercise) => exercise[category] === value
-        );
-        setFilteredExercises(filtered);
+    const handleCategoryClick = (category) => {
+        setSelectedCategory(category);
+  
+        const filteredExercises = originalExercises.filter(exercise => exercise[category.toLowerCase()] != null);
+        console.log('Filtered Exercises:', filteredExercises);
+        setExercises(filteredExercises);
         setSelectedExercise(null);
-    }
+   
+
+    };
+
+    const handleSubcategoryClick = (subcategory) => {
+
+        const filteredExercises = originalExercises.filter(exercise => {
+        const categoryProperty = selectedCategory.toLowerCase();
+        return exercise[categoryProperty].toLowerCase() === subcategory.toLowerCase();
+        });
+        console.log('Filtered Exercises:', filteredExercises);
+        setExercises(filteredExercises);
+        setSelectedExercise(null);
+
+
+    };
 
     const handleExerciseClick = (exercise) => {
-        console.log(`Details for ${exercise.name}`);
         setSelectedExercise(exercise);
     };
 
     return (
-        <div className="preloaded-workouts">
-            <Navbar />
-            <Sidebar categories={['Muscle Group', 'Equipment']} onSelectCategory={filterExercises} exercises={exercises} />
-            <Exercises exercises={filteredExercises} onExerciseClick={handleExerciseClick} />
+        <div className="exercise-bank">
+            <Sidebar categories={categories} handleCategoryClick={handleCategoryClick} />
+            <Subcategories subcategories={subcategories[selectedCategory]} handleSubcategoryClick={handleSubcategoryClick} />
+            <div className="exercisename-description-container" style={{ display: 'flex' }}>
+            <Exercises exercises={exercises} handleExerciseClick={handleExerciseClick} />
             {selectedExercise && (
-                <div className="exercise-details">
-                    <h2 className="description">Description</h2>
-                    <p>{selectedExercise.description}</p>
+                <div className="exercise-description-container">
+                    <h2 className="exercise-description">Description</h2>
+                    <Description exercise={selectedExercise} />
                 </div>
             )}
+        </div>
         </div>
     );
 };
 
-export default PreloadedWorkouts;
+export default ExerciseBank;
