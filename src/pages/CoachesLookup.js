@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect }  from 'react';
-import mockCoaches from './mockCoachesData'; 
+// import mockCoaches from './mockCoachesData'; 
 import { CoachContext } from './CoachContext';
 import './styling/CoachLookup.css';
 import Navbar from "../components/navbar.js";
