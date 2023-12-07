@@ -36,7 +36,7 @@ const Signup = ({ onSwitch }) => {
         // console.log(loginResponse);
         if (loginResponse.status === 200) {
           console.log("Login successful");
-          console.log(loginResponse.data);
+          // console.log(loginResponse.data);
           localStorage.setItem('accessToken', loginResponse.data['access token']);
           localStorage.setItem('refreshToken', loginResponse.data['refresh token']);
           navigate('/initial-survey');
