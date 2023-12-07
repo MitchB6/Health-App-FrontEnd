@@ -55,7 +55,6 @@ const CoachesLookup = () => {
   };
 
   const handleSearchClick = () => {
-    console.log(coaches)
     const tempFilteredCoaches = coaches.filter(coach =>
       coach.first_name?.toLowerCase().includes(searchQuery) ||
       coach.last_name?.toLowerCase().includes(searchQuery) ||
