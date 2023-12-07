@@ -8,7 +8,7 @@ import axios from 'axios';
 const CoachesLookup = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [coaches, setCoaches] = useState([]); 
-  const [filteredCoaches, setFilteredCoaches] = useState(coaches);
+  const [filteredCoaches, setFilteredCoaches] = useState([]);
 
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
@@ -20,12 +20,12 @@ const CoachesLookup = () => {
     const getCoaches = async () => {
       try {
         const apiUrl = process.env.REACT_APP_API_URL;
-        const response = await axios.get(`${apiUrl}/coaches/`, {}, {
+        const response = await axios.get(`${apiUrl}/coaches/`, {
           headers: {
             'Authorization': `Bearer ${accessToken}`
           }
         });
-        console.log(response);
+        // console.log(response);
         if (response.status === 200) {
           console.log("Get coaches successful");
           console.log(response.data);
@@ -37,7 +37,9 @@ const CoachesLookup = () => {
         console.log(err);
       }
     }
-  }, [coaches]);
+    getCoaches();
+    setFilteredCoaches(coaches);
+  }, []);
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value.toLowerCase());
@@ -72,19 +74,18 @@ const CoachesLookup = () => {
               type="text" 
               value={searchQuery} 
               onChange={handleSearchChange} 
-              placeholder="Search by name, availability, location, goal, cost" 
+              placeholder="Search by name, availability, location, qualifications, cost" 
             />
             <button className="search-button" onClick={handleSearchClick}>Search</button>
           </div>
-
           <div className="coaches-list">
             {filteredCoaches.map((coach) => (
-              <div key={coach.id}>
-                <h3>{coach.name}</h3>
-                <p>Availability: {coach.availability}</p>
+              <div key={coach.coach_id}>
+                <h3>Coach {coach.first_name} {coach.last_name}</h3>
+                <p>Availability: {coach.schedule_general}</p>
                 <p>Location: {coach.location}</p>
-                <p>Goal: {coach.goal}</p>
-                <p>Cost: ${coach.cost}/hr</p>
+                <p>Qualifications: {coach.qualifications}</p>
+                <p>Cost: ${coach.price}/hr</p>
                 <button className="request-button" onClick={() => handleHireRequest(coach.id)}>Hire</button>
               </div>
             ))}
