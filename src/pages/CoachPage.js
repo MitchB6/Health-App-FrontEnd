@@ -1,8 +1,8 @@
 import React, { useState, useContext } from 'react';
 import ClientList from './ClientList';
 import ClientDetails from './ClientDetails';
-import { clients, pendingRequests } from './mockClientData';
-import mockCoaches from './mockCoachesData';
+import { clients, pendingRequests } from './mock/mockClientData.js';
+import mockCoaches from './mock/mockCoachesData.js';
 import { CoachContext } from './CoachContext';
 import Navbar from "../components/navbar.js";
 import './styling/CoachPage.css';
