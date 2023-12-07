@@ -14,8 +14,7 @@ const Signup = ({ onSwitch }) => {
   const navigate = useNavigate();
 
   const handleSignup = async () => {
-    console.log('Signup:', role, username, email, password, phone);
-    // Add actual backend call here for authentication 
+    // console.log('Signup:', role, username, email, password, phone);
     try {
       const apiUrl = process.env.REACT_APP_API_URL;
       const response = await axios.post(`${apiUrl}/auth/signup`, {
@@ -25,19 +24,19 @@ const Signup = ({ onSwitch }) => {
         password: password,
         phone: phone
       });
-      console.log(response);
+      // console.log(response);
       if (response.status === 200) {
         console.log("Signup successful");
-        console.log(response.data);
+        // console.log(response.data);
         const loginResponse = await axios.post(`${apiUrl}/auth/login`, {
           role_id: role,
           email: email,
           password: password
         });
-        console.log(loginResponse);
+        // console.log(loginResponse);
         if (loginResponse.status === 200) {
           console.log("Login successful");
-          console.log(loginResponse.data);
+          // console.log(loginResponse.data);
           localStorage.setItem('accessToken', loginResponse.data['access token']);
           localStorage.setItem('refreshToken', loginResponse.data['refresh token']);
           navigate('/initial-survey');

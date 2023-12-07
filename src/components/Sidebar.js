@@ -1,53 +1,24 @@
-import React, { useState } from 'react';
+import React from "react";
 
-const Sidebar = ({ categories, onSelectCategory, exercises }) => {
-    const [expandedCategory, setExpandedCategory] = useState(null);
-    const [selectedSubCategory, setSelectedSubCategory] = useState(null);
+const Sidebar = ({ categories, handleCategoryClick }) => {
 
-    const handleCategoryClick = (category) => {
-        console.log('Category clicked:', category);
-        setExpandedCategory(category === expandedCategory ? null : category);
-        setSelectedSubCategory(null);
-    };
-
-    const handleSubCategoryClick = (subCategory) => {
-        console.log('Subcategory clicked:', subCategory);
-        setSelectedSubCategory(subCategory);
-        onSelectCategory(expandedCategory, subCategory);
-    };
-
-    const renderSubCategories = () => {
-        const subCategories = expandedCategory === 'muscle_group'
-        ? [...new Set(exercises.map((exercise) => exercise.muscle_group))]
-        : [...new Set(exercises.map((exercise) => exercise.equipment))];
-
+    const reformatCategories = (inputString) => {
+        const words = inputString.split('_');
+        const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
+        return capitalizedWords.join(' ');
+    }
     return (
-        <ul className='sidebar'>
-            {subCategories.map((subCategory, index) => (
-                <li key={index} onClick={() => handleSubCategoryClick(subCategory)}>
-                    {subCategory}
-                </li>
-            ))}
-        </ul>
- 
+        <div className="sidebar">
+            <h2 className="categories">Categories</h2>
+            <ul className="list-of-categories">
+                {categories.map((category) => (
+                    <li className="category" key={category} onClick={() => handleCategoryClick(category)}>
+                        {category}
+                    </li>
+                ))}
+            </ul>
+        </div>
     );
-
 };
 
-return (
-    <div className='sidebar'>
-        <h2 className='categories'>Categories</h2>
-        <ul>
-            {categories.map((category, index) => (
-                <li key={index} onClick={() => handleCategoryClick(category)}>
-                    {category}
-                    {expandedCategory === category && renderSubCategories()}
-                </li>
-            ))}
-        </ul>
-    </div>
-    
-    );
- };
-        
 export default Sidebar;
