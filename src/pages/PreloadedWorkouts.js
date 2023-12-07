@@ -16,7 +16,8 @@ const ExerciseBank = () => {
     const [originalExercises, setOriginalExercises] = useState([]);
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:5000/exercise/')
+        const apiUrl = process.env.REACT_APP_API_URL;
+        axios.get(`${apiUrl}/exercise/`)
             .then(response => {
                 setExercises(response.data);
                 setOriginalExercises(response.data);
