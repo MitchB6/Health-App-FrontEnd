@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect }  from 'react';
-import mockCoaches from './mock/mockCoachesData'; 
-//import { CoachContext } from './CoachContext';
+//import mockCoaches from './mock/mockCoachesData'; 
+import { CoachContext } from './CoachContext';
 import './styling/CoachLookup.css';
 import Navbar from "../components/navbar.js";
 import axios from 'axios';
