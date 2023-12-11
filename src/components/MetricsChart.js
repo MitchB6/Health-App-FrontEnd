@@ -1,7 +1,7 @@
 import React from 'react';
-import { Line } from 'react-chartjs-2';
+import { Bar, Line } from 'react-chartjs-2';
 import 'chart.js/auto';
-
+const maxWaterIntake = 125;
 const MetricsChart = ({ logEntries }) => {
     const mapEmotionToNumber = (emotion) => {
         const emotions = {
@@ -14,22 +14,7 @@ const MetricsChart = ({ logEntries }) => {
         };
         return emotions[emotion] || 0;
     };
-    const weightChartData = {
-        labels: logEntries.map(entry => entry.date),
-        datasets: [
-            {
-                label: 'Weight',
-                data: logEntries.map(entry => entry.weight),
-                fill: true,
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgb(75, 192, 192)',
-                pointBackgroundColor: 'rgb(75, 192, 192)',
-                pointBorderColor: '#fff',
-                pointHoverBackgroundColor: '#fff',
-                pointHoverBorderColor: 'rgb(75, 192, 192)',
-            }
-        ],
-    };
+
 
     const caloriesChartData = {
         labels: logEntries.map(entry => entry.date),
@@ -37,24 +22,38 @@ const MetricsChart = ({ logEntries }) => {
             {
                 label: 'Calories In',
                 data: logEntries.map(entry => entry.caloriesIn),
-                fill: true,
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgb(255, 99, 132)',
-                pointBackgroundColor: 'rgb(255, 99, 132)',
-                pointBorderColor: '#fff',
-                pointHoverBackgroundColor: '#fff',
-                pointHoverBorderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(255, 99, 132, 0.8)',
+            }
+        ],
+    };
+    const caloriesOptions = {
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    callback: function(value) {
+                        return `${value} cal`;
+                    }
+                }
+            }
+        },
+        plugins: {
+            legend: {
+                display: false, 
             },
+            tooltip: {
+                enabled: true, 
+            }
+        }
+    };
+
+    const waterIntakeData = {
+        labels: logEntries.map(entry => entry.date),
+        datasets: [
             {
-                label: 'Calories Out',
-                data: logEntries.map(entry => entry.caloriesOut),
-                fill: true,
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderColor: 'rgb(54, 162, 235)',
-                pointBackgroundColor: 'rgb(54, 162, 235)',
-                pointBorderColor: '#fff',
-                pointHoverBackgroundColor: '#fff',
-                pointHoverBorderColor: 'rgb(54, 162, 235)',
+                label: 'Water Intake',
+                data: logEntries.map(entry => entry.waterIntake),
+                backgroundColor: 'rgba(54, 162, 235, 0.8)',
             }
         ],
     };
@@ -65,34 +64,96 @@ const MetricsChart = ({ logEntries }) => {
             {
                 label: 'Emotional Wellness',
                 data: logEntries.map(entry => mapEmotionToNumber(entry.emotionalWellness)),
-                backgroundColor: 'rgba(153, 102, 255, 0.5)',
-                borderColor: 'rgb(153, 102, 255)',
-                borderWidth: 1,
+                backgroundColor: 'rgba(153, 102, 255, 0.2)', 
+                borderColor: 'rgba(153, 102, 255, 1)',
+                pointBackgroundColor: 'rgba(153, 102, 255, 1)',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgba(153, 102, 255, 1)',
+                fill: 'start', 
             }
         ],
     };
+    const waterIntakeOptions = {
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    callback: function(value) {
+                        return `${value} oz 💧`;
+                    },
+                    stepSize: 10, 
+                    min: 0,
+                    max: maxWaterIntake,
+                    font: {
+                        size: 16 
+                    } 
+                }
+            },
+            x: {
+            }
+        },
+        plugins: {
+            legend: {
+                display: false, 
+            },
+            tooltip: {
+                enabled: true, 
+            }
+        }
+    };
     
-    const options = {
+
+    const generalOptions = {
         scales: {
             y: {
                 beginAtZero: true,
             },
         },
+    };
+    const emotionalWellnessOptions = {
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    stepSize: 1,
+                    callback: function (value) {
+                        const emojis = ['', '😠 Angry', '😔 Sad', '😐 Neutral', '😌 Relaxed', '😃 Happy'];
+            
+                        return emojis[value] ? emojis[value].split(' ')[0] : null;
+                    },
+                    font: {
+                        size: 20 
+                    }
+                }
+            }
+        },
+        plugins: {
+            tooltip: {
+                enabled: false, 
+            },
+            legend: {
+                display: false, 
+            },
+        },
         elements: {
             line: {
-                tension: 0.4 // This will smooth the line
+                tension: 0.4
+            },
+            point: {
+                radius: 5 
             }
         }
     };
 
     return (
         <div>
-            <h2>Weight Chart</h2>
-            <Line data={weightChartData} options={options} />
             <h2>Calories Chart</h2>
-            <Line data={caloriesChartData} options={options} />
+            <Bar data={caloriesChartData} options={caloriesOptions} />
+            <h2>Water Intake Chart</h2>
+            <Bar data={waterIntakeData} options={waterIntakeOptions} />
             <h2>Emotional Wellness Chart</h2>
-            <Line data={emotionalWellnessData} options={options} />
+            <Line data={emotionalWellnessData} options={emotionalWellnessOptions} />
         </div>
     );
 };
