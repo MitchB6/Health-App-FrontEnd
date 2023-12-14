@@ -42,8 +42,14 @@
       "last 1 safari version"
     ]
   },
+  "jest": {
+    "moduleNameMapper": {
+      "axios": "axios/dist/node/axios.cjs"
+    }
+  },
   "proxy": "http://localhost:5000",
   "devDependencies": {
+    "@babel/core": "^7.23.6",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "react-test-renderer": "^18.2.0"
   }
