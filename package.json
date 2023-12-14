@@ -45,7 +45,11 @@
   "jest": {
     "moduleNameMapper": {
       "axios": "axios/dist/node/axios.cjs"
-    }
+    },
+    "testMatch": [
+      "**/tests/**/*.js?(x)",
+      "**/?(*.)+(spec|test).js?(x)"
+    ]
   },
   "proxy": "http://localhost:5000",
   "devDependencies": {
