@@ -1,6 +1,6 @@
-import '@testing-library/jest-dom';
 import React from 'react';
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import axios from 'axios';
 import CoachesLookup from '../src/pages/CoachesLookup.js';
 
