@@ -6,7 +6,7 @@ const Navbar = () => {
         <nav className='navbar'>
             <div className='container'>
                 <div className='app-name'>
-                    <NavLink to="/">FITintoTHIS</NavLink>
+                    <NavLink to="/">FIT THIS</NavLink>
                 </div>
                     <div className='nav-elements'>
                         <ul>
