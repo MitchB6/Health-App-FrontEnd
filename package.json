@@ -21,7 +21,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -43,11 +43,15 @@
     ]
   },
   "jest": {
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    },
     "moduleNameMapper": {
-      "axios": "axios/dist/node/axios.cjs"
+      "axios": "axios/dist/node/axios.cjs",
+      "^.+\\.(css|less|scss)$": "identity-obj-proxy"
     },
     "testMatch": [
-      "**/tests/**/*.js?(x)",
+      "**/__tests__/**/*.js?(x)",
       "**/?(*.)+(spec|test).js?(x)"
     ]
   },
