@@ -47,6 +47,9 @@
       "^.+\\.jsx?$": "babel-jest"
     },
     "testEnvironment": "jsdom",
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/setupTests.js"
+    ],
     "moduleNameMapper": {
       "axios": "axios/dist/node/axios.cjs",
       "^.+\\.(css|less|scss)$": "identity-obj-proxy"
