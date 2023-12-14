@@ -6,13 +6,10 @@ const Navbar = () => {
         <nav className='navbar'>
             <div className='container'>
                 <div className='app-name'>
-                    Fitness & Health
+                    <NavLink to="/">FITintoTHIS</NavLink>
                 </div>
                     <div className='nav-elements'>
                         <ul>
-                            <li>
-                                <NavLink to="/">Home</NavLink>
-                            </li>
                             <li>
                                 <NavLink to="/workout-notebook">Notebook</NavLink>
                             </li>
