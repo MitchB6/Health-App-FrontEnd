@@ -93,10 +93,9 @@ describe('CoachesLookup Component', () => {
         );
       });
     await waitFor(() => {
-      expect(screen.getByText('FirstName1')).toBeInTheDocument();
-      expect(screen.getByText('LastName1')).toBeInTheDocument();
-      // expect(screen.getByText('FirstName2 LastName2')).toBeInTheDocument();
-      // expect(screen.getByText('FirstName3 LastName3')).toBeInTheDocument();
+      expect(screen.getByText(/FirstName1.*LastName1/)).toBeInTheDocument();
+      expect(screen.getByText(/FirstName2.*LastName2/)).toBeInTheDocument();
+      expect(screen.getByText(/FirstName3.*LastName3/)).toBeInTheDocument();
     });
   });
   
@@ -107,15 +106,15 @@ describe('CoachesLookup Component', () => {
           <CoachesLookup />
         </Router>
         );
-      const searchInput = screen.getByPlaceholderText('Search by location, qualifications, cost');
-      const searchButton = screen.getByText('Search');
-      fireEvent.change(searchInput, { target: { value: 'Location1' } });
-      fireEvent.click(searchButton);
-    });
+      });
+    const searchInput = await screen.findByPlaceholderText("Search by location, qualifications, cost");
+    const searchButton = await screen.findByText('Search');
+    fireEvent.change(searchInput, { target: { value: 'Location1' } });
+    fireEvent.click(searchButton);
     await waitFor(() => {
-      expect(screen.getByText('FirstName1 LastName1')).toBeInTheDocument();
-      expect(screen.queryByText('FirstName2 LastName2')).not.toBeInTheDocument();
-      expect(screen.queryByText('FirstName3 LastName3')).not.toBeInTheDocument();
+      expect(screen.queryByText(/FirstName1.*LastName1/)).toBeInTheDocument();
+      expect(screen.queryByText(/FirstName2.*LastName2/)).not.toBeInTheDocument();
+      expect(screen.queryByText(/FirstName3.*LastName3/)).not.toBeInTheDocument();
     });
   });
 
@@ -126,15 +125,15 @@ describe('CoachesLookup Component', () => {
           <CoachesLookup />
         </Router>
         );
-      const searchInput = screen.getByPlaceholderText('Search by location, qualifications, cost');
-      const searchButton = screen.getByText('Search');
-      fireEvent.change(searchInput, { target: { value: 'Qualifications2' } });
-      fireEvent.click(searchButton);
-    });
+      });
+    const searchInput = await screen.findByPlaceholderText("Search by location, qualifications, cost");
+    const searchButton = await screen.findByText('Search');
+    fireEvent.change(searchInput, { target: { value: 'Qualifications2' } });
+    fireEvent.click(searchButton);
     await waitFor(() => {
-      expect(screen.queryByText('FirstName1 LastName1')).not.toBeInTheDocument();
-      expect(screen.getByText('FirstName2 LastName2')).toBeInTheDocument();
-      expect(screen.queryByText('FirstName3 LastName3')).not.toBeInTheDocument();
+      expect(screen.queryByText(/FirstName1.*LastName1/)).not.toBeInTheDocument();
+      expect(screen.queryByText(/FirstName2.*LastName2/)).toBeInTheDocument();
+      expect(screen.queryByText(/FirstName3.*LastName3/)).not.toBeInTheDocument();
     });
   });
 
@@ -145,15 +144,15 @@ describe('CoachesLookup Component', () => {
           <CoachesLookup />
         </Router>
         );
-      const searchInput = screen.getByPlaceholderText('Search by location, qualifications, cost');
-      const searchButton = screen.getByText('Search');
-      fireEvent.change(searchInput, { target: { value: '3' } });
-      fireEvent.click(searchButton);
-  });
+      });
+    const searchInput = await screen.findByPlaceholderText("Search by location, qualifications, cost");
+    const searchButton = await screen.findByText('Search');
+    fireEvent.change(searchInput, { target: { value: '3' } });
+    fireEvent.click(searchButton);
     await waitFor(() => {
-      expect(screen.queryByText('FirstName1 LastName1')).not.toBeInTheDocument();
-      expect(screen.queryByText('FirstName2 LastName2')).not.toBeInTheDocument();
-      expect(screen.getByText('FirstName3 LastName3')).toBeInTheDocument();
+      expect(screen.queryByText(/FirstName1.*LastName1/)).not.toBeInTheDocument();
+      expect(screen.queryByText(/FirstName2.*LastName2/)).not.toBeInTheDocument();
+      expect(screen.queryByText(/FirstName3.*LastName3/)).toBeInTheDocument();
     });
   });
 });
