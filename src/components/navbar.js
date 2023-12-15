@@ -24,7 +24,11 @@ const Navbar = () => {
                                 <NavLink to="/coach">Find Coaches</NavLink>
                             </li>
                             <li>
-                                <NavLink to="/account-settings">Account Settings</NavLink>
+                            <NavLink to="/account-settings" className="menu-icon">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </NavLink>
                             </li>
                         </ul>
                     </div>

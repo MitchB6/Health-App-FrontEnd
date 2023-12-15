@@ -15,6 +15,7 @@ const CoachPage = () => {
     const handleSelectClient = client => {
         setSelectedClient(client);
     };
+    
 
     const handleAssignWorkout = client => {
         console.log('Assigning workout to', client.name);
@@ -58,3 +59,4 @@ const CoachPage = () => {
 };
 
 export default CoachPage;
+
