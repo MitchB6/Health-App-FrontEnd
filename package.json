@@ -22,7 +22,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -43,8 +43,34 @@
       "last 1 safari version"
     ]
   },
+  "jest": {
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    },
+    "testEnvironment": "jsdom",
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/setupTests.js"
+    ],
+    "moduleNameMapper": {
+      "axios": "axios/dist/node/axios.cjs",
+      "^.+\\.(css|less|scss)$": "identity-obj-proxy"
+    },
+    "testMatch": [
+      "**/__tests__/**/*.js?(x)",
+      "**/?(*.)+(spec|test).js?(x)"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ]
+  },
   "proxy": "http://localhost:5000",
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "@babel/core": "^7.23.6",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/preset-react": "^7.23.3",
+    "react-test-renderer": "^18.2.0"
   }
 }
