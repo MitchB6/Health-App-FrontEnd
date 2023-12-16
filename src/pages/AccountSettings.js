@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { jwtDecode } from "jwt-decode";
 import './styling/AccountSettings.css';
 import Navbar from "../components/navbar.js";
 
 const AccountSettings = () => {
-    // States for user information
-
     const [first_name, setFirstName] = useState('First Name');
     const [last_name, setLastName] = useState('Last Name');
     const [birthdate, setBirthDate] = useState(''); 
@@ -13,7 +12,6 @@ const AccountSettings = () => {
     const [email, setEmail] = useState('user@example.com');
     const [phone, setPhone] = useState('(123) 456-7890');
 
-    
     // Separate state for city, state, and zipCode
     const [city, setCity] = useState('City');
     const [state, setState] = useState('State');
@@ -47,6 +45,12 @@ const AccountSettings = () => {
     // Enhanced submit user info with basic validation
     const handleSubmit = async (event) => {
         event.preventDefault();
+        const accessToken = localStorage.getItem('accessToken');
+        const refreshToken = localStorage.getItem('refreshToken');
+        if (!accessToken || !refreshToken) {
+         console.log('No access token or refresh token');
+          return;
+          }
         if (!email.includes('@')) {
             setMessage('Please enter a valid email address.');
             return;
@@ -56,16 +60,8 @@ const AccountSettings = () => {
             return;
         }
 
-        const accessToken = localStorage.getItem('accessToken');
-        if (!accessToken) {
-            setMessage('No access token');
-            return;
-        }
-
-
-        // API call to update user information
-        const apiUrl = process.env.REACT_APP_API_URL;
         try {
+            const apiUrl = process.env.REACT_APP_API_URL;
             const response = await axios.put(`${apiUrl}/member/settings`, {
                 first_name,
                 last_name, 

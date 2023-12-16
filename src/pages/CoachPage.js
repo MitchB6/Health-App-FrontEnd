@@ -7,14 +7,16 @@ import { CoachContext } from './CoachContext';
 import Navbar from "../components/navbar.js";
 import './styling/CoachPage.css';
 
+
 const CoachPage = () => {
     const [selectedClient, setSelectedClient] = useState(null);
     const [clientsState, setClients] = useState(clients); 
     const [pendingRequestsState, setPendingRequests] = useState(pendingRequests); 
 
     const handleSelectClient = client => {
+        console.log('Selected client:', client);
         setSelectedClient(client);
-    };
+        };
     
 
     const handleAssignWorkout = client => {
@@ -32,6 +34,8 @@ const CoachPage = () => {
     const denyClientRequest = requestId => {
         setPendingRequests(currentRequests => currentRequests.filter(request => request.id !== requestId));
     };
+    
+    
 
     return (
         <div>
@@ -53,6 +57,8 @@ const CoachPage = () => {
             
             <ClientList clients={clientsState} onSelectClient={handleSelectClient} />
             <ClientDetails client={selectedClient} onAssignWorkout={handleAssignWorkout} />
+            
+            
         </div>
         </div>
     );
