@@ -5,7 +5,7 @@ import './styling/admin.css';
 
 const Admin = () => {
   const [showCoaches, setShowCoaches] = useState(false);
-  const [showExercises, setShowExercises] = useState(false);
+  const [showExercises, setShowExercises] = useState(true);
   const [coaches, setCoaches] = useState([]);
   const [exercises, setExercises] = useState([]);
 
