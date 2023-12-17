@@ -1,9 +1,10 @@
-import React, { createContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from "../components/navbar.js";
 import MetricsChart from '../components/MetricsChart.js';
 import './styling/StatisticLogger.css';
 import { jwtDecode } from "jwt-decode";
 import axios from 'axios';
+
 const StatisticLogger = () => {
     const [calories_intake, setCaloriesIn] = useState('');
     const [hydration_level, setWaterIntake] = useState(''); 
@@ -12,19 +13,23 @@ const StatisticLogger = () => {
     const [currentMoodEmoji, setCurrentMoodEmoji] = useState('😊');
     const [member_id, setMember_id] = useState(0);
 
+    
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         const accessToken = localStorage.getItem('accessToken');
-        const refreshToken = localStorage.getItem('refreshToken');
-        if (!accessToken || !refreshToken) {
-          console.log('No access token or refresh token');
+        if (!accessToken ) {
+          console.log('No access token token');
           return;
         }
+        setMember_id(jwtDecode(accessToken).sub);
+
         const newEntry = {
+            member_id: member_id,
             date: new Date().toLocaleDateString(),
             calories_intake: parseFloat(calories_intake),
             hydration_level: parseFloat(hydration_level), 
-            mood_level
+            mood_level,
         };
         try {
             const apiUrl = process.env.REACT_APP_API_URL;
@@ -35,12 +40,13 @@ const StatisticLogger = () => {
             });
             if (response.status === 200) {
                 console.log('Statistics logged successfully');
+                const survey_id = response.data.survey_id; // Get the survey_id from response
+                setLogEntries([...logEntries, {...newEntry, survey_id}]);
             }
         } catch (error) {
             console.error('Error logging statistics:', error);
         }
 
-        setLogEntries([...logEntries, newEntry]);
         setCaloriesIn('');
         setWaterIntake(''); 
         setEmotionalWellness('');

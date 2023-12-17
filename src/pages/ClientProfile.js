@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { clients } from "./mock/mockClientData.js"
 import Navbar from "../components/navbar.js";
 import ClientStatistics from '../components/ClientStatistics'; 
-
 import './styling/ClientProfile.css';
 
 const ClientProfile = () => {
@@ -57,3 +57,4 @@ const ClientProfile = () => {
 };
 
 export default ClientProfile;
+

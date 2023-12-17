@@ -5,6 +5,7 @@ import { clients, pendingRequests } from './mock/mockClientData.js';
 import mockCoaches from './mock/mockCoachesData.js';
 import { CoachContext } from './CoachContext';
 import Navbar from "../components/navbar.js";
+import axios from 'axios';
 import './styling/CoachPage.css';
 
 
