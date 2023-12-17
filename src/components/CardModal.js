@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import './components-styling/card.css';
 
 const CardModal = ({ onClose, onSave }) => {
