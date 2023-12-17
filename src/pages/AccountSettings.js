@@ -1,28 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { jwtDecode } from "jwt-decode";
 import './styling/AccountSettings.css';
 import Navbar from "../components/navbar.js";
 
 const AccountSettings = () => {
-    // States for user information
-
-    const [name, setName] = useState('User Name');
-    const [birthDate, setBirthDate] = useState('YYYY-MM-DD'); 
+    const [first_name, setFirstName] = useState('First Name');
+    const [last_name, setLastName] = useState('Last Name');
+    const [birthdate, setBirthDate] = useState(''); 
     const [gender, setGender] = useState('Gender');
     const [email, setEmail] = useState('user@example.com');
-    const [phoneNumber, setPhoneNumber] = useState('(123) 456-7890');
-    const [goals, setGoals] = useState(['']);
+    const [phone, setPhone] = useState('(123) 456-7890');
 
-    
     // Separate state for city, state, and zipCode
     const [city, setCity] = useState('City');
     const [state, setState] = useState('State');
-    const [zipCode, setZipCode] = useState('12345');
+    const [zip_code, setZipCode] = useState('12345');
 
     // States for password change
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
-    const [confirmNewPassword, setConfirmNewPassword] = useState('');
 
     // State for edit and password change mode toggle
     const [isEditMode, setIsEditMode] = useState(false);
@@ -48,83 +45,94 @@ const AccountSettings = () => {
     // Enhanced submit user info with basic validation
     const handleSubmit = async (event) => {
         event.preventDefault();
+        const accessToken = localStorage.getItem('accessToken');
+        const refreshToken = localStorage.getItem('refreshToken');
+        if (!accessToken || !refreshToken) {
+         console.log('No access token or refresh token');
+          return;
+          }
         if (!email.includes('@')) {
             setMessage('Please enter a valid email address.');
             return;
         }
-        if (phoneNumber && phoneNumber.length < 10) {
+        if (phone && phone.length < 10) {
             setMessage('Please enter a valid phone number.');
             return;
         }
 
-        // API call to update user information
         try {
-            const response = await axios.post('/api/updateUserInfo', {
-                name,
+            const apiUrl = process.env.REACT_APP_API_URL;
+            const response = await axios.put(`${apiUrl}/member/settings`, {
+                first_name,
+                last_name, 
+                birthdate,
+                gender,
                 email,
-                phoneNumber,
-                location: { city, state, zipCode }, // Sending location as an object
+                phone,
+                city,
+                state,
+                zip_code,
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`
+                }
             });
             setMessage('User information updated successfully!');
-            console.log('Updated User Information:', response.data);
         } catch (error) {
-            setMessage('');
+            setMessage('An error occurred.');
             console.error('Error:', error);
         }
-
-        setIsEditMode(false);
-    };
-
-    // Handle phone number change
-    const handlePhoneNumberChange = (event) => {
-        setPhoneNumber(event.target.value);
-    };
-
-
-    // Fetch user's selected goals when the component mounts
-    useEffect(() => {
-        const fetchGoals = async () => {
-            try {
-                const response = await axios.get('/api/getUserGoals');
-                setGoals(response.data.goals || []); // Ensuring goals is always an array
-            } catch (error) {
-                console.error('Error fetching goals:', error);
-            }
-        };
-
-        fetchGoals();
-    }, []);
-
-    // Handle goal change
-    const handleGoalChange = (selectedGoal) => {
-        setGoals(prevGoals => {
-            if (prevGoals.includes(selectedGoal)) {
-                return prevGoals.filter(goal => goal !== selectedGoal);
-            } else {
-                return [...prevGoals, selectedGoal];
-            }
-        });
     };
 
     // Handle password change
-    const handlePasswordChange = (e) => {
+    const handlePasswordChange = async (e) => {
         e.preventDefault();
-        if (newPassword !== confirmNewPassword) {
-            setMessage("New passwords do not match!");
+         const accessToken = localStorage.getItem('accessToken');
+        if (!accessToken) {
+            setMessage('No access token');
             return;
         }
-        // Add logic to change password here
-        setMessage("Password successfully changed!");
-        setCurrentPassword('');
-        setNewPassword('');
-        setConfirmNewPassword('');
-        setIsPasswordChangeMode(false);
+        try {
+            const apiUrl = process.env.REACT_APP_API_URL;
+            const response = await axios.post(`${apiUrl}/auth/change_password`, {
+                old_password: currentPassword,
+                new_password: newPassword,
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`
+                }
+            });
+            // Handle response
+            setMessage("Password successfully changed!");
+            setCurrentPassword('');
+            setNewPassword('');
+        } catch (error) {
+            // Handle error
+            setMessage('An error occurred.');
+            console.error('Error:', error);
+        }
     };
     const handleCancelEdit = () => {
-        
+        // Resetting state variables to their defaults or initial values
+        setFirstName('First Name');
+        setLastName('Last Name');
+        setBirthDate('yyyy-MM-dd');
+        setGender('Gender');
+        setEmail('user@example.com');
+        setPhone('(123) 456-7890');
+        // ... reset other state variables as needed ...
+    
+        // Disabling edit mode
         setIsEditMode(false);
+    
+        // Clearing any messages
         setMessage('');
     };
+    // Handle phone number change
+    const handlePhoneChange = (event) => {
+        setPhone(event.target.value);
+    };
+    
 
     // Handle account deletion
     const handleDeleteAccount = async () => {
@@ -170,22 +178,30 @@ const AccountSettings = () => {
                 <h2>Basic Info</h2> 
                 {/* User Section */}
                 <div className="setting">
-                <label>Name</label>
-                    {isEditMode ? (
-                        <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-                    ) : (
-                        <span>{name}</span>
-                         )}
+                <label>First Name</label>
+                {isEditMode ? (
+        <input type="text" value={first_name} onChange={(e) => setFirstName(e.target.value)} />
+    ) : (
+        <span>{first_name}</span>
+    )}
+</div>
+<div className="setting">
+    <label>Last Name</label>
+    {isEditMode ? (
+        <input type="text" value={last_name} onChange={(e) => setLastName(e.target.value)} />
+    ) : (
+        <span>{last_name}</span>
+    )}
                 </div>
                 <div className="setting">
                     <label>Birth Date</label>
                     {isEditMode ? (
                         <input
                         type="date"
-                        value={birthDate}
+                        value={birthdate}
                         onChange={(e) => setBirthDate(e.target.value)}/>
                         ) : (
-                            <span>{birthDate}</span>
+                            <span>{birthdate}</span>
                              )}
                 </div>
                 <div className="setting">
@@ -209,11 +225,11 @@ const AccountSettings = () => {
                             )}
                 </div>
                 <div className="setting">
-                    <label>Phone number:</label>
-                    {isEditMode ? (
-                        <input type="tel" value={phoneNumber} onChange={handlePhoneNumberChange} />
+                     <label>Phone number:</label>
+                     {isEditMode ? (
+                        <input type="tel" value={phone} onChange={handlePhoneChange} />
                         ) : (
-                            <span>{phoneNumber}</span>
+                            <span>{phone}</span>
                             )}
                 </div>
                 <div className="setting">
@@ -227,35 +243,13 @@ const AccountSettings = () => {
                             <input type="text" placeholder="State" value={state} onChange={(e) => setState(e.target.value)} />
                         </div>
                         <div className="setting">
-                             <input type="text" placeholder="Zip Code" value={zipCode} onChange={(e) => setZipCode(e.target.value)} />
+                             <input type="text" placeholder="Zip Code" value={zip_code} onChange={(e) => setZipCode(e.target.value)} />
                         </div>
                         </>
                         ) : (
-                            <span>{`${city}, ${state} ${zipCode}`}</span>
+                            <span>{`${city}, ${state} ${zip_code}`}</span>
                             )}
                 </div>
-                {/* Goals Section */}
-                <div className="setting">
-                    <label>Your Goals</label>
-                    {isEditMode ? (
-                        ['Goal 1', 'Goal 2', 'Goal 3'].map(goalOption => (
-                             <div key={goalOption}>
-                                <input
-                                 type="checkbox"
-                                 checked={goals.includes(goalOption)}
-                                 onChange={() => handleGoalChange(goalOption)}
-                                 />
-                                 {goalOption}
-                            </div>
-                             ))
-                             ) : (
-                             <ul>
-                                {goals.map(goal => (
-                                    <li key={goal}>{goal}</li>
-                                     ))}
-                                      </ul>
-                                      )}
-                        </div>
                         <h2>Account Info</h2>
                          <div className="account-info">
                             {/* Password Section */}
@@ -266,7 +260,6 @@ const AccountSettings = () => {
                                          <>
                                          <input type="password" placeholder="Current Password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} />
                                          <input type="password" placeholder="New Password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
-                                         <input type="password" placeholder="Confirm New Password" value={confirmNewPassword} onChange={(e) => setConfirmNewPassword(e.target.value)} />
                                         </>
                                         ) : (
                                             <span>********</span>
