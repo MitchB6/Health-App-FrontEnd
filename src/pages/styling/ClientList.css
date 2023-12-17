@@ -1,0 +1,34 @@
+.client-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.client-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5em 0;
+}
+
+.client-name {
+    flex-grow: 1;
+}
+
+.client-action-button {
+    padding: 10px;
+    margin-left: 10px;
+    cursor: pointer;
+    color: lightgreen;
+    border: 2px solid lightgreen;
+    background-color: white;
+    text-decoration: none;
+    box-sizing: border-box;
+    border-radius: 8px;
+    transition: background-color 0.3s, color 0.3s;
+
+    &:hover {
+        background-color: lightgreen;
+        color: white;
+    }
+}
+

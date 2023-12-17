@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { io } from "socket.io-client";
 
+
 const socket = io("http://localhost:5000");
 
 const Chat = () => {
+  const defaultCoach = 'Alice';
+  const defaultUser = 'Bob';
+
   const [username, setUsername] = useState('');
   const [recipient, setRecipient] = useState('');
   const [message, setMessage] = useState('');
   const [messageHistory, setMessageHistory] = useState({});
   const [messages, setMessages] = useState([]);
 
-  const users = ['Alice', 'Bob', 'Charlie']; // Example users
+  const users = [1,2, 3]; // Example users
 
   useEffect(() => {
     socket.on("new_message", (newMessage) => {
@@ -23,6 +27,7 @@ const Chat = () => {
   }, [messageHistory]);
 
   const selectUser = (user) => {
+    console.log(user, recipient)
     setUsername(user);
     if (recipient) {
       requestChatHistory(user, recipient);
@@ -31,7 +36,8 @@ const Chat = () => {
 
   const selectRecipient = (recip) => {
     setRecipient(recip);
-    if (username) {
+    console.log(recip, username)
+    if (username) {  
       requestChatHistory(username, recip);
     }
   };
@@ -52,7 +58,7 @@ const Chat = () => {
 
   const handleSendMessage = () => {
     if (message.trim() !== '') {
-      const newMessage = { sender: username, recipient: recipient, text: message };
+      const newMessage = { sender: 23, recipient: 24, text: message };
       socket.emit('send_message', newMessage);
       setMessage('');
     }
@@ -89,4 +95,8 @@ const Chat = () => {
 };
 
 export default Chat;
+
+
+
+
 
