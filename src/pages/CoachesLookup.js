@@ -98,9 +98,9 @@ const CoachesLookup = () => {
        <div className="coaches-lookup">
        <h1>Coaches</h1>
        
-          <div className="search-container">
+          <div className="search-container-coach">
             <input 
-              className="search-input"
+              className="search-input-coach"
               type="text" 
               value={searchQuery} 
               onChange={handleSearchChange} 
