@@ -34,7 +34,7 @@ const MetricsChart = ({ logEntries }) => {
         datasets: [
             {
                 label: 'Calories In',
-                data: logEntries.map(entry => entry.caloriesIn),
+                data: logEntries.map(entry => entry.calories_intake),
                 borderColor: 'rgba(255, 99, 132, 1)',
                 backgroundColor: 'rgba(255, 99, 132, 0.2)',
                 pointBorderColor: 'rgba(255, 99, 132, 1)',
@@ -79,7 +79,7 @@ const MetricsChart = ({ logEntries }) => {
         datasets: [
             {
                 label: 'Water Intake',
-                data: logEntries.map(entry => entry.waterIntake),
+                data: logEntries.map(entry => entry.hydration_level),
                 borderColor: 'rgba(54, 162, 235, 1)',
                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
                 pointBorderColor: 'rgba(54, 162, 235, 1)',
@@ -124,7 +124,7 @@ const MetricsChart = ({ logEntries }) => {
             {
                 type: 'line', 
                 label: 'Emotional Wellness Line',
-                data: logEntries.map(entry => mapEmotionToNumber(entry.emotionalWellness)),
+                data: logEntries.map(entry => mapEmotionToNumber(entry.mood_level)),
                 borderColor: 'rgba(153, 102, 255, 1)', // Corrected light purple color
                 pointBackgroundColor: 'rgba(153, 102, 255, 1)',
                 pointBorderColor: '#fff',

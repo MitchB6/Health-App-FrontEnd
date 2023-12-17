@@ -7,9 +7,13 @@ const clients = [
         age: 30,
         gender: 'Male',
         location: 'Newark, NJ, 07101',
-        workoutLog: '...' 
+        stats: [
+            { date: '2023-12-01', caloriesIn: 2200, waterIntake: 64, emotionalWellness: '😃 Happy' },
+            { date: '2023-12-02', caloriesIn: 2100, waterIntake: 70, emotionalWellness: '😐 Neutral' },
+            // More log entries...
+        ]
     },
-];
+]; 
 
 const pendingRequests = [
     { 
@@ -20,7 +24,11 @@ const pendingRequests = [
         age: 28,
         gender: 'Female',
         location: 'New York, NY, 10001',
-        workoutLog: '...' 
+        stats: [
+            { date: '2023-12-01', caloriesIn: 1900, waterIntake: 55, emotionalWellness: '😌 Relaxed' },
+            { date: '2023-12-02', caloriesIn: 2000, waterIntake: 60, emotionalWellness: '😔 Sad' },
+            // More log entries...
+        ]
     },
 ];
 

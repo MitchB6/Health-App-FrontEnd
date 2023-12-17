@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom';
 import React from 'react';
 
 import './components-styling/navbar.css';
+import React from 'react';
 
 const Navbar = () => {
     return (
@@ -26,7 +27,14 @@ const Navbar = () => {
                                 <NavLink to="/coach">Find Coaches</NavLink>
                             </li>
                             <li>
-                                <NavLink to="/account-settings">Account Settings</NavLink>
+                                <NavLink to="/coach-page">Dashboard</NavLink>
+                            </li>
+                            <li>
+                            <NavLink to="/account-settings" className="menu-icon">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </NavLink>
                             </li>
                         </ul>
                     </div>

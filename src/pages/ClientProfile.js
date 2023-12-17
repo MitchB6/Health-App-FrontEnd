@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { clients } from "./mock/mockClientData.js"
 import Navbar from "../components/navbar.js";
+import ClientStatistics from '../components/ClientStatistics'; 
+
 import './styling/ClientProfile.css';
 
 const ClientProfile = () => {
@@ -25,6 +27,12 @@ const ClientProfile = () => {
 
     const handleAssignWorkout = () => {
     };
+
+    const handleChatWithClient = () => {
+        console.log('Chat with', client.name);
+        // Implement chat functionality here
+
+    };
   
 
     return (
@@ -38,8 +46,11 @@ const ClientProfile = () => {
             <p>Gender: {client.gender}</p>
             <p>Location: {client.location}</p>
             <p>Workout Log: {client.workoutLog}</p>
-            
-            <button className="client-profile-button" onClick={handleAssignWorkout}>Assign Workout</button>
+            <div className="client-action-buttons">
+                    <button className="client-profile-button" onClick={handleAssignWorkout}>Assign Workout</button>
+                    <button className="client-profile-button" onClick={handleChatWithClient}>Chat</button>
+            </div>
+            {client.stats && <ClientStatistics stats={client.stats} />}
         </div>
         </div>
     );
