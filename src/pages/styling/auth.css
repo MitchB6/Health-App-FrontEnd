@@ -3,15 +3,16 @@
 
 
 
-body {
-  background-color: #fff6ea; /* Sets the background for the whole page */
+.initial-survey-page {
+  background-color: #fff6ea; 
+  min-height: 100vh; 
 }
 
 .survey-container {
   max-width: 600px;
   margin: auto;
-  padding: 50px;
-  background-color: white; /* Light witch-like color for the container */
+  padding: 20px;
+  background-color: white;
   border-radius: 10px;
   box-shadow: 0px 0px 15px rgba(0,0,0,0.2);
   font-family: 'Poppins', sans-serif;
