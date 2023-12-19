@@ -18,6 +18,9 @@ const Navbar = () => {
                             <li>
                                 <NavLink to="/statistic-logger">Statistics</NavLink>
                             </li>
+                            <li>
+                                <NavLink to="/exercise-bank">Exercises</NavLink>
+                            </li>
 
                             <li>
                                 <NavLink to="/coach">Find Coaches</NavLink>
