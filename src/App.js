@@ -16,7 +16,6 @@ import WorkoutNotebook from './pages/WorkoutNotebook.js';
 import ExerciseBank from './pages/PreloadedWorkouts.js';
 import AddWorkout from './pages/AddWorkout.js';
 import WorkoutDetails from './pages/WorkoutDetails.js';
-import ExerciseBank from './pages/PreloadedWorkouts.js';
 
 
 

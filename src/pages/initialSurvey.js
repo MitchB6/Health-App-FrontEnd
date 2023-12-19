@@ -1,4 +1,5 @@
 // initial servey for everyone, another file will be directed to the coach if necessary
+import React from 'react';
 import { useState } from 'react';
 import axios from 'axios';
 import './styling/auth.css';

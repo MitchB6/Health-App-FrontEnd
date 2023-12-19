@@ -1,4 +1,4 @@
-
+import React from 'react';
 import Navbar from "../components/navbar.js";
 import "./pages-styling/home.css";
 import Image from "../assets/banner-art-1.png";
