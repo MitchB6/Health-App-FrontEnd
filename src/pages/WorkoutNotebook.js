@@ -65,12 +65,11 @@ const WorkoutNotebook = () => {
         setIsModalOpen(true);
     }
 
-    const handleSaveEditChanges = async (workout_exercise_id, editedReps, editedSets, editedSequence, editedNotes) => {
+    const handleSaveEditChanges = async (workout_exercise_id, editedReps, editedSets, editedNotes) => {
         try {
             const response = await axios.put(`${apiUrl}/workouts/workout_exercise/${workout_exercise_id}`, {
                 reps: editedReps,
                 sets: editedSets,
-                sequence: editedSequence,
                 notes: editedNotes,
             }, {
                 headers: {
@@ -130,7 +129,7 @@ const WorkoutNotebook = () => {
                             <ul>
                                 {workout.exercises.map((exercise, index) => (
                                     <li key={index}>
-                                        <strong>{exercise.name}</strong> - Reps: {exercise.reps}, Sets: {exercise.sets}, Sequence: {exercise.sequence}, Notes: {exercise.notes}
+                                        <strong>{exercise.name}</strong> - Reps: {exercise.reps}, Sets: {exercise.sets}, Notes: {exercise.notes}
                                         <button onClick={() => handleEdit(exercise.workout_exercise_id, exercise)}>Edit</button>
                                         <button onClick={() => handleDeleteClick(exercise.workout_exercise_id)}>Delete</button>
 
@@ -144,7 +143,7 @@ const WorkoutNotebook = () => {
 
         </div>
         {isModalOpen && selectedWEID && (
-            <Modal isOpen={isModalOpen} onClose={handleCloseModal} onEdit={handleSaveEditChanges} workout_exercise_id={selectedWEID} initialReps={exercise.reps} initialSets={exercise.sets} initialSequence={exercise.sequence} initialNotes={exercise.notes} />
+            <Modal isOpen={isModalOpen} onClose={handleCloseModal} onEdit={handleSaveEditChanges} workout_exercise_id={selectedWEID} initialReps={exercise.reps} initialSets={exercise.sets} initialNotes={exercise.notes} />
         )}
         {showConfirmation && (
             <div className="confirmation-message">

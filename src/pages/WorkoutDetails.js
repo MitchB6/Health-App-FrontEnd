@@ -10,7 +10,6 @@ const WorkoutDetails = ({ setSelectedExercises }) => {
     const [selectedExerciseId, setSelectedExerciseId] = useState('');
     const [reps, setReps] = useState(0);
     const [sets, setSets] = useState(0);
-    const [sequence, setSequence] = useState(0);
     const [notes, setNotes] = useState('');
     const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -21,9 +20,8 @@ const WorkoutDetails = ({ setSelectedExercises }) => {
         console.log('Selected Exercise:', selectedExercise);
         console.log('Reps:', reps);
         console.log('Sets:', sets);
-        console.log('Sequence:', sequence);
         console.log('Notes:', notes);
-        if (selectedExercise && reps && sets && sequence && notes && exercises.length < 8) {
+        if (selectedExercise && reps && sets && notes && exercises.length < 8) {
             const accessToken = localStorage.getItem('accessToken');
             const refreshToken = localStorage.getItem('refreshToken');
     
@@ -33,14 +31,13 @@ const WorkoutDetails = ({ setSelectedExercises }) => {
             }
 
             const { exercise_id } = selectedExercise;
-            const newExercise = { exercise_id, reps, sets, sequence, notes };
+            const newExercise = { exercise_id, reps, sets, notes };
             setExercises([...exercises, newExercise]);
 
             axios.post(`${apiUrl}/workouts/${workoutId}/workout_exercises`, {
                 exercise_id: exercise_id,
                 reps: reps,
                 sets: sets,
-                sequence: sequence,
                 notes: notes,
             }, {
                 headers: {
@@ -55,7 +52,6 @@ const WorkoutDetails = ({ setSelectedExercises }) => {
                     setSelectedExercise(null);
                     setReps(0);
                     setSets(0);
-                    setSequence(0);
                     setNotes('');
                 })
                 .catch(error => {
@@ -82,10 +78,7 @@ const WorkoutDetails = ({ setSelectedExercises }) => {
                 Reps:
                 <input type="number" value={reps} onChange={(e) => setReps(e.target.value)} />
             </label>
-            <label>
-                Sequence:
-                <input type="number" value={sequence} onChange={(e) => setSequence(e.target.value)} />
-            </label>
+
             <label>
                 Notes:
                 <input type="text" value={notes} onChange={(e) => setNotes(e.target.value)} />
