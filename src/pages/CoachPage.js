@@ -1,5 +1,4 @@
 import { useState, useContext } from 'react';
-import React from 'react';
 import ClientList from './ClientList';
 import ClientDetails from './ClientDetails';
 import { clients, pendingRequests } from './mock/mockClientData.js';

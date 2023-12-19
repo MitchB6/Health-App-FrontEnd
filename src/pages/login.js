@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import React from 'react';
 import AuthSwitcher from '../components/authSwitch.js';
 // import api from '../api.js';
 import './pages-styling/auth.css'

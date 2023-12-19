@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import React from 'react';
 import { useParams } from 'react-router-dom';
 import { clients } from "./mock/mockClientData.js"
 import Navbar from "../components/navbar.js";

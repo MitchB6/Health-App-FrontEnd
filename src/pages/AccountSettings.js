@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import React from 'react';
 import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
 import './styling/AccountSettings.css';

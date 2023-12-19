@@ -1,5 +1,4 @@
 import { createContext, useState } from 'react';
-import React from 'react';
 import Navbar from "../components/navbar.js";
 import MetricsChart from '../components/MetricsChart.js';
 import './styling/StatisticLogger.css';
