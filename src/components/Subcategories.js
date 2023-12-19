@@ -1,4 +1,4 @@
-// import React from "react";
+import './components-styling/subcategories.css';
 
 const Subcategories = ({ subcategories, handleSubcategoryClick }) => {
 
@@ -6,15 +6,21 @@ const Subcategories = ({ subcategories, handleSubcategoryClick }) => {
         return null;
 }
     return (
-        <div className="subcategories-container">
-            <h2 className="subcategory">Subcategories</h2>
-            <ul className="list-of-subcategories">
-                {subcategories.map((subcategory) => (
-                    <li className="subcategory" key={subcategory} onClick={() => handleSubcategoryClick(subcategory)} >
-                        {subcategory}
-                    </li>
-                ))}
-            </ul>
+        <div className="subcategoriess-container">
+            <table className="subcategories-table">
+                <thead>
+                    <tr>
+                        <th colSpan="1">Types</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {subcategories.map((subcategory) => (
+                        <tr className="subcategory" key={subcategory} onClick={() => handleSubcategoryClick(subcategory)}>
+                            <td>{subcategory}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 };
