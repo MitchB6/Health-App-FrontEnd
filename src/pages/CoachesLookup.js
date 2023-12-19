@@ -1,5 +1,4 @@
-import React, { useState, useContext, useEffect }  from 'react';
-// import mockCoaches from './mockCoachesData'; 
+import { useState, useContext, useEffect }  from 'react';
 import { CoachContext } from './CoachContext';
 import './styling/CoachLookup.css';
 import Navbar from "../components/navbar.js";
@@ -56,9 +55,6 @@ const CoachesLookup = () => {
 
   const handleSearchClick = () => {
     const tempFilteredCoaches = coaches.filter(coach =>
-      coach.first_name?.toLowerCase().includes(searchQuery) ||
-      coach.last_name?.toLowerCase().includes(searchQuery) ||
-      coach.schedule_general?.toLowerCase().includes(searchQuery) ||
       coach.location?.toLowerCase().includes(searchQuery) ||
       coach.qualifications?.toLowerCase().includes(searchQuery) ||
       coach.price?.toString().toLowerCase().includes(searchQuery)
@@ -108,7 +104,7 @@ const CoachesLookup = () => {
               type="text" 
               value={searchQuery} 
               onChange={handleSearchChange} 
-              placeholder="Search by name, availability, location, qualifications, cost" 
+              placeholder="Search by location, qualifications, cost" 
             />
             <button className="search-button" onClick={handleSearchClick}>Search</button>
           </div>

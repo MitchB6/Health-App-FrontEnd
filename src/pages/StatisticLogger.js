@@ -1,64 +1,92 @@
-import React, { useState } from 'react';
+import { createContext, useState } from 'react';
 import Navbar from "../components/navbar.js";
+import MetricsChart from '../components/MetricsChart.js';
 import './styling/StatisticLogger.css';
-
-const LoggerForm = () => {
-    const [weight, setWeight] = useState('');
-    const [caloriesIn, setCaloriesIn] = useState('');
-    const [caloriesOut, setCaloriesOut] = useState('');
-    const [emotionalWellness, setEmotionalWellness] = useState('');
-    const [physicalWellness, setPhysicalWellness] = useState('');
+import { jwtDecode } from "jwt-decode";
+import axios from 'axios';
+const StatisticLogger = () => {
+    const [calories_intake, setCaloriesIn] = useState('');
+    const [hydration_level, setWaterIntake] = useState(''); 
+    const [mood_level, setEmotionalWellness] = useState('');
     const [logEntries, setLogEntries] = useState([]);
+    const [currentMoodEmoji, setCurrentMoodEmoji] = useState('😊');
+    const [member_id, setMember_id] = useState(0);
 
-
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-
+        const accessToken = localStorage.getItem('accessToken');
+        const refreshToken = localStorage.getItem('refreshToken');
+        if (!accessToken || !refreshToken) {
+          console.log('No access token or refresh token');
+          return;
+        }
         const newEntry = {
             date: new Date().toLocaleDateString(),
-            weight,
-            caloriesIn,
-            caloriesOut,
-            emotionalWellness,
-            physicalWellness,
+            calories_intake: parseFloat(calories_intake),
+            hydration_level: parseFloat(hydration_level), 
+            mood_level
         };
+        try {
+            const apiUrl = process.env.REACT_APP_API_URL;
+            const response = await axios.post(`${apiUrl}/survey/{survey_id}`, newEntry, {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`
+                }
+            });
+            if (response.status === 200) {
+                console.log('Statistics logged successfully');
+            }
+        } catch (error) {
+            console.error('Error logging statistics:', error);
+        }
 
         setLogEntries([...logEntries, newEntry]);
-
-    
-        setWeight('');
         setCaloriesIn('');
-        setCaloriesOut('');
+        setWaterIntake(''); 
         setEmotionalWellness('');
-        setPhysicalWellness('');
+    };
+
+    const handleMoodChange = (e) => {
+        setEmotionalWellness(e.target.value);
+        setCurrentMoodEmoji(e.target.options[e.target.selectedIndex].text.split(' ')[0]);
     };
 
     return (
         <div>
-        <Navbar/>
-        <div className="statistic-logger">
-            <h1>Statistic Logger</h1>
-            <form onSubmit={handleSubmit}>
-                <input type="number" value={weight} onChange={(e) => setWeight(e.target.value)} placeholder="Weight" />
-                <input type="number" value={caloriesIn} onChange={(e) => setCaloriesIn(e.target.value)} placeholder="Calories In" />
-                <input type="number" value={caloriesOut} onChange={(e) => setCaloriesOut(e.target.value)} placeholder="Calories Out" />
-                <input type="text" value={emotionalWellness} onChange={(e) => setEmotionalWellness(e.target.value)} placeholder="Emotional Wellness" />
-                <input type="text" value={physicalWellness} onChange={(e) => setPhysicalWellness(e.target.value)} placeholder="Physical Wellness" />
-                <button type="submit">Submit</button>
-            </form>
-            {logEntries.map((entry, index) => (
-                <div key={index}>
-                    <p>Date: {entry.date}</p>
-                    <p>Weight: {entry.weight}</p>
-                    <p>Calories In: {entry.caloriesIn}</p>
-                    <p>Calories Out: {entry.caloriesOut}</p>
-                    <p>Emotional Wellness: {entry.emotionalWellness}</p>
-                    <p>Physical Wellness: {entry.physicalWellness}</p>
+            <Navbar />
+            <div className="statistic-logger">
+                <h1>Statistic Logger</h1>
+                <form onSubmit={handleSubmit}>
+                <div className="input-statistic-container">
+                    <span className="input-statistic-icon">🔥</span> {/* Calories Icon */}
+                    <input type="number" value={calories_intake} onChange={(e) => setCaloriesIn(e.target.value)} placeholder="Calories In" />
+                    <span className="input-statistic-unit">cal</span>
                 </div>
-            ))}
-        </div>
+                <div className="input-statistic-container">
+                    <span className="input-statistic-icon">💧</span> {/* Water Intake Icon */}
+                    <input type="number" value={hydration_level} onChange={(e) => setWaterIntake(e.target.value)} placeholder="Water Intake (in ounces)" />
+                    <span className="input-statistic-unit">oz</span>
+                </div>
+                    <div className="input-statistic-container">
+                        <span className="input-statistic-icon">{currentMoodEmoji}</span> {/* Mood Icon */}
+                        <select value={mood_level} onChange={handleMoodChange}>
+                            <option value="">Select Emotional Wellness</option>
+                            <option value="😃 Happy">😃 Happy</option>
+                            <option value="😐 Neutral">😐 Neutral</option>
+                            <option value="😔 Sad">😔 Sad</option>
+                            <option value="😠 Angry">😠 Angry</option>
+                            <option value="😌 Relaxed">😌 Relaxed</option>
+                        </select>
+                        <span className="input-statistic-unit"></span>
+                    </div>
+    
+                    <button type="submit">Submit</button>
+                </form>
+                <MetricsChart logEntries={logEntries} />
+            </div>
         </div>
     );
-};
+    
+    };
 
-export default LoggerForm;
+export default StatisticLogger;

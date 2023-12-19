@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import ReactPaginate from 'react-paginate';
 import './styling/admin.css';
 
 const Admin = () => {
   const [showCoaches, setShowCoaches] = useState(false);
-  const [showExercises, setShowExercises] = useState(false);
+  const [showExercises, setShowExercises] = useState(true);
   const [coaches, setCoaches] = useState([]);
   const [exercises, setExercises] = useState([]);
 

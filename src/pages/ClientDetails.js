@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 
 const ClientDetails = ({ client, onAssignWorkout }) => {
     if (!client) return <div>Select a client to see details</div>;
