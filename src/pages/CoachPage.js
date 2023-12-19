@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ClientList from './ClientList';
 import ClientDetails from './ClientDetails';
 import Navbar from "../components/navbar.js";
+import { CoachContext } from './CoachContext';
 import axios from 'axios';
 import './styling/CoachPage.css';
 
@@ -20,18 +21,31 @@ const CoachPage = () => {
                     headers: { 'Authorization': `Bearer ${accessToken}` }
                 });
                 setClients(clientsResponse.data);
-
+    
                 const requestsResponse = await axios.get(`${apiUrl}/clients/requests`, {
                     headers: { 'Authorization': `Bearer ${accessToken}` }
                 });
-                setPendingRequests(requestsResponse.data);
+    
+                // Check if the response is an array
+                if (Array.isArray(requestsResponse.data)) {
+                    setPendingRequests(requestsResponse.data);
+                } 
+                // Check if the response is an object with a requests array
+                else if (requestsResponse.data && Array.isArray(requestsResponse.data.requests)) {
+                    setPendingRequests(requestsResponse.data.requests);
+                } 
+                else {
+                    console.error("Unexpected format for pending requests:", requestsResponse.data);
+                    // Optionally set an error state or handle the unexpected format here
+                }
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
         };
         getClients();
     }, []);
-
+    
+    
     const handleSelectClient = (client) => {
         console.log('Selected client:', client);
         setSelectedClient(client);
@@ -73,7 +87,7 @@ const CoachPage = () => {
                 <h1>Coach Dashboard</h1>
                 <div className="client-requests">
                     <h2>Pending Client Requests</h2>
-                    {pendingRequestsState.map((request) => (
+                    {Array.isArray(pendingRequestsState) && pendingRequestsState.map((request) => (
                         <div key={request.id}>
                             <span>{request.name}</span>
                             <div className="button-container-coach">

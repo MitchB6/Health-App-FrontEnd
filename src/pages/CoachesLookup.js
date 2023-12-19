@@ -29,7 +29,7 @@ const CoachesLookup = () => {
             'Authorization': `Bearer ${accessToken}`
           }
         });
-        // console.log(response);
+        console.log(response);
         if (response.status === 200) {
           console.log("Get coaches successful");
           // console.log(response.data);
