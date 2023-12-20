@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+.statistic-logger {
+    font-family: "Poppins", sans-serif;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 800px;
+    margin: 40px auto;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+}
+
+.statistic-logger form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.statistic-logger label {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.input-statistic-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.input-statistic-icon {
+    position: absolute;
+    left: 10px; 
+    font-size: 20px; 
+    
+}
+
+
+.input-statistic-unit {
+    position: absolute;
+    right: 10px; 
+    font-size: 14px; 
+}
+
+.statistic-logger input,
+.statistic-logger select {
+    padding-left: 40px; 
+    padding-right: 30px; 
+    
+}
+
+
+.statistic-logger input:focus,
+.statistic-logger select:focus {
+    border-color: lightgreen; 
+}
+
+.statistic-logger button {
+    padding: 8px 18px;
+    color: lightgreen;
+    border: 2px solid lightgreen;
+    background-color: white;
+    border-radius: 8px;
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+    &:hover {
+        background-color: lightgreen;
+        color: white;
+    }
+}
+
+.statistic-logger .entry-display {
+    margin-top: 20px;
+}
+
+.statistic-logger .entry-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}

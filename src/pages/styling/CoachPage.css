@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+.coach-page {
+    font-family: 'Poppins', sans-serif;
+    padding: 20px;
+    max-width: 1000px;
+    margin: 40px auto;
+}
+
+.coach-page h1 {
+    font-family: "Poppins", sans-serif;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.client-requests, .client-list, .client-details {
+    font-family: "Poppins", sans-serif;
+    border-radius: 5px;
+    background-color: #fff6ea;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.client-requests h2, .client-list h2, .client-details h2 {
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.client-requests div, .client-list div {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.client-requests span, .client-list span {
+    font-size: 16px;
+}
+.button-container-coach {
+    display: flex;
+    align-items: center; /* Align buttons vertically */
+    justify-content: flex-start; /* Align buttons to the start (left) */
+    gap: 10px; /* Space between buttons */
+}
+
+.client-accept-button {
+    padding: 8px 18px;
+    color: lightgreen;
+    border: 2px solid lightgreen;
+    background-color: white;
+    border-radius: 8px;
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+    &:hover {
+        background-color: lightgreen;
+        color: white;
+    }
+}
+.client-decline-button {
+    padding: 8px 18px;
+    border-radius: 8px;
+    color: rgb(249, 50, 96);
+    border: none;
+    background-color: transparent;  
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+    &:hover {
+        background-color: rgb(249, 50, 96);;
+        color: white;
+    }
+}
+
+
+.client-details {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+    .client-requests div, .client-list div {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

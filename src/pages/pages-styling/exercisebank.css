@@ -1,0 +1,74 @@
+
+
+ul {
+    list-style-type: none;
+}
+li {
+    list-style-type: none;
+    margin-bottom: 10px;
+}
+.exercise-bank {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+
+  }
+
+.eb-title {
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    margin-bottom: 30px;
+    margin-top: 50px;
+}
+
+.categories {
+    justify-content: flex-start;
+    align-items:flex-start;
+
+}
+.exercise-bank-container {
+    display: flex;
+}
+  .sidebar {
+    width: 200px;
+    padding-left: 5px;
+    cursor: pointer;
+    margin-left:0px;
+    justify-content: flex-start;
+    align-items:flex-start;
+  }
+  .subcategories-container {
+
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+  }
+  .subcategories {
+    cursor: pointer;
+    white-space: nowrap;
+    margin-top: -2px;
+  }
+  .subcategories-exercises-container {
+    display: flex;
+    margin-left: 10px;
+    margin-top: 0px;
+  }
+.exercise-description-container {
+    display: flex;
+    }
+  .exercise-name {
+    display: flex;
+    cursor: pointer;
+    padding-right: 30px;
+    white-space: nowrap;
+  }
+  
+
+    /* Exercise Description styles */
+  .exercise-description {
+    margin-left: -70px;
+  }
+  
