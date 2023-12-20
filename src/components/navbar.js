@@ -25,13 +25,8 @@ const Navbar = () => {
                             <li>
                                 <NavLink to="/coach-page">Dashboard</NavLink>
                             </li>
-                            <li>
-                            <NavLink to="/account-settings" className="menu-icon">
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                            </NavLink>
-                            </li>
+                           
+                         
                         </ul>
                     </div>
                 </div>

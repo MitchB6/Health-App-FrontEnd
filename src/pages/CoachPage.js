@@ -1,11 +1,11 @@
-import { useState, useContext } from 'react';
-import React from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import ClientList from './ClientList';
 import ClientDetails from './ClientDetails';
 import { clients, pendingRequests } from './mock/mockClientData.js';
 import mockCoaches from './mock/mockCoachesData.js';
 import { CoachContext } from './CoachContext';
 import Navbar from "../components/navbar.js";
+import axios from 'axios';
 import './styling/CoachPage.css';
 
 
@@ -66,4 +66,3 @@ const CoachPage = () => {
 };
 
 export default CoachPage;
-

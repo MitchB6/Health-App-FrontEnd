@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import React from 'react';
-import Card from "../components/Card.js";
+//import Card from "../components/Card.js";
 import Navbar from "../components/navbar";
 
 
 
 const WeeklyWorkoutPlan = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [cards, setCards] = useState([]);
+  //  const [cards, setCards] = useState([]);
     const [currentWeek, setCurrentWeek] = useState(new Date());
     const [workoutData, setWorkoutData] = useState({});
     const [isEditing, setIsEditing] = useState(false);
@@ -80,12 +80,8 @@ const WeeklyWorkoutPlan = () => {
                 <button className="next-week-button" onClick={handleNextWeek}>→</button>
             </div>
             <div className="day-cards">
-                {daysOfWeekCards.map((cardData, index) => (
-                    <Card key={index} cardData={cardData} onChange={(e) => handleInputChange(cardData, e)} />
-                ))}
-                {cards.map((cardData, index) => (
-                    <Card key={index} cardData={cardData} onChange={(e) => handleInputChange(cardData, e)} />
-                ))}
+               
+           
             </div>
         </div>
     );

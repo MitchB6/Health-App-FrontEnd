@@ -82,6 +82,7 @@ const InitialSurvey = () => {
     return options;
   };
   return(
+    <div className="initial-survey-page">
     <div className='survey-container'>
       <h2>Initial Survey</h2>
       <form onSubmit={handleSubmit}>
@@ -207,6 +208,7 @@ const InitialSurvey = () => {
         <br />
         <input type="submit" value="Submit" className='submit-button' />
       </form>
+    </div>
     </div>
   )
 }

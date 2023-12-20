@@ -225,12 +225,16 @@ const Admin = () => {
   }
 
   return(
-    <div>
-      <h1>Admin Page</h1>
-      <button onClick={handleShowCoaches}>Show Coaches</button>
-      <button onClick={handleShowExercises}>Show Exercises</button>
+    <div className="admin-container">
+      <h1 className="admin-header">Admin Page</h1>
+
+      <div className="button-group">
+      <button className="button-ShowCoaches"onClick={handleShowCoaches}>Show Coaches</button>
+      <button className="button-ShowExercises"onClick={handleShowExercises}>Show Exercises</button>
+      </div>
+
       {showCoaches &&
-      <div>
+      <div className="table-container">
         <h2>Coaches</h2>
         <table>
           <thead>
@@ -260,8 +264,8 @@ const Admin = () => {
                 <td>{coach.schedule_general}</td>
                 <td>{coach.qualifications}</td>
                 <td>
-                  <button onClick={() => handleApprove(coach.coach_id)}>Accept</button>
-                  <button onClick={() => handleDeny(coach.coach_id)}>Deny</button>
+                  <button className="approve-button"onClick={() => handleApprove(coach.coach_id)}>Accept</button>
+                  <button className="deny-button"onClick={() => handleDeny(coach.coach_id)}>Deny</button>
                 </td>
               </tr>
             ))}
@@ -269,13 +273,13 @@ const Admin = () => {
         </table>
       </div>}
       {showExercises &&
-      <div>
+      <div className="table-container">
         <h2>Exercises</h2>
-        <p><button onClick={handleAddExercise}>Add Exercise</button></p>
+        <p><button className="button-AddExercise"onClick={handleAddExercise}>Add Exercise</button></p>
         <table>
           <thead>
             <tr>
-              <th>Exercise Name</th>
+              <th >Exercise Name</th>
               <th>Exercise Description</th>
               <th>Exercise Equipment</th>
               <th>Exercise Muscle Group</th>
@@ -290,8 +294,8 @@ const Admin = () => {
                 <td>{exercise.equipment}</td>
                 <td>{exercise.muscle_group}</td>
                 <td>
-                  <button onClick={() => handleActivate(exercise.exercise_id)}>Activate</button>
-                  <button onClick={() => handleDeactivate(exercise.exercise_id)}>Deactivate</button>
+                  <button className="activate-button" onClick={() => handleActivate(exercise.exercise_id)}>Activate</button>
+                  <button className="deactivate-button"onClick={() => handleDeactivate(exercise.exercise_id)}>Deactivate</button>
                   </td>
               </tr>
             ))}
