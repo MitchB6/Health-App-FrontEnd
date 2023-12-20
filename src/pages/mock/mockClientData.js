@@ -8,8 +8,8 @@ const clients = [
         gender: 'Male',
         location: 'Newark, NJ, 07101',
         stats: [
-            { date: '2023-12-01', calories_intake: 2200, hydration_level: 64, mood_level: '😃 Happy' },
-            { date: '2023-12-02', calories_intake: 2100, hydration_level: 70, mood_level: '😐 Neutral' },
+            { date: '2023-12-01', calories_intake: 2200, hydration_level: 64, mood_level: '5' },
+            { date: '2023-12-02', calories_intake: 2100, hydration_level: 70, mood_level: '3' },
             // More log entries...
         ]
     },
@@ -25,8 +25,8 @@ const pendingRequests = [
         gender: 'Female',
         location: 'New York, NY, 10001',
         stats: [
-            { date: '2023-12-01', calories_intake: 1900, hydration_level: 55, mood_level: '😌 Relaxed' },
-            { date: '2023-12-02', calories_intake: 2000, hydration_level: 60, mood_level: '😔 Sad' },
+            { date: '2023-12-01', calories_intake: 1900, hydration_level: 55, mood_level: '4' },
+            { date: '2023-12-02', calories_intake: 2000, hydration_level: 60, mood_level: '2' },
             // More log entries...
         ]
     },

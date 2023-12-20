@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Signup from './pages/signup.js';
 import Login from './pages/login.js';
 import Home from './pages/home.js'; 
-import AccountSettings from './pages/AccountSettings.js';
 import CoachesLookup from './pages/CoachesLookup.js'; 
 import CoachPage from './pages/CoachPage.js'; 
 import { CoachProvider } from './pages/CoachContext.js'; 
@@ -35,7 +34,6 @@ function App() {
           <Route path="/preloaded-workouts" element={<ExerciseBank />} />
           <Route path="/signup" element={<Signup onSwitch={handleSwitch} />} />
           <Route path="/login" element={<Login onSwitch={handleSwitch} />} />
-          <Route path="/account-settings" element={<AccountSettings />} />
           <Route path="/statistic-logger" element={<StatisticLogger />} />
           <Route path="/coach" element={<CoachesLookup />} />
           <Route path="/coach-page" element={<CoachPage />} />
