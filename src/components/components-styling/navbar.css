@@ -35,10 +35,11 @@ body {
     position: relative;
 }
 
-.app-name {
+.app-name a {
     font-weight: 700;
     font-size: 20px;
     text-decoration: none;
+    color: black;
 }
 
 .nav-elements ul {

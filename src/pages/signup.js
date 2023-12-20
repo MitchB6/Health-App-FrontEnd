@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import AuthSwitcher from '../components/authSwitch.js';
 import './pages-styling/auth.css';
 import axios from 'axios';

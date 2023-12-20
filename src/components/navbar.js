@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import React from 'react';
+// import React from 'react';
 
 import './components-styling/navbar.css';
 
@@ -8,13 +8,10 @@ const Navbar = () => {
         <nav className='navbar'>
             <div className='container'>
                 <div className='app-name'>
-                    Fitness & Health
+                    <NavLink to="/">FIT THIS</NavLink>
                 </div>
                     <div className='nav-elements'>
                         <ul>
-                            <li>
-                                <NavLink to="/">Home</NavLink>
-                            </li>
                             <li>
                                 <NavLink to="/workout-notebook">Notebook</NavLink>
                             </li>

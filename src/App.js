@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Signup from './pages/signup.js';
 import Login from './pages/login.js';
@@ -14,7 +14,13 @@ import InitialSurvey from './pages/initialSurvey.js';
 import WeeklyWorkoutPlan from './pages/WeeklyWorkoutPlan.js';
 import WorkoutNotebook from './pages/WorkoutNotebook.js';
 import ExerciseBank from './pages/PreloadedWorkouts.js';
+<<<<<<< HEAD
 import Chat from './pages/Chat.js';
+=======
+import AddWorkout from './pages/AddWorkout.js';
+import WorkoutDetails from './pages/WorkoutDetails.js';
+
+>>>>>>> 6eef075395a2b6fe7dcb9455feb5901bdf3d0837
 
 
 function App() {
@@ -33,10 +39,13 @@ function App() {
           <Route path="/weekly-workout-plan" element={<WeeklyWorkoutPlan />} />
           <Route path="/workout-notebook" element={<WorkoutNotebook />} />
           <Route path="/preloaded-workouts" element={<ExerciseBank />} />
+          <Route path="/add-workout/" element={<AddWorkout />} />
+          <Route path="/workout-details/:workoutId/" element={<WorkoutDetails />} />
           <Route path="/signup" element={<Signup onSwitch={handleSwitch} />} />
           <Route path="/login" element={<Login onSwitch={handleSwitch} />} />
           <Route path="/account-settings" element={<AccountSettings />} />
           <Route path="/statistic-logger" element={<StatisticLogger />} />
+          <Route path="/exercise-bank" element={<ExerciseBank />} />
           <Route path="/coach" element={<CoachesLookup />} />
           <Route path="/chat" element={<Chat/>}/>
           <Route path="/coach-page" element={<CoachPage />} />
