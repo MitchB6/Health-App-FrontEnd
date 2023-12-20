@@ -1,37 +1,71 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import Navbar from "../components/navbar.js";
-import ClientStatistics from '../components/ClientStatistics'; 
+import axios from 'axios';
+import Navbar from "../components/navbar";
+import ClientStatistics from '../components/ClientStatistics';
 import './styling/ClientProfile.css';
-import { clients } from './mock/mockClientData.js';
 
 const ClientProfile = () => {
     const { clientId } = useParams();
     const [client, setClient] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    const apiUrl = process.env.REACT_APP_API_URL;
+    const accessToken = localStorage.getItem('accessToken');
 
     useEffect(() => {
-        // Function to fetch client data based on clientId
-        const fetchClientData = () => {
-            // Find the client in the mock data based on the clientId
-            const foundClient = clients.find(client => client.id === parseInt(clientId));
-            setClient(foundClient);
+        const fetchClientData = async () => {
+            try {
+                const response = await axios.get(`${apiUrl}/clients/`, {
+                    headers: { 'Authorization': `Bearer ${accessToken}` }
+                });
+                setClient(response.data);
+                setLoading(false);
+            } catch (err) {
+                console.error("Error fetching client data:", err);
+                setError(err);
+                setLoading(false);
+            }
         };
 
         fetchClientData();
-    }, [clientId]);
+    }, [clientId, apiUrl, accessToken]);
 
-    if (!client) {
+    const handleAssignWorkout = async (workoutDetails) => {
+        try {
+          const workoutResponse = await axios.post(`${apiUrl}/workouts/`, {
+            workout_name: workoutDetails.workoutName,
+          }, {
+            headers: { 'Authorization': `Bearer ${accessToken}` }
+          });
+      
+          const workoutId = workoutResponse.data.workout_id;
+      
+          await axios.post(`${apiUrl}/workouts/member/${clientId}`, {
+            workout_id: workoutId,
+          }, {
+            headers: { 'Authorization': `Bearer ${accessToken}` }
+          });
+      
+          console.log('Workout assigned to client successfully');
+        } catch (error) {
+          console.error('Error assigning workout:', error);
+        }
+      };
+      
+
+    if (loading) {
         return <div>Loading...</div>;
     }
 
-    const handleAssignWorkout = () => {
-        // Implement workout assignment functionality here
-    };
+    if (error) {
+        return <div>Error loading client profile.</div>;
+    }
 
-    const handleChatWithClient = () => {
-        console.log('Chat with', client.name);
-        // Implement chat functionality here
-    };
+    if (!client) {
+        return <div>Client not found.</div>;
+    }
 
     return (
         <div>
@@ -45,7 +79,6 @@ const ClientProfile = () => {
                 <p>Location: {client.location}</p>
                 <div className="client-action-buttons">
                     <button className="client-profile-button" onClick={handleAssignWorkout}>Assign Workout</button>
-                    <button className="client-profile-button" onClick={handleChatWithClient}>Chat</button>
                 </div>
                 {client.stats && <ClientStatistics stats={client.stats} />}
             </div>

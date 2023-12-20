@@ -1,11 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const ClientList = ({ clients}) => {
+const ClientList = ({ clients }) => {
     const navigate = useNavigate();
 
-    const handleSelectClient = clientId => {
-        navigate(`/client-profile/${clientId}`);
+    const handleSelectClient = memberId => {
+        navigate(`/client-profile/${memberId}`);
     };
 
     return (
@@ -13,8 +13,8 @@ const ClientList = ({ clients}) => {
             <h2>Clients</h2>
             <ul>
                 {clients.map(client => (
-                    <li key={client.id} onClick={() => handleSelectClient(client.id)}>
-                        {client.name}
+                    <li key={client.member_id} onClick={() => handleSelectClient(client.member_id)}>
+                        {client.first_name} {client.last_name}
                     </li>
                 ))}
             </ul>
