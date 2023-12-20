@@ -9,13 +9,20 @@ import { act } from 'react-dom/test-utils';
 jest.mock('axios');
 
 describe('Admin Component', () => {
+  process.env.REACT_APP_API_URL = 'http://localhost:5000';
   const mockAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwMzA0MzE4NywianRpIjoiYTZjZWIxZmMtMDIyNi00N2NhLTg1MzgtNDA2YmIyMjBiYjRlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MywibmJmIjoxNzAzMDQzMTg3LCJleHAiOjE3MDMwNDY3ODcsInJvbGVfaWQiOjJ9.mOquznnaWYmrwYdRrJFk868LftF3fvQmfvyA82QnnWs';
-  beforeEach(() => {
+  beforeEach(async () => {
     window.localStorage.setItem('accessToken', mockAccessToken);
     window.localStorage.setItem('refreshToken', mockAccessToken);
-    axios.put.mockResolvedValue({ status: 200 });
-    axios.post.mockResolvedValue({ status: 200 });
-    axios.get.mockResolvedValue((url) => {
+    jest.spyOn(window, 'prompt').mockImplementation((message) => {
+      if(message === 'Exercise name:') return 'Name4';
+      if(message === 'Exercise description:') return 'Description4';
+      if(message === 'Exercise equipment:') return 'Equipment4';
+      if(message === 'Exercise muscle group:') return 'MuscleGroup4';
+    });
+    axios.put.mockImplementation({ status: 200 });
+    axios.post.mockImplementation({ status: 201 });
+    axios.get.mockImplementation((url) => {
       if(url.includes('admin')) {
         return Promise.resolve({
           status: 200,
@@ -58,7 +65,7 @@ describe('Admin Component', () => {
             }
           ]
         })
-      } else if(url.includes('exercises')) {
+      } else if(url.includes('exercise')) {
         return Promise.resolve({
           status: 200,
           data: [
@@ -91,6 +98,9 @@ describe('Admin Component', () => {
       }
     });
   });
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
   it('should render the admin page', async () => {
     render(
@@ -110,11 +120,10 @@ describe('Admin Component', () => {
     });
     await waitFor(() => expect(screen.getByText("Admin Page")).toBeInTheDocument());
     fireEvent.click(screen.getByRole('button', { name: 'Show Coaches' }));
-    screen.debug();
-    await waitFor(() => expect(screen.getByText('Coaches')).toBeInTheDocument(), { timeout: 2000 });
-    await waitFor(() => expect(screen.getByText('FirstName1')).toBeInTheDocument(), { timeout: 2000 });
-    await waitFor(() => expect(screen.getByText('FirstName2')).toBeInTheDocument(), { timeout: 2000 });
-    await waitFor(() => expect(screen.getByText('FirstName3')).toBeInTheDocument(), { timeout: 2000 });
+    await waitFor(() => expect(screen.getByText('Coaches')).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText('FirstName1')).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText('FirstName2')).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText('FirstName3')).toBeInTheDocument());
   });
   it('should render and click the show exercises button to display exercises', async () => {
     await act(async () => {
@@ -125,10 +134,23 @@ describe('Admin Component', () => {
       )
     });
     await waitFor(() => expect(screen.getByText("Admin Page")).toBeInTheDocument());
+    fireEvent.click(screen.getByRole('button', { name: 'Show Coaches' }));
     fireEvent.click(screen.getByRole('button', { name: 'Show Exercises' }));
     await waitFor(() => expect(screen.getByText('Exercises')).toBeInTheDocument());
     await waitFor(() => expect(screen.getByText('Name1')).toBeInTheDocument());
     await waitFor(() => expect(screen.getByText('Name2')).toBeInTheDocument());
     await waitFor(() => expect(screen.getByText('Name3')).toBeInTheDocument());
+  });
+  it("should render and click add exercise button to add a new exercise", async () => {
+    await act(async () => {
+      render(
+        <Router>
+          <Admin />
+        </Router>
+      )
+    });
+    await waitFor(() => expect(screen.getByText("Admin Page")).toBeInTheDocument());
+    fireEvent.click(screen.getByRole('button', { name: 'Add Exercise' }));
+    await waitFor(() => expect(screen.getByText('Name4').toBeInTheDocument()));
   });
 });

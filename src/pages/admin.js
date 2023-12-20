@@ -115,7 +115,7 @@ const Admin = () => {
         'Authorization': `Bearer ${accessToken}`
       }
     });
-    console.log(response);
+    // console.log(response);
     if (response.status === 200) {
       console.log("Coach denied");
       updateCoachStatus(coach_id, false);
