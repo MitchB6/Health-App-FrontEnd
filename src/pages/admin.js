@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import React from 'react';
 import axios from 'axios';
 import ReactPaginate from 'react-paginate';
 import './styling/admin.css';

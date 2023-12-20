@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import React from 'react';
 import AuthSwitcher from '../components/authSwitch.js';
 // import api from '../api.js';
 import './pages-styling/auth.css'
@@ -10,6 +11,7 @@ const Login = ({ onSwitch }) => {
   const [role, setRole] = useState(0);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const navigate = useNavigate();
 
@@ -36,6 +38,7 @@ const Login = ({ onSwitch }) => {
           }
         } else {
           console.log('Login failed');
+          setErrorMessage('The email or password you entered is incorrect');
         }
       } catch (err) {
         console.log(err);
@@ -71,6 +74,9 @@ const Login = ({ onSwitch }) => {
         </div>
       </label>
       <br />
+      <div className='error-message'>
+        {errorMessage && <p>{errorMessage}</p>}
+      </div>
       <button onClick={handleLogin} className='submit-button'>Login</button>
       <AuthSwitcher isLogin={true} onSwitch={onSwitch} />
     </div>

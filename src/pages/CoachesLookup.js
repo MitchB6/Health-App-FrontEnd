@@ -1,4 +1,5 @@
-import React, { useState, useContext, useEffect }  from 'react';
+import { useState, useContext, useEffect }  from 'react';
+import React from 'react';
 import { CoachContext } from './CoachContext';
 import './styling/CoachLookup.css';
 import Navbar from "../components/navbar.js";
