@@ -34,6 +34,7 @@ const InitialSurvey = () => {
       return;
     }
     const birthday = `${year}-${month}-${day}`;
+    const height = Number(heightFeet) * 12 + Number(heightInches);
     const surveyData = {
       first_name: firstName,
       last_name: lastName,
@@ -41,11 +42,12 @@ const InitialSurvey = () => {
       state: state,
       zip_code: zip,
       birthdate: birthday,
-      height: (heightFeet * 12 + heightInches),
+      height: height,
       weight: weight,
       age: age,
       gender: gender
     }
+    console.log(height);
     try{
       const apiUrl = process.env.REACT_APP_API_URL;
       const response = await axios.put(`${apiUrl}/member/settings`, surveyData, {
@@ -59,7 +61,7 @@ const InitialSurvey = () => {
       if (response.status === 200) {
         console.log("Survey successful");
         // console.log(response.data);
-        navigate('/');
+        navigate('/workout-notebook');
       } else {
         console.log('Survey failed');
       }

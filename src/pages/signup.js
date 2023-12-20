@@ -40,7 +40,11 @@ const Signup = ({ onSwitch }) => {
           // console.log(loginResponse.data);
           localStorage.setItem('accessToken', loginResponse.data['access token']);
           localStorage.setItem('refreshToken', loginResponse.data['refresh token']);
-          navigate('/initial-survey');
+          if(role === '1'){
+            navigate('/initial-survey-coach');
+          }else{
+            navigate('/initial-survey');
+          }
         }
       } else {
         console.log('Signup failed');

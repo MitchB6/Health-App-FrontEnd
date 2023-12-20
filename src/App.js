@@ -17,7 +17,7 @@ import ExerciseBank from './pages/PreloadedWorkouts.js';
 import AddWorkout from './pages/AddWorkout.js';
 import WorkoutDetails from './pages/WorkoutDetails.js';
 import MemberDashboard from './pages/MemberDashboard.js'
-
+import InitialSurveyCoach from './pages/initialSurveyCoach.js';
 
 
 
@@ -50,6 +50,7 @@ function App() {
           <Route path="/initial-survey" element={<InitialSurvey />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/member-dashboard" element={<MemberDashboard />} />
+          <Route path='/initial-survey-coach' element={<InitialSurveyCoach />} />
         </Routes>
       </div>
       </CoachProvider>
