@@ -29,7 +29,7 @@ const CoachesLookup = () => {
             'Authorization': `Bearer ${accessToken}`
           }
         });
-        // console.log(response);
+        console.log(response);
         if (response.status === 200) {
           console.log("Get coaches successful");
           // console.log(response.data);
@@ -72,7 +72,7 @@ const CoachesLookup = () => {
     }
     try {
       const apiUrl = process.env.REACT_APP_API_URL;
-      const response = await axios.post(`${apiUrl}/coaches/request_hire`, {
+      const response = await axios.post(`${apiUrl}/coaches/request_hire/${coach_id}`, {
         member_id: member_id,
         coach_id: coach_id
       }, {
@@ -80,12 +80,12 @@ const CoachesLookup = () => {
           'Authorization': `Bearer ${accessToken}`
         }
       });
-      // console.log(response);
-      if (response.status === 201) {
-        console.log("Hire request successful");
-        // console.log(response.data);
+      console.log(response);
+      if (response.status === 200) {
+       console.log("Hire request successful");
+        console.log(response.data);
       } else {
-        console.log('Hire request failed');
+        console.log('Hire request failed with status: ' + response.status);
       }
     } catch (err) {
       console.log(err);
@@ -98,9 +98,9 @@ const CoachesLookup = () => {
        <div className="coaches-lookup">
        <h1>Coaches</h1>
        
-          <div className="search-container">
+          <div className="search-container-coach">
             <input 
-              className="search-input"
+              className="search-input-coach"
               type="text" 
               value={searchQuery} 
               onChange={handleSearchChange} 

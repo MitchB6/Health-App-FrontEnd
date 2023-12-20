@@ -14,9 +14,13 @@ import InitialSurvey from './pages/initialSurvey.js';
 import WeeklyWorkoutPlan from './pages/WeeklyWorkoutPlan.js';
 import WorkoutNotebook from './pages/WorkoutNotebook.js';
 import ExerciseBank from './pages/PreloadedWorkouts.js';
+<<<<<<< HEAD
 import AddWorkout from './pages/AddWorkout.js';
 import WorkoutDetails from './pages/WorkoutDetails.js';
 
+=======
+import MemberDashboard from './pages/MemberDashboard.js'
+>>>>>>> 3038fadc81bf9c92116e2ab87c568299e062ff8c
 
 
 function App() {
@@ -47,6 +51,7 @@ function App() {
           <Route path="/client-profile/:clientId" element={<ClientProfile />} />
           <Route path="/initial-survey" element={<InitialSurvey />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/member-dashboard" element={<MemberDashboard />} />
         </Routes>
       </div>
       </CoachProvider>

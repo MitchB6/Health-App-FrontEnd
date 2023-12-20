@@ -1,68 +1,111 @@
+<<<<<<< HEAD
 import { useState, useContext } from 'react';
+=======
+import React, { useState, useEffect } from 'react';
+>>>>>>> 3038fadc81bf9c92116e2ab87c568299e062ff8c
 import ClientList from './ClientList';
 import ClientDetails from './ClientDetails';
-import { clients, pendingRequests } from './mock/mockClientData.js';
-import mockCoaches from './mock/mockCoachesData.js';
-import { CoachContext } from './CoachContext';
 import Navbar from "../components/navbar.js";
+import { CoachContext } from './CoachContext';
+import axios from 'axios';
 import './styling/CoachPage.css';
-
 
 const CoachPage = () => {
     const [selectedClient, setSelectedClient] = useState(null);
-    const [clientsState, setClients] = useState(clients); 
-    const [pendingRequestsState, setPendingRequests] = useState(pendingRequests); 
+    const [clientsState, setClients] = useState([]);
+    const [pendingRequestsState, setPendingRequests] = useState([]);
+    const accessToken = localStorage.getItem('accessToken');
+    const refreshToken = localStorage.getItem('refreshToken');
+    const apiUrl = process.env.REACT_APP_API_URL;
 
-    const handleSelectClient = client => {
+    useEffect(() => {
+        const getClients = async () => {
+            try {
+                const clientsResponse = await axios.get(`${apiUrl}/clients/`, {
+                    headers: { 'Authorization': `Bearer ${accessToken}` }
+                });
+                setClients(clientsResponse.data);
+    
+                const requestsResponse = await axios.get(`${apiUrl}/clients/requests`, {
+                    headers: { 'Authorization': `Bearer ${accessToken}` }
+                });
+    
+                // Check if the response is an array
+                if (Array.isArray(requestsResponse.data)) {
+                    setPendingRequests(requestsResponse.data);
+                } 
+                // Check if the response is an object with a requests array
+                else if (requestsResponse.data && Array.isArray(requestsResponse.data.requests)) {
+                    setPendingRequests(requestsResponse.data.requests);
+                } 
+                else {
+                    console.error("Unexpected format for pending requests:", requestsResponse.data);
+                    // Optionally set an error state or handle the unexpected format here
+                }
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+        getClients();
+    }, []);
+    
+    
+    const handleSelectClient = (client) => {
         console.log('Selected client:', client);
         setSelectedClient(client);
-        };
-    
+    };
 
-    const handleAssignWorkout = client => {
+    const handleAssignWorkout = (client) => {
         console.log('Assigning workout to', client.name);
     };
-    const { pendingRequests: contextPendingRequests } = useContext(CoachContext);
-    console.log("Rendering CoachPage, pendingRequests:", pendingRequests);
 
-    const acceptClientRequest = requestId => {
-        const request = pendingRequestsState.find(request => request.id === requestId);
-        setClients(currentClients => [...currentClients, request]);
-        setPendingRequests(currentRequests => currentRequests.filter(request => request.id !== requestId));
+    const acceptClientRequest = async (link_id) => {
+        try {
+            await axios.post(`${apiUrl}/clients/accept_request/${link_id}`,  {
+                headers: { 'Authorization': `Bearer ${accessToken}` }
+            });
+
+            setClients((currentClients) => [...currentClients, pendingRequestsState.find((request) => request.id === link_id)]);
+            setPendingRequests((currentRequests) => currentRequests.filter((request) => request.id !== link_id));
+        } catch (error) {
+            console.error("Error accepting client request:", error);
+        }
     };
 
-    const denyClientRequest = requestId => {
-        setPendingRequests(currentRequests => currentRequests.filter(request => request.id !== requestId));
+    const denyClientRequest = async (link_id) => {
+        try {
+            await axios.post(`${apiUrl}/clients/decline_request/${link_id}`,  {
+                headers: { 'Authorization': `Bearer ${accessToken}` }
+            });
+
+            setPendingRequests((currentRequests) => currentRequests.filter((request) => request.id !== link_id));
+        } catch (error) {
+            console.error("Error declining client request:", error);
+        }
     };
-    
-    
 
     return (
         <div>
-        <Navbar />
-        <div className="coach-page">
-            <h1>Coach Dashboard</h1>
-            <div className="client-requests">
-                <h2>Pending Client Requests</h2>
-                {pendingRequestsState.map(request => (
-                    <div key={request.id}>
-                        <span>{request.name}</span>
-                        <div className="button-container-coach">
-                        <button className="client-accept-button" onClick={() => acceptClientRequest(request.id)}>Accept</button>
-                        <button className="client-decline-button" onClick={() => denyClientRequest(request.id)}>Decline</button>
+            <Navbar />
+            <div className="coach-page">
+                <h1>Coach Dashboard</h1>
+                <div className="client-requests">
+                    <h2>Pending Client Requests</h2>
+                    {Array.isArray(pendingRequestsState) && pendingRequestsState.map((request) => (
+                        <div key={request.id}>
+                            <span>{request.name}</span>
+                            <div className="button-container-coach">
+                                <button className="client-accept-button" onClick={() => acceptClientRequest(request.id)}>Accept</button>
+                                <button className="client-decline-button" onClick={() => denyClientRequest(request.id)}>Decline</button>
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
+                <ClientList clients={clientsState} onSelectClient={handleSelectClient} />
+                <ClientDetails client={selectedClient} onAssignWorkout={handleAssignWorkout} />
             </div>
-            
-            <ClientList clients={clientsState} onSelectClient={handleSelectClient} />
-            <ClientDetails client={selectedClient} onAssignWorkout={handleAssignWorkout} />
-            
-            
-        </div>
         </div>
     );
 };
 
 export default CoachPage;
-

@@ -1,9 +1,13 @@
+<<<<<<< HEAD
 import { useEffect, useState } from 'react';
+=======
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+>>>>>>> 3038fadc81bf9c92116e2ab87c568299e062ff8c
 import { useParams } from 'react-router-dom';
 import { clients } from "./mock/mockClientData.js"
 import Navbar from "../components/navbar.js";
 import ClientStatistics from '../components/ClientStatistics'; 
-
 import './styling/ClientProfile.css';
 
 const ClientProfile = () => {
@@ -57,3 +61,4 @@ const ClientProfile = () => {
 };
 
 export default ClientProfile;
+
