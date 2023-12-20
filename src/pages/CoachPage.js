@@ -15,6 +15,25 @@ const CoachPage = () => {
     const apiUrl = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
+        const acceptClientRequest = async (link_id) => {
+            try {
+                // Make the request and store the response
+                const response = await axios.post(`${apiUrl}/clients/accept_request/${link_id}`, {}, {
+                    headers: { 'Authorization': `Bearer ${accessToken}` }
+                });
+        
+                if(response.status === 200) {
+                    // Assuming the response includes the accepted client's data
+                    const acceptedClient = response.data;
+                    setClients(currentClients => [...currentClients, acceptedClient]);
+                    setPendingRequests(currentRequests => currentRequests.filter(request => request.id !== link_id));
+                }
+            } catch (error) {
+                console.error("Error accepting client request:", error);
+                // Optionally update the UI to reflect the error
+            }
+        };
+        
         const getClients = async () => {
             try {
                 const clientsResponse = await axios.get(`${apiUrl}/clients/`, {
@@ -57,16 +76,20 @@ const CoachPage = () => {
 
     const acceptClientRequest = async (link_id) => {
         try {
-            await axios.post(`${apiUrl}/clients/accept_request/${link_id}`,  {
+            const response = await axios.post(`${apiUrl}/clients/accept_request/${link_id}`, {}, {
                 headers: { 'Authorization': `Bearer ${accessToken}` }
             });
-
-            setClients((currentClients) => [...currentClients, pendingRequestsState.find((request) => request.id === link_id)]);
-            setPendingRequests((currentRequests) => currentRequests.filter((request) => request.id !== link_id));
+    
+            if(response.status === 200) {
+                const acceptedClient = response.data;
+                setClients(currentClients => [...currentClients, acceptedClient]);
+                setPendingRequests(currentRequests => currentRequests.filter(request => request.id !== link_id));
+            }
         } catch (error) {
             console.error("Error accepting client request:", error);
         }
     };
+    
 
     const denyClientRequest = async (link_id) => {
         try {

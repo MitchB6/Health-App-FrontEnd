@@ -1,4 +1,4 @@
-// import React from 'react';
+import React from 'react';
 import { Line } from 'react-chartjs-2';
 import 'chart.js/auto';
 
@@ -104,8 +104,7 @@ const maxWaterIntake = 10;
                 type: 'line', 
                 label: 'Emotional Wellness Line',
                 data: logEntries.map(entry => entry.mood_level),
-                borderColor: 'rgba(153, 102, 255, 1)', 
-                backgroundColor: 'rgba(153, 102, 255, 0.2)', 
+                borderColor: 'rgba(153, 102, 255, 1)', // Corrected light purple color
                 pointBackgroundColor: 'rgba(153, 102, 255, 1)',
                 pointBorderColor: '#fff',
                 pointHoverBackgroundColor: '#fff',

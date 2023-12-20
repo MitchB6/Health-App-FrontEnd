@@ -23,37 +23,18 @@ const StatisticLogger = () => {
         console.log('No access token or refresh token');
         return;
     }
+    setMember_id(jwtDecode(accessToken).sub);
 
-    try {
-        setMember_id(jwtDecode(accessToken).sub);
-
-        // Fetch survey data after setting the member ID
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(`${apiUrl}/survey/`, {
-                    headers: { 'Authorization': `Bearer ${accessToken}`}
-                });
-                if (response.status === 200 && response.data) {
-                    setLogEntries(response.data); 
-                }
-            } catch (error) {
-                console.error('Error fetching survey data:', error);
-            }
-        };
-
-        fetchData();
-    } catch (error) {
-        console.error('Error decoding token:', error);
-    }
+    
 }, []);
 
 
     const moodMap = {
-        "😃 Happy": 1,
-        "😐 Neutral": 2,
-        "😔 Sad": 3,
-        "😠 Angry": 4,
-        "😌 Relaxed": 5
+        "😃 Happy": 5,
+        "😐 Neutral": 3,
+        "😔 Sad": 2,
+        "😠 Angry": 2,
+        "😌 Relaxed": 4
     };
     const handleSubmit = async (event) => {
         event.preventDefault();
