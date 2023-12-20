@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+.coaches-lookup {
+    font-family: "Poppins", sans-serif;
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 800px;
+    margin: 40px auto;
+}
+.search-container {
+  display: flex;
+  border: 2px solid lightgreen;
+  align-items: center; 
+  justify-content: flex-start;
+}
+
+.search-input {
+    padding: 9px;
+    border: none;
+    outline: none; 
+    
+}
+
+.search-button {
+  padding: 8px 18px;
+  color:lightgreen;
+
+  border: 2px solid white;
+  background-color: white;
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+  cursor: pointer; 
+
+  
+}
+.request-button {
+    display: flex-end;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 18px;
+    color:lightgreen;
+    border: 2px solid lightgreen;
+    background-color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.3s, color 0.3s;
+
+    &:hover {
+        background-color: lightgreen;
+        color: white;
+    }
+}
+
+.coaches-list {
+    margin-top: 20px;
+}
+
+.coach-item {
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 4px;
+}
