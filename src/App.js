@@ -14,13 +14,10 @@ import InitialSurvey from './pages/initialSurvey.js';
 import WeeklyWorkoutPlan from './pages/WeeklyWorkoutPlan.js';
 import WorkoutNotebook from './pages/WorkoutNotebook.js';
 import ExerciseBank from './pages/PreloadedWorkouts.js';
-<<<<<<< HEAD
 import Chat from './pages/Chat.js';
-=======
 import AddWorkout from './pages/AddWorkout.js';
 import WorkoutDetails from './pages/WorkoutDetails.js';
 
->>>>>>> 6eef075395a2b6fe7dcb9455feb5901bdf3d0837
 
 
 function App() {
