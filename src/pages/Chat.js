@@ -1,10 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext} from 'react';
 import { io } from "socket.io-client";
+import { jwtDecode } from "jwt-decode";
+// import UserContext from './path/to/UserContext';
 
 
 const socket = io("http://localhost:5000");
 
 const Chat = () => {
+  const [clientMember_id, setClientMember_id] = useState(2);
+  const [coachMember_id, setCoachMember_id] = useState(5);
+
+  // const { memberID } = useContext(UserContext);
   const defaultCoach = 'Alice';
   const defaultUser = 'Bob';
 
@@ -17,6 +23,16 @@ const Chat = () => {
   const users = [1,2, 3]; // Example users
 
   useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+    const refreshToken = localStorage.getItem('refreshToken');
+    if (!accessToken || !refreshToken) {
+      console.log('No access token or refresh token');
+      return;
+    }
+    setClientMember_id(jwtDecode(accessToken).sub);
+    console.log(clientMember_id);
+    setCoachMember_id(jwtDecode(accessToken).sub);
+    console.log(coachMember_id);
     socket.on("new_message", (newMessage) => {
       updateMessageHistory(newMessage);
     });
