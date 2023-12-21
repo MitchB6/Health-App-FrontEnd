@@ -1,9 +1,9 @@
 import { useState } from 'react';
+// import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Signup from './pages/signup.js';
 import Login from './pages/login.js';
 import Home from './pages/home.js'; 
-import AccountSettings from './pages/AccountSettings.js';
 import CoachesLookup from './pages/CoachesLookup.js'; 
 import CoachPage from './pages/CoachPage.js'; 
 import { CoachProvider } from './pages/CoachContext.js'; 
@@ -17,6 +17,9 @@ import ExerciseBank from './pages/PreloadedWorkouts.js';
 import Chat from './pages/Chat.js';
 import AddWorkout from './pages/AddWorkout.js';
 import WorkoutDetails from './pages/WorkoutDetails.js';
+import MemberDashboard from './pages/MemberDashboard.js'
+import InitialSurveyCoach from './pages/initialSurveyCoach.js';
+
 
 
 
@@ -40,7 +43,6 @@ function App() {
           <Route path="/workout-details/:workoutId/" element={<WorkoutDetails />} />
           <Route path="/signup" element={<Signup onSwitch={handleSwitch} />} />
           <Route path="/login" element={<Login onSwitch={handleSwitch} />} />
-          <Route path="/account-settings" element={<AccountSettings />} />
           <Route path="/statistic-logger" element={<StatisticLogger />} />
           <Route path="/exercise-bank" element={<ExerciseBank />} />
           <Route path="/coach" element={<CoachesLookup />} />
@@ -49,6 +51,8 @@ function App() {
           <Route path="/client-profile/:clientId" element={<ClientProfile />} />
           <Route path="/initial-survey" element={<InitialSurvey />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/member-dashboard" element={<MemberDashboard />} />
+          <Route path='/initial-survey-coach' element={<InitialSurveyCoach />} />
         </Routes>
       </div>
       </CoachProvider>

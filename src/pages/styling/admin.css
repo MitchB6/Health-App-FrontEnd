@@ -1,40 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+.admin-container {
+  font-family: "Poppins", sans-serif;
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 1200px;
+  margin: 40px auto;
+}
+
+.admin-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.admin-button {
+  padding: 8px 18px;
+  margin: 0 10px;
+  color: lightgreen;
+  border: 2px solid lightgreen;
+  background-color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background-color 0.3s, color 0.3s;
+  cursor: pointer;
+}
+
+.admin-button:hover {
+  background-color: lightgreen;
+  color: white;
+}
+
+.table-container {
+  margin-top: 20px;
+}
+
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  table-layout: auto;
+}
+
+.admin-table th,
+.admin-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.admin-table th {
+  background-color: #f4f4f4;
+}
 
 .pagination {
   display: flex;
-  list-style: none;
   justify-content: center;
-  padding: 0;
+  list-style-type: none;
+  padding: 20px;
 }
 
 .page-item {
   margin: 0 5px;
+  border: 1px solid lightgreen;
+  border-radius: 4px;
 }
 
 .page-link {
-  padding: 0.5rem 0.75rem;
-  margin-left: -1px;
-  border: 1px solid #dee2e6;
+  display: block;
+  padding: 8px 12px;
   color: lightgreen;
-  background-color: #fff;
+  text-decoration: none;
+}
+.button-AddExercise{
+  display: flex-end;
+  align-items: center;
+  justify-content: center;
+  color:rgb(10, 163, 10);
+  font-size: 18px;
+  border: none;
+  background-color: white;
+  text-decoration: none;
   cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+.button-ShowCoaches,
+.button-ShowExercises{
+  display: flex-end;
+  align-items: center;
+  justify-content: center;
+  color:rgb(5, 5, 5);
+  font-size: 18px;
+  border: none;
+  background-color: white;
+  text-decoration: none;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+.activate-button, 
+.approve-button{
+  display: flex-end;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 9px;
+    color:lightgreen;
+    border: 2px solid lightgreen;
+    background-color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    &:hover {
+        background-color: lightgreen;
+        color: white;
+}
 }
 
-.active .page-link {
-  color: #fff;
-  background-color: lightgreen;
-  border-color: lightgreen;
-}
-
-.disabled .page-link {
-  color: #6c757d;
-  pointer-events: none;
-  cursor: auto;
-  background-color: #fff;
-  border-color: #dee2e6;
-}
-
-.page-link:hover {
-  color: #0056b3;
-  background-color: #e9ecef;
-  border-color: #dee2e6;
+.deactivate-button,
+.deny-button{
+  padding: 3px 9px;
+  border-radius: 8px;
+  color: rgb(249, 50, 96);
+  border: none;
+  background-color: transparent;  
+  transition: background-color 0.3s, color 0.3s;
+  cursor: pointer;
+  &:hover {
+      background-color: rgb(249, 50, 96);;
+      color: white;
+  }
 }

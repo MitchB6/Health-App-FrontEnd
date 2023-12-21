@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import React from 'react';
 import AuthSwitcher from '../components/authSwitch.js';
 import './pages-styling/auth.css';
 import axios from 'axios';
@@ -41,7 +42,11 @@ const Signup = ({ onSwitch }) => {
           // console.log(loginResponse.data);
           localStorage.setItem('accessToken', loginResponse.data['access token']);
           localStorage.setItem('refreshToken', loginResponse.data['refresh token']);
-          navigate('/initial-survey');
+          if(role === '1'){
+            navigate('/initial-survey-coach');
+          }else{
+            navigate('/initial-survey');
+          }
         }
       } else {
         console.log('Signup failed');
@@ -63,7 +68,6 @@ const Signup = ({ onSwitch }) => {
         <select value={role} onChange={(e) => setRole(e.target.value)}>
           <option value="0">Member</option>
           <option value="1">Coach</option>
-          <option value="2">Admin</option>
         </select>
         </div>
       </label>

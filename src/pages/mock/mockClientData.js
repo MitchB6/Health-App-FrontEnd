@@ -8,8 +8,22 @@ const clients = [
         gender: 'Male',
         location: 'Newark, NJ, 07101',
         stats: [
-            { date: '2023-12-01', caloriesIn: 2200, waterIntake: 64, emotionalWellness: '😃 Happy' },
-            { date: '2023-12-02', caloriesIn: 2100, waterIntake: 70, emotionalWellness: '😐 Neutral' },
+            { date: '2023-12-01', calories_intake: 2200, hydration_level: 10, mood_level: '5' },
+            { date: '2023-12-02', calories_intake: 2100, hydration_level: 7, mood_level: '3' },
+            // More log entries...
+        ]
+    },
+    { 
+        id: 1, 
+        name: 'Mia Smith', 
+        email: 'mia@example.com',
+        phone: '123-456-7890',
+        age: 20,
+        gender: 'Fimail',
+        location: 'Red Bank, NJ, 07101',
+        stats: [
+            { date: '2023-12-01', calories_intake: 1200, hydration_level: 10, mood_level: '5' },
+            { date: '2023-12-02', calories_intake: 1500, hydration_level: 8, mood_level: '4' },
             // More log entries...
         ]
     },
@@ -25,8 +39,8 @@ const pendingRequests = [
         gender: 'Female',
         location: 'New York, NY, 10001',
         stats: [
-            { date: '2023-12-01', caloriesIn: 1900, waterIntake: 55, emotionalWellness: '😌 Relaxed' },
-            { date: '2023-12-02', caloriesIn: 2000, waterIntake: 60, emotionalWellness: '😔 Sad' },
+            { date: '2023-12-01', calories_intake: 1900, hydration_level: 55, mood_level: '4' },
+            { date: '2023-12-02', calories_intake: 2000, hydration_level: 60, mood_level: '2' },
             // More log entries...
         ]
     },

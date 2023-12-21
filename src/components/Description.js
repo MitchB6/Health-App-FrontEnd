@@ -1,5 +1,4 @@
-// import React from "react";
-
+import React from 'react';
 const Description = ({ exercise }) => {
     return (
         <div className="description">
