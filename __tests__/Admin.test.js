@@ -20,7 +20,8 @@ describe('Admin Component', () => {
       if(message.includes('Exercise equipment:')) return 'Equipment4';
       if(message.includes('Exercise muscle group:')) return 'MuscleGroup4';
     });
-    axios.put.mockImplementation({ status: 200 });
+    window.alert = jest.fn();
+    axios.put.mockImplementation(() => { return Promise.resolve({ status: 200 })});
     axios.post.mockImplementation(() => {
       return Promise.resolve({
         status: 201,
@@ -161,5 +162,38 @@ describe('Admin Component', () => {
     await waitFor(() => expect(screen.getByText("Admin Page")).toBeInTheDocument());
     fireEvent.click(screen.getByRole('button', { name: 'Add Exercise' }));
     await waitFor(() => expect(screen.getByText('Name4')).toBeInTheDocument());
+  });
+  it("should render and click the activate and deactive button in excerise page", async () => {
+    await act(async () => {
+      render(
+        <Router>
+          <Admin />
+        </Router>
+      )
+    });
+    await waitFor(() => expect(screen.getByText("Admin Page")).toBeInTheDocument());
+    fireEvent.click(screen.getByRole('button', { name: 'Show Exercises' }));
+    const activate = screen.getAllByRole('button', { name: 'Activate' });
+    const deactivate = screen.getAllByRole('button', { name: 'Deactivate' });
+    fireEvent.click(activate[0]);
+    fireEvent.click(deactivate[0]);
+    await waitFor(() => expect(axios.put).toHaveBeenCalledTimes(2));
+  });
+  it("should render and click the approve and disapprove button in coaches page", async () => {
+    await act(async () => {
+      render(
+        <Router>
+          <Admin />
+        </Router>
+      )
+    });
+    await waitFor(() => expect(screen.getByText("Admin Page")).toBeInTheDocument());
+    fireEvent.click(screen.getByRole('button', { name: 'Show Coaches' }));
+    await waitFor(() => expect(screen.getByText('Coaches')).toBeInTheDocument());
+    const accept = screen.getAllByRole('button', { name: 'Accept' });
+    const reject = screen.getAllByRole('button', { name: 'Deny' });
+    fireEvent.click(accept[0]);
+    fireEvent.click(reject[1]);
+    await waitFor(() => expect(axios.put).toHaveBeenCalledTimes(2));
   });
 });

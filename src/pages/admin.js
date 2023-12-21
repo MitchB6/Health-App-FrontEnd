@@ -298,7 +298,7 @@ const Admin = () => {
                 <td>
                   <button className="activate-button" onClick={() => handleActivate(exercise.exercise_id)}>Activate</button>
                   <button className="deactivate-button"onClick={() => handleDeactivate(exercise.exercise_id)}>Deactivate</button>
-                  </td>
+                </td>
               </tr>
             ))}
           </tbody>
