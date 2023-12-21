@@ -34,26 +34,36 @@ img {
     height: 600px;
 }
 
+
+
 .button-container {
-    margin-top: 50px;
-    font-size: 18px;
+    display: flex;
+    align-items: center; /* Keep buttons aligned vertically */
+    gap: 10px; /* Space between buttons */
+    margin-top: 20px; /* Increase this value to move buttons lower */
+    margin-top: 100px;
+}
+.signup-button, .login-button {
+    padding: 8px 18px;
+    color: black;
+    border: 2px;
+    background-color: white;
+    text-decoration: underline;
+    border-radius: none;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-.custom-button {
-    display: flex-end;
-    align-items: center;
-    justify-content: center;
-    margin-top: 100px;
+.login-button {
     padding: 8px 18px;
-    color:lightgreen;
+    color: lightgreen;
     border: 2px solid lightgreen;
     background-color: white;
     text-decoration: none;
     border-radius: 8px;
     transition: background-color 0.3s, color 0.3s;
+}
 
-    &:hover {
-        background-color: lightgreen;
-        color: white;
-    }
+.signup-button:hover, .login-button:hover {
+    background-color: lightgreen;
+    color: white;
 }

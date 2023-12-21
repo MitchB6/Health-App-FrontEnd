@@ -13,7 +13,7 @@ const Home = () => {
                     <h1>Start Here</h1>
                     <p>Plan Your Workouts. Find Coaches. Track Your Journey.</p>
                     <div className="button-container">
-                    <NavLink to="/signup" className="custom-button">Sign Up</NavLink> or <NavLink to="/login">Login</NavLink>
+                    <NavLink to="/signup" className="signup-button">Sign Up</NavLink> or <NavLink className="login-button" to="/login">Login</NavLink>
                     </div>
                 </div>
                 <div className="image-container">
