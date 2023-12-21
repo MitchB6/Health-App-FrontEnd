@@ -1,4 +1,3 @@
-import React from 'react';
 
 const CategoriesDropdown = ({ categories, handleCategoryClick }) => {
 
@@ -11,7 +10,7 @@ const CategoriesDropdown = ({ categories, handleCategoryClick }) => {
         <label>
             Choose a Category:
             <select onChange={(e) => handleCategoryClick(e.target.value)}>
-                <option value="" disabled>Select a Category</option>
+                <option value="" enabled>Select a Category</option>
                 {categories.map((category) => (
                     <option key={category} value={category}>
                         {reformatCategories(category)}

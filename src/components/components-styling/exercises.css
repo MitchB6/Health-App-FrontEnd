@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+.exercises-container {
+    width: 50%; 
+    margin-top: 20px; 
+    padding: 20px;
+    font-family: 'Poppins', sans-serif;
+    float: right;
+    position: absolute;
+  top: 181px;
+  right: 40px;
+  }
+  
+  .exercises-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .exercises-table th {
+    background-color: lightgreen;
+    padding: 15px;
+    text-align: center;
+    font-weight: 1000;
+    border-bottom: 1px solid #ddd;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    color: white;
+    font-size: x-large;
+  }
+  
+  .exercises-table td {
+    padding: 15px;
+    text-align: center;
+    font-weight: 500;
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.3s, color 0.3s;
+
+  }
+  
+  .exercises-table td:first-child {
+    border-left: none; 
+  }
+  
+  .exercises-table td:last-child {
+    border-right: none; 
+  }
+  
+  .exercises-table tr:last-child td {
+    border-bottom: none; 
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+  
+  .exercises-table tr:hover {
+    background-color: #fff6ea;
+    color: black;
+    cursor: pointer;
+  }
+
+  .exercises-table td:hover::after {
+    content: attr(data-tooltip);
+    font-weight: 200;
+    position:sticky;
+    top: -30px; /* Adjust based on your design */
+    left: 50%;
+    transform: translateX(-4%);
+    padding: 8px;
+    background-color: #fff6ea;
+    color: black;
+    border-radius: 5px;
+    opacity: 0.8;
+    white-space: normal;
+    word-wrap: break-word;
+
+    z-index: 1;
+    display: block;
+    width: 600px;
+  }
+  

@@ -1,4 +1,4 @@
-import React from 'react';
+import './components-styling/sidebar.css';
 
 const Sidebar = ({ categories, handleCategoryClick }) => {
 
@@ -9,14 +9,22 @@ const Sidebar = ({ categories, handleCategoryClick }) => {
     }
     return (
         <div className="sidebar">
-            <h2 className="categories">Categories</h2>
-            <ul className="list-of-categories">
-                {categories.map((category) => (
-                    <li className="category" key={category} onClick={() => handleCategoryClick(category)}>
-                        {category}
-                    </li>
-                ))}
-            </ul>
+            <table className="categories-table-container">
+                <thead>
+                    <tr>
+                        <th colSpan="1">Filters</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {categories.map((category) => (
+                        <tr className="category" key={category} onClick={() => handleCategoryClick(category)}>
+                            <td>{reformatCategories(category)}</td>
+                        </tr>
+                    ))}
+
+                </tbody>
+            </table>
+        
         </div>
     );
 };
