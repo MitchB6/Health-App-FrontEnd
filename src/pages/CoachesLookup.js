@@ -99,7 +99,8 @@ const CoachesLookup = () => {
   let navigate = useNavigate();
 
   const redirectToChat = (coach) => {
-    navigate('/chat', { state: { coach_id: coach.coach_id} });
+    console.log(coach.first_name)
+    navigate('/chat', { state: { recp: coach } });
   };
 
   return (

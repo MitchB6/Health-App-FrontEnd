@@ -9,9 +9,14 @@ const ClientList = ({ clients}) => {
         console.log(clientId)
     };
 
-    const handleChatWithClient = clientId => {
-        navigate(`/chat`, { state: { recipientId: clientId } });
+    const handleChatWithClient = (client) => {
+        navigate(`/chat`, { state: { recp: client } });
     };
+
+    // const redirectToChat = (coach) => {
+    //     console.log(coach.first_name)
+    //     navigate('/chat', { state: { coach: coach } });
+    //   };
     
 
     return (
@@ -23,7 +28,7 @@ const ClientList = ({ clients}) => {
                         <span className="client-name"></span>
                         <div className="client-actions">
                             <button onClick={() => handleSelectClient(client.id)} className="client-action-button">{client.name}</button>
-                            <button onClick={() => handleChatWithClient(client.id)} className="client-action-button">Chat</button>
+                            <button onClick={() => handleChatWithClient(client)} className="client-action-button">Chat</button>
                         </div>
                     </li>
                 ))}
