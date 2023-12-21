@@ -1,0 +1,18 @@
+.exercise-selection {
+    width: 455px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    
+}
+
+input,
+  select {
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    padding: 6px;
+    margin-top: 15px;
+    width: 500px !important;
+    box-sizing: border-box;
+  }

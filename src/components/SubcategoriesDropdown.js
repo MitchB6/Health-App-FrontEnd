@@ -1,4 +1,3 @@
-import React from "react";
 
 const SubcategoriesDropdown = ({ subcategories, handleSubcategoryClick }) => {
     if (!subcategories) {
@@ -9,7 +8,7 @@ const SubcategoriesDropdown = ({ subcategories, handleSubcategoryClick }) => {
         <label>
             Choose a Subcategory: 
             <select onChange={(e) => handleSubcategoryClick(e.target.value)}>
-                <option value="" disabled>Select Subcategory</option>
+                <option value="" enabled>Select Subcategory</option>
                 {subcategories.map((subcategory) => (
                     <option key={subcategory} value={subcategory}>
                         {subcategory}
