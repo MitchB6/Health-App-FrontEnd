@@ -1,9 +1,4 @@
-<<<<<<< Updated upstream
 import { useEffect, useState } from "react";
-import Card from "../components/Card.js";
-=======
-import React, { useEffect, useState } from "react";
->>>>>>> Stashed changes
 import Navbar from "../components/navbar";
 import Calendar from 'react-calendar';
 import { Link, useNavigate } from 'react-router-dom';
@@ -14,21 +9,13 @@ import './pages-styling/weekly-workout-plan.css';
 
 
 const WeeklyWorkoutPlan = () => {
-<<<<<<< Updated upstream
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [cards, setCards] = useState([]);
-    const [currentWeek, setCurrentWeek] = useState(new Date());
-    const [workoutData, setWorkoutData] = useState({});
-    const [isEditing, setIsEditing] = useState(false);
-    const [editableDay, setEditableDay] = useState(null);
-=======
+
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [plans, setPlans] = useState([]);
     const [selectedPlanId, setSelectedPlanId] = useState(null);
     const [showStatsModal, setShowStatsModal] = useState(false);
     const [caloriesInput, setCaloriesInput] = useState("");
     const [durationInput, setDurationInput] = useState("");
->>>>>>> Stashed changes
 
     const accessToken = localStorage.getItem('accessToken');
     const refreshToken = localStorage.getItem('refreshToken');
@@ -111,27 +98,6 @@ const WeeklyWorkoutPlan = () => {
         }
     }
 
-<<<<<<< Updated upstream
-    return (
-        <div className="weekly-workout-plan-container">
-            <Navbar />
-            <div className="weekly-workout-plan">
-                <h2 className="wwp-title">Weekly Workout Plans</h2>
-                <button className="previous-week-button" onClick={handlePrevWeek}>←</button>
-                <h3>{`Week of ${currentWeek.toDateString()}`}</h3>
-                <button className="next-week-button" onClick={handleNextWeek}>→</button>
-            </div>
-            <div className="day-cards">
-                {daysOfWeekCards.map((cardData, index) => (
-                    <Card key={index} cardData={cardData} onChange={(e) => handleInputChange(cardData, e)} />
-                ))}
-                {cards.map((cardData, index) => (
-                    <Card key={index} cardData={cardData} onChange={(e) => handleInputChange(cardData, e)} />
-                ))}
-            </div>
-        </div>
-    );
-=======
     const handleStatsModalOpen = () => {
         setShowStatsModal(true);
     }
@@ -207,7 +173,6 @@ const WeeklyWorkoutPlan = () => {
       </div>
     </div>
   );
->>>>>>> Stashed changes
 };
 
 export default WeeklyWorkoutPlan;
