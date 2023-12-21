@@ -6,6 +6,8 @@ import mockCoaches from './mock/mockCoachesData.js';
 import { CoachContext } from './CoachContext';
 import Navbar from "../components/navbar.js";
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 import './styling/CoachPage.css';
 
 
@@ -13,6 +15,7 @@ const CoachPage = () => {
     const [selectedClient, setSelectedClient] = useState(null);
     const [clientsState, setClients] = useState(clients); 
     const [pendingRequestsState, setPendingRequests] = useState(pendingRequests); 
+    const navigate = useNavigate();
 
     const handleSelectClient = client => {
         console.log('Selected client:', client);
@@ -22,6 +25,7 @@ const CoachPage = () => {
 
     const handleAssignWorkout = client => {
         console.log('Assigning workout to', client.name);
+        navigate('/workout-notebook');
     };
     const { pendingRequests: contextPendingRequests } = useContext(CoachContext);
     console.log("Rendering CoachPage, pendingRequests:", pendingRequests);

@@ -4,10 +4,12 @@ import Navbar from "../components/navbar.js";
 import ClientStatistics from '../components/ClientStatistics'; 
 import './styling/ClientProfile.css';
 import { clients } from './mock/mockClientData.js';
+import { useNavigate } from 'react-router-dom';
 
 const ClientProfile = () => {
     const { clientId } = useParams();
     const [client, setClient] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         // Function to fetch client data based on clientId
@@ -25,14 +27,11 @@ const ClientProfile = () => {
     }
 
     const handleAssignWorkout = () => {
-        // Implement workout assignment functionality here
+      console.log('Assigning workout to', client.name);
+      navigate('/workout-notebook');
     };
 
-    const handleChatWithClient = () => {
-        console.log('Chat with', client.name);
-        // Implement chat functionality here
-    };
-
+    
     return (
         <div>
             <Navbar />
@@ -45,7 +44,6 @@ const ClientProfile = () => {
                 <p>Location: {client.location}</p>
                 <div className="client-action-buttons">
                     <button className="client-profile-button" onClick={handleAssignWorkout}>Assign Workout</button>
-                    <button className="client-profile-button" onClick={handleChatWithClient}>Chat</button>
                 </div>
                 {client.stats && <ClientStatistics stats={client.stats} />}
             </div>

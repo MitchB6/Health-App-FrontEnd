@@ -8,8 +8,22 @@ const clients = [
         gender: 'Male',
         location: 'Newark, NJ, 07101',
         stats: [
-            { date: '2023-12-01', calories_intake: 2200, hydration_level: 64, mood_level: '5' },
-            { date: '2023-12-02', calories_intake: 2100, hydration_level: 70, mood_level: '3' },
+            { date: '2023-12-01', calories_intake: 2200, hydration_level: 10, mood_level: '5' },
+            { date: '2023-12-02', calories_intake: 2100, hydration_level: 7, mood_level: '3' },
+            // More log entries...
+        ]
+    },
+    { 
+        id: 1, 
+        name: 'Mia Smith', 
+        email: 'mia@example.com',
+        phone: '123-456-7890',
+        age: 20,
+        gender: 'Fimail',
+        location: 'Red Bank, NJ, 07101',
+        stats: [
+            { date: '2023-12-01', calories_intake: 1200, hydration_level: 10, mood_level: '5' },
+            { date: '2023-12-02', calories_intake: 1500, hydration_level: 8, mood_level: '4' },
             // More log entries...
         ]
     },
