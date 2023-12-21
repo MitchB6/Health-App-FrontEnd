@@ -8,7 +8,7 @@ const Navbar = () => {
         <nav className='navbar'>
             <div className='container'>
                 <div className='app-name'>
-                    <NavLink to="/">FIT THIS</NavLink>
+                    <NavLink to="/">FITintoTHIS</NavLink>
                 </div>
                     <div className='nav-elements'>
                         <ul>
@@ -17,6 +17,9 @@ const Navbar = () => {
                             </li>
                             <li>
                                 <NavLink to="/statistic-logger">Statistics</NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/exercise-bank">Exercises</NavLink>
                             </li>
 
                             <li>

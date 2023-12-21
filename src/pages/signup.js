@@ -4,6 +4,7 @@ import AuthSwitcher from '../components/authSwitch.js';
 import './pages-styling/auth.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Chatter from './Chat.js';
 
 const Signup = ({ onSwitch }) => {
   const [role, setRole] = useState(0);
@@ -11,6 +12,7 @@ const Signup = ({ onSwitch }) => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  localStorage.setItem('username', username);
 
   const navigate = useNavigate();
 

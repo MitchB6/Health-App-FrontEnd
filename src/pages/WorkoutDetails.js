@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useParams, NavLink } from "react-router-dom";
 import axios from 'axios';
 import ExerciseSelection from "../components/ExerciseSelection";
+import './pages-styling/add-exercises.css';
 
 const WorkoutDetails = ({ setSelectedExercises }) => {
     const { workoutId: workoutId } = useParams();
@@ -11,8 +12,6 @@ const WorkoutDetails = ({ setSelectedExercises }) => {
     const [reps, setReps] = useState(0);
     const [sets, setSets] = useState(0);
     const [notes, setNotes] = useState('');
-    const apiUrl = process.env.REACT_APP_API_URL;
-
 
     console.log('WID', workoutId);
     const handleSave = () => {
@@ -34,7 +33,7 @@ const WorkoutDetails = ({ setSelectedExercises }) => {
             const newExercise = { exercise_id, reps, sets, notes };
             setExercises([...exercises, newExercise]);
 
-            axios.post(`${apiUrl}/workouts/${workoutId}/workout_exercises`, {
+            axios.post(`http://127.0.0.1:5000/workouts/${workoutId}/workout_exercises`, {
                 exercise_id: exercise_id,
                 reps: reps,
                 sets: sets,
@@ -68,6 +67,8 @@ const WorkoutDetails = ({ setSelectedExercises }) => {
 
     return (
         <div className="workout-details">
+            <div className="workout-details-container">
+                <div className="workout-details-items-container">
             <h2>Add Exercises</h2>
             <ExerciseSelection workoutId={workoutId} onExerciseSelect={handleExerciseSelect} />
             <label>
@@ -84,8 +85,10 @@ const WorkoutDetails = ({ setSelectedExercises }) => {
                 <input type="text" value={notes} onChange={(e) => setNotes(e.target.value)} />
             </label>
 
-            <button onClick={handleSave}>Save Exercise</button>
-            <NavLink to="/workout-notebook">Back to Workout Notebook</NavLink>
+            <button className="submit-button" onClick={handleSave}>Add Exercise</button>
+            <NavLink to="/workout-notebook" className="to-notebook">Back to Workout Notebook ⇢</NavLink>
+            </div>
+            </div>
         </div>
     );
 };

@@ -14,6 +14,7 @@ import InitialSurvey from './pages/initialSurvey.js';
 import WeeklyWorkoutPlan from './pages/WeeklyWorkoutPlan.js';
 import WorkoutNotebook from './pages/WorkoutNotebook.js';
 import ExerciseBank from './pages/PreloadedWorkouts.js';
+import Chat from './pages/Chat.js';
 import AddWorkout from './pages/AddWorkout.js';
 import WorkoutDetails from './pages/WorkoutDetails.js';
 import MemberDashboard from './pages/MemberDashboard.js'
@@ -45,6 +46,7 @@ function App() {
           <Route path="/statistic-logger" element={<StatisticLogger />} />
           <Route path="/exercise-bank" element={<ExerciseBank />} />
           <Route path="/coach" element={<CoachesLookup />} />
+          <Route path="/chat" element={<Chat/>}/>
           <Route path="/coach-page" element={<CoachPage />} />
           <Route path="/client-profile/:clientId" element={<ClientProfile />} />
           <Route path="/initial-survey" element={<InitialSurvey />} />

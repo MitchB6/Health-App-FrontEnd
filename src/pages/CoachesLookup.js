@@ -1,10 +1,12 @@
-import { useState, useContext, useEffect }  from 'react';
-import React from 'react';
+import React, { useState, useContext, useEffect }  from 'react';
+import { useNavigate } from 'react-router-dom';
+//import mockCoaches from './mock/mockCoachesData'; 
 import { CoachContext } from './CoachContext';
 import './styling/CoachLookup.css';
 import Navbar from "../components/navbar.js";
 import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
+import { async } from 'q';
 
 const CoachesLookup = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -12,6 +14,8 @@ const CoachesLookup = () => {
   const [filteredCoaches, setFilteredCoaches] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [member_id, setMember_id] = useState(0);
+
+
 
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
@@ -92,6 +96,12 @@ const CoachesLookup = () => {
       console.log(err);
     }
   }
+  let navigate = useNavigate();
+
+  const redirectToChat = (coach) => {
+    console.log(coach.first_name)
+    navigate('/chat', { state: { recp: coach } });
+  };
 
   return (
     <div>
@@ -118,6 +128,7 @@ const CoachesLookup = () => {
                 <p>Qualifications: {coach.qualifications}</p>
                 <p>Cost: ${coach.price}/hr</p>
                 <button className="request-button" onClick={() => handleHireRequest(coach.coach_id)}>Hire</button>
+                <button className="request-button" onClick={() => redirectToChat(coach)}>Chat</button>
               </div>
             ))}
           </div>
