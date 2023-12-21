@@ -1,10 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
 import ClientList from './ClientList';
 import ClientDetails from './ClientDetails';
-import { CoachContext } from './CoachContext';
 import Navbar from "../components/navbar.js";
 import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
+import { useParams } from 'react-router-dom';
 import './styling/CoachPage.css';
 
 const CoachPage = () => {
@@ -13,38 +13,63 @@ const CoachPage = () => {
     const [pendingRequestsState, setPendingRequests] = useState([]); 
     const apiUrl = process.env.REACT_APP_API_URL;
     const accessToken = localStorage.getItem('accessToken');
-    const [member_id, setMember_id] = useState(null);
-
+    const [username, setUsername] = useState('');
+    const [memberId, setMemberId] = useState(null);
+    const { member_id } = useParams() || member_id;
 
     useEffect(() => {
-        const accessToken = localStorage.getItem('accessToken');
-    const refreshToken = localStorage.getItem('refreshToken');
-    if (!accessToken || !refreshToken) {
-        console.log('No access token or refresh token');
-        return;
-    }
+        const fetchInitialData = async () => {
+            const accessToken = localStorage.getItem('accessToken');
+            const refreshToken = localStorage.getItem('refreshToken');
+            if (!accessToken || !refreshToken) {
+                console.log('No access token or refresh token');
+                return;
+            }
 
-    try {
-        const decoded = jwtDecode(accessToken);
-        setMember_id(decoded.sub);
-    } catch (error) {
-        console.error('Error decoding token:', error);
-    }
+            try {
+                const decoded = jwtDecode(accessToken);
+                setMemberId(decoded.sub); // Changed to setMemberId
+            } catch (error) {
+                console.error('Error decoding token:', error);
+            }
 
-        axios.get(`${apiUrl}/clients/`, {
-            headers: { 'Authorization': `Bearer ${accessToken}` }
-        }).then(response => {
-            console.log("Clients data:", response.data);
-            setClients(response.data);
-        })
-          .catch(error => console.error('Error fetching clients:', error));
+            // Fetching member details
+            if (member_id) {
+                try {
+                    const memberResponse = await axios.get(`${apiUrl}/members/${member_id}`, {
+                        headers: { 'Authorization': `Bearer ${accessToken}` }
+                    });
+                    setUsername(memberResponse.data.name); // Assuming name is in the response
+                } catch (error) {
+                    console.error('Error fetching member details:', error);
+                }
+            }
 
-        // Fetch pending requests
-        axios.get(`${apiUrl}/clients/requests`, {
-            headers: { 'Authorization': `Bearer ${accessToken}` }
-        }).then(response => setPendingRequests(response.data))
-          .catch(error => console.error('Error fetching client requests:', error));
-    }, []);
+            // Fetching clients
+            try {
+                const clientsResponse = await axios.get(`${apiUrl}/clients/`, {
+                    headers: { 'Authorization': `Bearer ${accessToken}` }
+                });
+                setClients(clientsResponse.data);
+                console.log("Clients state after fetch:", clientsState);
+
+            } catch (error) {
+                console.error('Error fetching clients:', error);
+            }
+
+            // Fetching client requests
+            try {
+                const requestsResponse = await axios.get(`${apiUrl}/clients/requests`, {
+                    headers: { 'Authorization': `Bearer ${accessToken}` }
+                });
+                setPendingRequests(requestsResponse.data);
+            } catch (error) {
+                console.error('Error fetching client requests:', error);
+            }
+        };
+
+        fetchInitialData();
+    }, [member_id]);
 
     const handleSelectClient = client => {
         console.log('Selected client:', client);
@@ -70,14 +95,23 @@ const CoachPage = () => {
         }
     };
     
-
     const acceptClientRequest = async (requestId) => {
         try {
+            // Send the accept request to the server
             await axios.post(`${apiUrl}/clients/accept_request/${requestId}`, {}, {
                 headers: { 'Authorization': `Bearer ${accessToken}` }
             });
-            // Update state to reflect changes
+    
+            // Update the state to remove the accepted request from pendingRequestsState
             setPendingRequests(currentRequests => currentRequests.filter(request => request.id !== requestId));
+    
+            // Find the accepted request from pendingRequestsState
+            const acceptedRequest = pendingRequestsState.find(request => request.id === requestId);
+    
+            // Add the accepted request to the clientsState
+            if (acceptedRequest) {
+                setClients(currentClients => [...currentClients, acceptedRequest]);
+            }
         } catch (error) {
             console.error('Error accepting request:', error);
         }
@@ -85,10 +119,12 @@ const CoachPage = () => {
     
     const denyClientRequest = async (requestId) => {
         try {
+            // Send the decline request to the server
             await axios.post(`${apiUrl}/clients/decline_request/${requestId}`, {}, {
                 headers: { 'Authorization': `Bearer ${accessToken}` }
             });
-            // Update state to reflect changes
+    
+            // Update the state to remove the declined request from pendingRequestsState
             setPendingRequests(currentRequests => currentRequests.filter(request => request.id !== requestId));
         } catch (error) {
             console.error('Error declining request:', error);
@@ -105,7 +141,10 @@ const CoachPage = () => {
                     <h2>Pending Client Requests</h2>
                     {pendingRequestsState.map(request => (
                         <div key={request.id}>
-                            <span>{request.name}</span>
+                            <span>{`${request.first_name || 'First'} ${request.last_name || 'Last'}`}</span>
+
+                            {/* Log the client's full name */}
+                            
                             <div className="button-container-coach">
                                 <button className="client-accept-button" onClick={() => acceptClientRequest(request.id)}>Accept</button>
                                 <button className="client-decline-button" onClick={() => denyClientRequest(request.id)}>Decline</button>
@@ -120,5 +159,4 @@ const CoachPage = () => {
         </div>
     );
 };
-
 export default CoachPage;

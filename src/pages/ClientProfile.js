@@ -17,7 +17,7 @@ const ClientProfile = () => {
     useEffect(() => {
         const fetchClientData = async () => {
             try {
-                const response = await axios.get(`${apiUrl}/clients/`, {
+                const response = await axios.get(`${apiUrl}/clients/${clientId}`, {
                     headers: { 'Authorization': `Bearer ${accessToken}` }
                 });
                 setClient(response.data);
