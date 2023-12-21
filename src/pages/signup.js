@@ -102,7 +102,6 @@ const Signup = ({ onSwitch }) => {
       <br />
       <button onClick={handleSignup} className='submit-button'>Sign Up</button>
       <AuthSwitcher isLogin={false} onSwitch={onSwitch} />
-      <Chatter username={username} />
     </div>
     </div>
     </div>

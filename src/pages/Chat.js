@@ -9,7 +9,6 @@ const Chatter = ({ username }) => (
   <div>
     <h1>Chat</h1>
     <p>Logged in as {username}</p>
-    <Link to="/login">Logout</Link>
   </div>
 );
 const storedUsername = localStorage.getItem('username');
@@ -38,7 +37,7 @@ const Chat = () => {
   const [username_id, setUsername_id] = useState(1);
   const [recipient_id, setRecipient_id] = useState(7);
   let defaultUser  = jwtDecode(accessToken).sub;
-  let defaultCoach = recp.member_id;
+  let defaultCoach = recp ? recp.member_id : null;
   console.log("defaultUser is ", jwtDecode(accessToken).sub.first_name);
   console.log("defaultCoach is ",  recp);
   const [username, setUsername] = useState('');
@@ -46,10 +45,12 @@ const Chat = () => {
   const [message, setMessage] = useState('');
   const [messageHistory, setMessageHistory] = useState({});
   const [messages, setMessages] = useState([]);
-  const testuser = recp.member_id ? [recp.member_id, defaultUser] : [defaultCoach, defaultUser];
+  const testuser = recp ? [recp, defaultUser] : [defaultCoach, defaultUser];
 
-  const users = [storedUsername ? storedUsername : jwtDecode(accessToken).sub, recp.username ? recp.username : (recp.firstname ? recp.firstname : recp.member_id)] // Example users
-
+  const users = [
+    storedUsername ? storedUsername : (accessToken ? jwtDecode(accessToken).sub : 'DefaultUser'),
+    recp ? (recp.username ? recp.username : (recp.firstname ? recp.firstname : recp.member_id)) : 'DefaultRecipient'
+];
   useEffect(() => {
     if (recp) {
       console.log("recp is ", recp);

@@ -81,7 +81,6 @@ const Login = ({ onSwitch }) => {
       </div>
       <button onClick={handleLogin} className='submit-button'>Login</button>
       <AuthSwitcher isLogin={true} onSwitch={onSwitch} />
-      <Chatter username={email} />
     </div>
     </div>
     </div>
