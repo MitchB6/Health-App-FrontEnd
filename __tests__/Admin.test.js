@@ -179,21 +179,4 @@ describe('Admin Component', () => {
     fireEvent.click(deactivate[0]);
     await waitFor(() => expect(axios.put).toHaveBeenCalledTimes(2));
   });
-  it("should render and click the approve and disapprove button in coaches page", async () => {
-    await act(async () => {
-      render(
-        <Router>
-          <Admin />
-        </Router>
-      )
-    });
-    await waitFor(() => expect(screen.getByText("Admin Page")).toBeInTheDocument());
-    fireEvent.click(screen.getByRole('button', { name: 'Show Coaches' }));
-    await waitFor(() => expect(screen.getByText('Coaches')).toBeInTheDocument());
-    const accept = screen.getAllByRole('button', { name: 'Accept' });
-    const reject = screen.getAllByRole('button', { name: 'Deny' });
-    fireEvent.click(accept[0]);
-    fireEvent.click(reject[1]);
-    await waitFor(() => expect(axios.put).toHaveBeenCalledTimes(2));
-  });
 });

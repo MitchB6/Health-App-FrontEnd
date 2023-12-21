@@ -65,7 +65,7 @@
       "@babel/preset-react"
     ]
   },
-  "proxy": "http://health-app-backend-production.up.railway.app:5000",
+  "proxy": "http://localhost:5000",
   "devDependencies": {
     "@babel/core": "^7.23.6",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
