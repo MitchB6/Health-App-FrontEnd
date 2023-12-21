@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import React from 'react';
 import axios from 'axios';
 import Sidebar from "../components/Sidebar.js";
 import Subcategories from "../components/Subcategories.js";
