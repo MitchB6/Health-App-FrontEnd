@@ -20,8 +20,8 @@ const InitialSurvey = () => {
   const [weight, setWeight] = useState(0);
   // const [goal, setGoal] = useState('');
   const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [zip, setZip] = useState(10000);
+  const [state, setState] = useState('AL');
+  const [zip, setZip] = useState('10000');
 
   const navigate = useNavigate();
 
@@ -205,7 +205,7 @@ const InitialSurvey = () => {
             <option value="WI">Wisconsin</option>
             <option value="WY">Wyoming</option>
           </select>
-          <input type="number" value={zip} placeholder="Zip" onChange = {(e) => setZip(e.target.value)} />
+          <input type="text" value={zip} placeholder="Zip" onChange = {(e) => setZip(e.target.value)} />
         </label>
         <br />
         <input type="submit" value="Submit" className='submit-button' />

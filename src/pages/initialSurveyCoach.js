@@ -33,7 +33,7 @@ const InitialSurveyCoach = () => {
     }
     try{
       const apiUrl = process.env.REACT_APP_API_URL;
-      const response = await axios.post('${apiUrl}/coach/settings', surveyData, {
+      const response = await axios.post(`${apiUrl}/auth/coach_signup`, surveyData, {
         headers: {
           'Authorization': `Bearer ${accessToken}`
         }
