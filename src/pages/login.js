@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import React from 'react';
 import AuthSwitcher from '../components/authSwitch.js';
 // import api from '../api.js';
 import './pages-styling/auth.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Chatter from './Chat.js';
 
 
 const Login = ({ onSwitch }) => {
@@ -11,6 +13,7 @@ const Login = ({ onSwitch }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  localStorage.setItem('username', email);
 
   const navigate = useNavigate();
 
@@ -78,6 +81,7 @@ const Login = ({ onSwitch }) => {
       </div>
       <button onClick={handleLogin} className='submit-button'>Login</button>
       <AuthSwitcher isLogin={true} onSwitch={onSwitch} />
+      <Chatter username={email} />
     </div>
     </div>
     </div>

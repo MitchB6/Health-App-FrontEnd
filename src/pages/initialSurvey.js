@@ -1,5 +1,6 @@
 // initial servey for everyone, another file will be directed to the coach if necessary
 import { useState } from 'react';
+import React from 'react';
 import axios from 'axios';
 import './styling/auth.css';
 import { useNavigate } from 'react-router-dom';
@@ -19,8 +20,8 @@ const InitialSurvey = () => {
   const [weight, setWeight] = useState(0);
   // const [goal, setGoal] = useState('');
   const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [zip, setZip] = useState(10000);
+  const [state, setState] = useState('AL');
+  const [zip, setZip] = useState('10000');
 
   const navigate = useNavigate();
 
@@ -33,6 +34,7 @@ const InitialSurvey = () => {
       return;
     }
     const birthday = `${year}-${month}-${day}`;
+    const height = Number(heightFeet) * 12 + Number(heightInches);
     const surveyData = {
       first_name: firstName,
       last_name: lastName,
@@ -40,11 +42,12 @@ const InitialSurvey = () => {
       state: state,
       zip_code: zip,
       birthdate: birthday,
-      height: (heightFeet * 12 + heightInches),
+      height: height,
       weight: weight,
       age: age,
       gender: gender
     }
+    console.log(height);
     try{
       const apiUrl = process.env.REACT_APP_API_URL;
       const response = await axios.put(`${apiUrl}/member/settings`, surveyData, {
@@ -58,7 +61,7 @@ const InitialSurvey = () => {
       if (response.status === 200) {
         console.log("Survey successful");
         // console.log(response.data);
-        navigate('/');
+        navigate('/workout-notebook');
       } else {
         console.log('Survey failed');
       }
@@ -81,6 +84,7 @@ const InitialSurvey = () => {
     return options;
   };
   return(
+    <div className="initial-survey-page">
     <div className='survey-container'>
       <h2>Initial Survey</h2>
       <form onSubmit={handleSubmit}>
@@ -201,11 +205,12 @@ const InitialSurvey = () => {
             <option value="WI">Wisconsin</option>
             <option value="WY">Wyoming</option>
           </select>
-          <input type="number" value={zip} placeholder="Zip" onChange = {(e) => setZip(e.target.value)} />
+          <input type="text" value={zip} placeholder="Zip" onChange = {(e) => setZip(e.target.value)} />
         </label>
         <br />
         <input type="submit" value="Submit" className='submit-button' />
       </form>
+    </div>
     </div>
   )
 }

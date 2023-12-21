@@ -7,14 +7,14 @@
     max-width: 800px;
     margin: 40px auto;
 }
-.search-container {
+.search-container-coach {
   display: flex;
   border: 2px solid lightgreen;
   align-items: center; 
   justify-content: flex-start;
 }
 
-.search-input {
+.search-input-coach {
     padding: 9px;
     border: none;
     outline: none; 

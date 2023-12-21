@@ -1,9 +1,12 @@
-import { useState, useContext, useEffect }  from 'react';
+import React, { useState, useContext, useEffect }  from 'react';
+import { useNavigate } from 'react-router-dom';
+//import mockCoaches from './mock/mockCoachesData'; 
 import { CoachContext } from './CoachContext';
 import './styling/CoachLookup.css';
 import Navbar from "../components/navbar.js";
 import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
+import { async } from 'q';
 
 const CoachesLookup = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -11,6 +14,8 @@ const CoachesLookup = () => {
   const [filteredCoaches, setFilteredCoaches] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [member_id, setMember_id] = useState(0);
+
+
 
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
@@ -29,7 +34,7 @@ const CoachesLookup = () => {
             'Authorization': `Bearer ${accessToken}`
           }
         });
-        // console.log(response);
+        console.log(response);
         if (response.status === 200) {
           console.log("Get coaches successful");
           // console.log(response.data);
@@ -72,7 +77,7 @@ const CoachesLookup = () => {
     }
     try {
       const apiUrl = process.env.REACT_APP_API_URL;
-      const response = await axios.post(`${apiUrl}/coaches/request_hire`, {
+      const response = await axios.post(`${apiUrl}/coaches/request_hire/${coach_id}`, {
         member_id: member_id,
         coach_id: coach_id
       }, {
@@ -80,17 +85,23 @@ const CoachesLookup = () => {
           'Authorization': `Bearer ${accessToken}`
         }
       });
-      // console.log(response);
-      if (response.status === 201) {
-        console.log("Hire request successful");
-        // console.log(response.data);
+      console.log(response);
+      if (response.status === 200) {
+       console.log("Hire request successful");
+        console.log(response.data);
       } else {
-        console.log('Hire request failed');
+        console.log('Hire request failed with status: ' + response.status);
       }
     } catch (err) {
       console.log(err);
     }
   }
+  let navigate = useNavigate();
+
+  const redirectToChat = (coach) => {
+    console.log(coach.first_name)
+    navigate('/chat', { state: { recp: coach } });
+  };
 
   return (
     <div>
@@ -98,9 +109,9 @@ const CoachesLookup = () => {
        <div className="coaches-lookup">
        <h1>Coaches</h1>
        
-          <div className="search-container">
+          <div className="search-container-coach">
             <input 
-              className="search-input"
+              className="search-input-coach"
               type="text" 
               value={searchQuery} 
               onChange={handleSearchChange} 
@@ -117,6 +128,7 @@ const CoachesLookup = () => {
                 <p>Qualifications: {coach.qualifications}</p>
                 <p>Cost: ${coach.price}/hr</p>
                 <button className="request-button" onClick={() => handleHireRequest(coach.coach_id)}>Hire</button>
+                <button className="request-button" onClick={() => redirectToChat(coach)}>Chat</button>
               </div>
             ))}
           </div>

@@ -9,6 +9,7 @@ import './pages-styling/weekly-workout-plan.css';
 
 
 const WeeklyWorkoutPlan = () => {
+ 
 
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [plans, setPlans] = useState([]);

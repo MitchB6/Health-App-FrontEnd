@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import React from 'react';
 import AuthSwitcher from '../components/authSwitch.js';
 import './pages-styling/auth.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Chatter from './Chat.js';
 
 const Signup = ({ onSwitch }) => {
   const [role, setRole] = useState(0);
@@ -10,6 +12,7 @@ const Signup = ({ onSwitch }) => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  localStorage.setItem('username', username);
 
   const navigate = useNavigate();
 
@@ -39,7 +42,11 @@ const Signup = ({ onSwitch }) => {
           // console.log(loginResponse.data);
           localStorage.setItem('accessToken', loginResponse.data['access token']);
           localStorage.setItem('refreshToken', loginResponse.data['refresh token']);
-          navigate('/initial-survey');
+          if(role === '1'){
+            navigate('/initial-survey-coach');
+          }else{
+            navigate('/initial-survey');
+          }
         }
       } else {
         console.log('Signup failed');
@@ -61,7 +68,6 @@ const Signup = ({ onSwitch }) => {
         <select value={role} onChange={(e) => setRole(e.target.value)}>
           <option value="0">Member</option>
           <option value="1">Coach</option>
-          <option value="2">Admin</option>
         </select>
         </div>
       </label>
@@ -96,6 +102,7 @@ const Signup = ({ onSwitch }) => {
       <br />
       <button onClick={handleSignup} className='submit-button'>Sign Up</button>
       <AuthSwitcher isLogin={false} onSwitch={onSwitch} />
+      <Chatter username={username} />
     </div>
     </div>
     </div>
