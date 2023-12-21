@@ -15,13 +15,20 @@ describe('Admin Component', () => {
     window.localStorage.setItem('accessToken', mockAccessToken);
     window.localStorage.setItem('refreshToken', mockAccessToken);
     jest.spyOn(window, 'prompt').mockImplementation((message) => {
-      if(message === 'Exercise name:') return 'Name4';
-      if(message === 'Exercise description:') return 'Description4';
-      if(message === 'Exercise equipment:') return 'Equipment4';
-      if(message === 'Exercise muscle group:') return 'MuscleGroup4';
+      if(message.includes('Exercise name:')) return 'Name4';
+      if(message.includes('Exercise description:')) return 'Description4';
+      if(message.includes('Exercise equipment:')) return 'Equipment4';
+      if(message.includes('Exercise muscle group:')) return 'MuscleGroup4';
     });
     axios.put.mockImplementation({ status: 200 });
-    axios.post.mockImplementation({ status: 201 });
+    axios.post.mockImplementation(() => {
+      return Promise.resolve({
+        status: 201,
+        data: {
+          message: 'Exercise created successfully: 4'
+        }
+      });
+    });
     axios.get.mockImplementation((url) => {
       if(url.includes('admin')) {
         return Promise.resolve({
@@ -103,11 +110,13 @@ describe('Admin Component', () => {
   });
 
   it('should render the admin page', async () => {
-    render(
-      <Router>
-        <Admin />
-      </Router>
-    );
+    await act(async () => {
+      render(
+        <Router>
+          <Admin />
+        </Router>
+      )
+    });
   });
 
   it('should render and click the show coaches button to display coaches', async () => {
@@ -151,6 +160,6 @@ describe('Admin Component', () => {
     });
     await waitFor(() => expect(screen.getByText("Admin Page")).toBeInTheDocument());
     fireEvent.click(screen.getByRole('button', { name: 'Add Exercise' }));
-    await waitFor(() => expect(screen.getByText('Name4').toBeInTheDocument()));
+    await waitFor(() => expect(screen.getByText('Name4')).toBeInTheDocument());
   });
 });

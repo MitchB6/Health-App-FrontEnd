@@ -163,6 +163,8 @@ const Admin = () => {
       if (response.status === 201) {
         console.log("Exercise added");
         // console.log(response.data);
+        const tempExerciseID = response.data.message.match(/\d+/g)[0];
+        newExercise.exercise_id = Number(tempExerciseID);
         setExercises([...exercises, newExercise]);
       } else {
         console.log('Exercise addition failed');
